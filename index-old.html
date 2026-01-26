@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NK Architects - Premier architectural design firm in Addis Ababa, Ethiopia">
+    <title>NK Architects | Architectural Excellence in Addis Ababa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <img src="assets/logo/logo.ico" alt="NK Architects Logo" class="logo">
+                <span class="brand-name">NK Architects</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Slideshow -->
+    <section id="home" class="hero">
+        <div class="hero-slideshow">
+            <div class="slide active" style="background-image: url('assets/images/img1.jpg');"></div>
+            <div class="slide" style="background-image: url('assets/images/img2.jpg');"></div>
+            <div class="slide" style="background-image: url('assets/images/img3.jpg');"></div>
+            <div class="slide" style="background-image: url('assets/images/img4.jpg');"></div>
+            <div class="slide" style="background-image: url('assets/images/img5.jpg');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">Designing Tomorrow's Ethiopia</h1>
+            <p class="hero-subtitle fade-in-up delay-1">Innovative architectural solutions in the heart of Addis Ababa</p>
+            <a href="#contact" class="btn btn-primary fade-in-up delay-2">Get Started</a>
+        </div>
+        <div class="hero-controls">
+            <button class="slide-btn prev" id="prevSlide" aria-label="Previous slide">‹</button>
+            <button class="slide-btn next" id="nextSlide" aria-label="Next slide">›</button>
+        </div>
+        <div class="hero-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+            <span class="indicator" data-slide="3"></span>
+            <span class="indicator" data-slide="4"></span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header slide-in-left">
+                <h2>About NK Architects</h2>
+                <p class="section-subtitle">Excellence in architectural design since our founding</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text slide-in-left">
+                    <h3>Our Vision</h3>
+                    <p>NK Architects is a leading architectural firm based in Addis Ababa, Ethiopia. We specialize in creating innovative, sustainable, and culturally responsive designs that shape the future of Ethiopian architecture.</p>
+                    <p>Our team combines international best practices with deep local knowledge to deliver projects that are both beautiful and functional, respecting the rich heritage of Ethiopia while embracing modern design principles.</p>
+                    <h3>Why Choose Us</h3>
+                    <ul class="features-list">
+                        <li>✓ Experienced team of licensed architects</li>
+                        <li>✓ Sustainable and eco-friendly designs</li>
+                        <li>✓ Deep understanding of local context</li>
+                        <li>✓ End-to-end project management</li>
+                        <li>✓ Commitment to quality and excellence</li>
+                    </ul>
+                </div>
+                <div class="about-image slide-in-right">
+                    <img src="assets/images/img6.jpg" alt="NK Architects Team">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Our Services</h2>
+                <p class="section-subtitle">Comprehensive architectural solutions</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in delay-1">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Architectural Design</h3>
+                    <p>Complete architectural design services from concept to construction documents</p>
+                </div>
+                <div class="service-card fade-in delay-2">
+                    <div class="service-icon">🏢</div>
+                    <h3>Commercial Projects</h3>
+                    <p>Office buildings, retail spaces, and mixed-use developments</p>
+                </div>
+                <div class="service-card fade-in delay-3">
+                    <div class="service-icon">🏠</div>
+                    <h3>Residential Design</h3>
+                    <p>Custom homes, residential complexes, and housing developments</p>
+                </div>
+                <div class="service-card fade-in delay-4">
+                    <div class="service-icon">🌱</div>
+                    <h3>Sustainable Design</h3>
+                    <p>Green building solutions and energy-efficient designs</p>
+                </div>
+                <div class="service-card fade-in delay-5">
+                    <div class="service-icon">📐</div>
+                    <h3>Interior Design</h3>
+                    <p>Complete interior design services to complement our architectural work</p>
+                </div>
+                <div class="service-card fade-in delay-6">
+                    <div class="service-icon">🔍</div>
+                    <h3>Consultation</h3>
+                    <p>Expert architectural consultation and project feasibility studies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Our Portfolio</h2>
+                <p class="section-subtitle">Showcasing our architectural excellence</p>
+            </div>
+            
+            <!-- Project Categories Filter -->
+            <div class="project-filters fade-in">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="residential">Residential</button>
+                <button class="filter-btn" data-filter="commercial">Commercial</button>
+                <button class="filter-btn" data-filter="institutional">Institutional</button>
+                <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+                <button class="filter-btn" data-filter="mixed-use">Mixed-Use</button>
+                <button class="filter-btn" data-filter="sustainable">Sustainable Design</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Residential Projects -->
+                <div class="project-card" data-category="residential">
+                    <div class="project-image">
+                        <img src="assets/images/img7.jpg" alt="Residential Project">
+                        <div class="project-overlay">
+                            <h3>Luxury Residence</h3>
+                            <p>Modern residential design</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="residential">
+                    <div class="project-image">
+                        <img src="assets/images/img8.jpg" alt="Residential Project">
+                        <div class="project-overlay">
+                            <h3>Urban Villa</h3>
+                            <p>Contemporary living spaces</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="residential">
+                    <div class="project-image">
+                        <img src="assets/images/img9.jpg" alt="Residential Project">
+                        <div class="project-overlay">
+                            <h3>Family Home</h3>
+                            <p>Functional elegance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="residential">
+                    <div class="project-image">
+                        <img src="assets/images/img10.jpg" alt="Residential Project">
+                        <div class="project-overlay">
+                            <h3>Suburban Estate</h3>
+                            <p>Spacious design</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commercial Projects -->
+                <div class="project-card" data-category="commercial">
+                    <div class="project-image">
+                        <img src="assets/images/img11.jpeg" alt="Commercial Project">
+                        <div class="project-overlay">
+                            <h3>Business Complex</h3>
+                            <p>Modern office spaces</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="commercial">
+                    <div class="project-image">
+                        <img src="assets/images/img12.jpeg" alt="Commercial Project">
+                        <div class="project-overlay">
+                            <h3>Corporate Tower</h3>
+                            <p>Iconic architecture</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="commercial">
+                    <div class="project-image">
+                        <img src="assets/images/img13.jpeg" alt="Commercial Project">
+                        <div class="project-overlay">
+                            <h3>Retail Center</h3>
+                            <p>Commercial excellence</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="commercial">
+                    <div class="project-image">
+                        <img src="assets/images/img14.jpeg" alt="Commercial Project">
+                        <div class="project-overlay">
+                            <h3>Office Building</h3>
+                            <p>Professional spaces</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Institutional Projects -->
+                <div class="project-card" data-category="institutional">
+                    <div class="project-image">
+                        <img src="assets/images/img15.jpeg" alt="Institutional Project">
+                        <div class="project-overlay">
+                            <h3>Educational Facility</h3>
+                            <p>Learning environments</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="institutional">
+                    <div class="project-image">
+                        <img src="assets/images/img16.jpeg" alt="Institutional Project">
+                        <div class="project-overlay">
+                            <h3>Cultural Center</h3>
+                            <p>Community spaces</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="institutional">
+                    <div class="project-image">
+                        <img src="assets/images/img18.jpeg" alt="Institutional Project">
+                        <div class="project-overlay">
+                            <h3>Public Building</h3>
+                            <p>Civic architecture</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospitality Projects -->
+                <div class="project-card" data-category="hospitality">
+                    <div class="project-image">
+                        <img src="assets/images/img19.jpeg" alt="Hospitality Project">
+                        <div class="project-overlay">
+                            <h3>Boutique Hotel</h3>
+                            <p>Luxury hospitality</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="hospitality">
+                    <div class="project-image">
+                        <img src="assets/images/img20.jpeg" alt="Hospitality Project">
+                        <div class="project-overlay">
+                            <h3>Resort Complex</h3>
+                            <p>Relaxation spaces</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="hospitality">
+                    <div class="project-image">
+                        <img src="assets/images/img21.jpeg" alt="Hospitality Project">
+                        <div class="project-overlay">
+                            <h3>Restaurant Design</h3>
+                            <p>Culinary experiences</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mixed-Use Projects -->
+                <div class="project-card" data-category="mixed-use">
+                    <div class="project-image">
+                        <img src="assets/images/img22.jpeg" alt="Mixed-Use Project">
+                        <div class="project-overlay">
+                            <h3>Urban Development</h3>
+                            <p>Integrated communities</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="mixed-use">
+                    <div class="project-image">
+                        <img src="assets/images/img23.jpeg" alt="Mixed-Use Project">
+                        <div class="project-overlay">
+                            <h3>City Center</h3>
+                            <p>Multi-purpose spaces</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="mixed-use">
+                    <div class="project-image">
+                        <img src="assets/images/img24.jpeg" alt="Mixed-Use Project">
+                        <div class="project-overlay">
+                            <h3>Plaza Complex</h3>
+                            <p>Dynamic environments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sustainable Design Projects -->
+                <div class="project-card" data-category="sustainable">
+                    <div class="project-image">
+                        <img src="assets/images/img25.jpeg" alt="Sustainable Project">
+                        <div class="project-overlay">
+                            <h3>Eco Building</h3>
+                            <p>Green architecture</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="sustainable">
+                    <div class="project-image">
+                        <img src="assets/images/img26.jpeg" alt="Sustainable Project">
+                        <div class="project-overlay">
+                            <h3>Solar Complex</h3>
+                            <p>Renewable energy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-category="sustainable">
+                    <div class="project-image">
+                        <img src="assets/images/img27.jpeg" alt="Sustainable Project">
+                        <div class="project-overlay">
+                            <h3>Green Building</h3>
+                            <p>Environmental design</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Get In Touch</h2>
+                <p class="section-subtitle">Let's bring your vision to life</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info slide-in-left">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <strong>📍 Address:</strong>
+                        <p>Addis Ababa, Ethiopia</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>📧 Email:</strong>
+                        <p>info@nkarchitects.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>📞 Phone:</strong>
+                        <p>+251 XX XXX XXXX</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>🕒 Hours:</strong>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <form class="contact-form slide-in-right" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Your Phone">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo/logo.ico" alt="NK Architects Logo" class="footer-logo">
+                    <p>NK Architects - Shaping the future of Ethiopian architecture</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">Facebook</a>
+                        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NK Architects. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
