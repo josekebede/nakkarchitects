@@ -103,15 +103,23 @@
       </div>
     </section>
 
-    <!-- Map Section (Placeholder) -->
-    <section class="contact-map">
-      <div class="contact-map__placeholder">
-        <div class="contact-map__content">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
-          <p>Map integration available on request</p>
+    <section class="contact-location" aria-labelledby="location-heading">
+      <div class="container contact-location__inner">
+        <div>
+          <p class="contact-location__eyebrow">Our studio</p>
+          <h2 id="location-heading">Visit us in Addis Ababa.</h2>
+        </div>
+        <div>
+          <address>Mina Building, Wolo Sefer<br>Ethio China Street, Addis Ababa</address>
+          <a
+            class="contact-location__link"
+            href="https://www.google.com/maps/search/?api=1&query=Mina+Building+Wolo+Sefer+Ethio+China+Street+Addis+Ababa"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open in Google Maps
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
@@ -122,7 +130,7 @@
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 import ContactForm from '@/components/common/ContactForm.vue'
 
-const heroImage = new URL('@/assets/images/img4.jpg', import.meta.url).href
+const heroImage = '/projects/selamwit-residence/full/001.webp'
 </script>
 
 <style scoped>
@@ -308,39 +316,66 @@ const heroImage = new URL('@/assets/images/img4.jpg', import.meta.url).href
   margin-bottom: var(--space-8);
 }
 
-/* Map */
-.contact-map {
-  height: 400px;
-  background-color: var(--gray-100);
+/* Location */
+.contact-location {
+  padding: var(--space-20) 0;
+  color: var(--white);
+  background: var(--gray-900);
 }
 
-.contact-map__placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.contact-location__inner {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 0.65fr);
+  gap: var(--space-16);
+  align-items: end;
 }
 
-.contact-map__content {
-  text-align: center;
-  color: var(--text-muted);
+.contact-location__eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--primary-lighter);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
 }
 
-.contact-map__content svg {
-  width: 48px;
-  height: 48px;
-  margin-bottom: var(--space-4);
-}
-
-.contact-map__content p {
-  font-size: var(--text-sm);
+.contact-location h2 {
   margin: 0;
+  color: var(--white);
+  font-size: clamp(2rem, 4.4vw, 4.4rem);
+  font-weight: var(--font-medium);
+}
+
+.contact-location address {
+  margin-bottom: var(--space-6);
+  color: var(--gray-200);
+  font-style: normal;
+  line-height: var(--leading-relaxed);
+}
+
+.contact-location__link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--white);
+  border-bottom: 1px solid var(--primary-lighter);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+}
+
+.contact-location__link:hover {
+  color: var(--primary-lighter);
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
   .contact-main__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .contact-location__inner {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }

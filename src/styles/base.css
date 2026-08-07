@@ -25,6 +25,38 @@ body {
   overflow-x: hidden;
 }
 
+/* ===== Keyboard Navigation ===== */
+
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: calc(var(--z-tooltip) + 1);
+  padding: var(--space-3) var(--space-5);
+  color: var(--white);
+  background-color: var(--primary-darker);
+  border: 2px solid var(--white);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  font-weight: var(--font-semibold);
+  transform: translateY(calc(-100% - var(--space-8)));
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  color: var(--white);
+  transform: translateY(0);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 3px;
+}
+
 /* ===== Typography ===== */
 
 h1, h2, h3, h4, h5, h6 {
@@ -127,6 +159,13 @@ textarea:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(90, 125, 124, 0.1);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
 }
 
 textarea {
@@ -338,5 +377,15 @@ textarea {
 
   h2 {
     font-size: var(--text-2xl);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .skip-link {
+    transition: none;
   }
 }

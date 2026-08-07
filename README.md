@@ -1,82 +1,40 @@
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
+# NAKK Architecture
 
-menuToggle.addEventListener('click', () => {
-navMenu.classList.toggle('active');
-});
+Portfolio website for NAKK Architecture, built with Vue 3, Vite, Vue Router, and Pinia.
 
-// Close menu when clicking on a link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-link.addEventListener('click', () => {
-navMenu.classList.remove('active');
-});
-});
+## Portfolio structure
 
-// Smooth scroll for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-const target = document.querySelector(this.getAttribute('href'));
-if (target) {
-target.scrollIntoView({
-behavior: 'smooth',
-block: 'start'
-});
-}
-});
-});
+The portfolio is organized as nine project records rather than one card per image. The project manifest lives in `src/data/projects.js`, and optimized media is stored in `public/projects/<slug>/`:
 
-// Contact Form Handler
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-contactForm.addEventListener('submit', function(e) {
-e.preventDefault();
+- `thumb/`: 720 px WebP images for listings and gallery previews
+- `full/`: up to 1920 px WebP images for project covers and the lightbox
 
-        // Get form data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            message: document.getElementById('message').value
-        };
+Every project has a stable `/projects/:slug` page with a responsive gallery and keyboard-accessible lightbox.
 
-        // For now, just show an alert (you can integrate with a backend later)
-        alert('Thank you for your message! We will get back to you soon.');
+## Local development
 
-        // Reset form
-        contactForm.reset();
-    });
+Use Node 24 (the version is pinned in `.nvmrc`).
 
-}
+```sh
+nvm use
+npm install
+npm run dev
+```
 
-// Add scroll effect to navbar
-window.addEventListener('scroll', () => {
-const navbar = document.querySelector('.navbar');
-if (window.scrollY > 50) {
-navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-} else {
-navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-}
-});
+Create a production build with:
 
-// Lazy loading for images (optional enhancement)
-if ('IntersectionObserver' in window) {
-const imageObserver = new IntersectionObserver((entries, observer) => {
-entries.forEach(entry => {
-if (entry.isIntersected) {
-const img = entry.target;
-if (img.dataset.src) {
-img.src = img.dataset.src;
-img.removeAttribute('data-src');
-observer.unobserve(img);
-}
-}
-});
-});
+```sh
+npm run build
+npm run preview
+```
 
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-    });
+## Updating projects
 
-}
+1. Optimize new source images into matching `thumb` and `full` WebP files.
+2. Add the media metadata to `src/data/projects.js`.
+3. Keep image paths rooted at `/projects/<slug>/...`.
+4. Run `npm run build` and verify every referenced file exists before publishing.
+
+## Deployment
+
+The included `netlify.toml` publishes `dist` and redirects unknown paths to `index.html`, which preserves Vue Router deep links. The contact page uses Netlify Forms; the static form definition in `index.html` must remain in place so Netlify can discover its fields during the build.

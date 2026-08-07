@@ -42,7 +42,12 @@
 
           <AnimatedSection animation="slide-in-right" class="about-story__image-wrapper">
             <div class="about-story__image img-zoom">
-              <img :src="getImagePath('img6.jpg')" alt="NAKK Architecture Team" loading="lazy" />
+              <img
+                src="/projects/abay-technical-trading/full/011.webp"
+                alt="Reception and workspace designed for Abay Technical & Trading PLC"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </AnimatedSection>
         </div>
@@ -121,9 +126,6 @@
       </div>
     </section>
 
-    <!-- Client Logos -->
-    <ClientLogos :dark="true" />
-
     <!-- CTA Section -->
     <section class="about-cta section">
       <div class="container">
@@ -145,13 +147,8 @@
 <script setup>
 import { h } from 'vue'
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
-import ClientLogos from '@/components/common/ClientLogos.vue'
 
-const heroImage = new URL('@/assets/images/img2.jpg', import.meta.url).href
-
-const getImagePath = (filename) => {
-  return new URL(`../assets/images/${filename}`, import.meta.url).href
-}
+const heroImage = '/projects/nuclear-energy-commission/full/001.webp'
 
 const values = [
   {

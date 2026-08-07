@@ -1,137 +1,188 @@
 <template>
-  <article class="project-card" :class="{ 'project-card--visible': isVisible }">
-    <div class="project-card__inner img-zoom">
-      <div class="project-card__image">
+  <article class="project-card">
+    <RouterLink
+      class="project-card__link"
+      :to="`/projects/${project.slug}`"
+      :aria-label="`View ${project.name}, ${project.imageCount} images`"
+    >
+      <div class="project-card__media" :style="mediaStyle">
         <img
-          :src="imagePath"
-          :alt="project.name"
-          loading="lazy"
-          @load="onImageLoad"
+          :src="project.cover.thumb"
+          :srcset="coverSrcset"
+          sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+          :width="project.cover.width"
+          :height="project.cover.height"
+          :alt="project.cover.alt"
+          :loading="loading"
+          decoding="async"
+          @error="hasImageError = true"
         />
+        <div v-if="hasImageError" class="project-card__fallback" aria-hidden="true">
+          <span>NAKK</span>
+        </div>
+        <span class="project-card__count">{{ project.imageCount }} images</span>
       </div>
-      <div class="project-card__overlay">
-        <span class="project-card__category">{{ formatCategory(project.category) }}</span>
-        <h3 class="project-card__title">{{ project.name }}</h3>
-        <p class="project-card__description">{{ project.description }}</p>
+
+      <div class="project-card__content">
+        <div>
+          <p class="project-card__category">{{ project.categoryLabel }}</p>
+          <h2 class="project-card__title">{{ project.name }}</h2>
+        </div>
+        <span class="project-card__arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
       </div>
-    </div>
+    </RouterLink>
   </article>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   project: {
     type: Object,
     required: true
+  },
+  loading: {
+    type: String,
+    default: 'lazy'
   }
 })
 
-const isVisible = ref(false)
+const hasImageError = ref(false)
 
-const imagePath = computed(() => {
-  return new URL(`../../assets/images/${props.project.image}`, import.meta.url).href
+const mediaStyle = computed(() => ({
+  '--project-ratio': `${props.project.cover.width} / ${props.project.cover.height}`
+}))
+
+const coverSrcset = computed(() => {
+  const cover = props.project.cover
+  if (!cover?.thumb || !cover?.full || cover.thumb === cover.full) return undefined
+
+  const fullWidth = Number(cover.width) || 1920
+  const thumbWidth = Math.min(720, fullWidth)
+  if (fullWidth <= thumbWidth) return undefined
+  return `${cover.thumb} ${thumbWidth}w, ${cover.full} ${fullWidth}w`
 })
-
-const formatCategory = (category) => {
-  return category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')
-}
-
-const onImageLoad = () => {
-  isVisible.value = true
-}
 </script>
 
 <style scoped>
 .project-card {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  min-width: 0;
 }
 
-.project-card--visible {
-  opacity: 1;
-  transform: scale(1);
+.project-card__link {
+  display: block;
+  color: var(--text-primary);
+  text-decoration: none;
 }
 
-.project-card__inner {
+.project-card__media {
   position: relative;
-  border-radius: var(--radius-lg);
   overflow: hidden;
-  cursor: pointer;
-  aspect-ratio: 4/3;
+  width: 100%;
+  aspect-ratio: var(--project-ratio, 4 / 3);
+  min-height: 240px;
+  max-height: 520px;
+  background: var(--accent);
 }
 
-.project-card__image {
-  position: absolute;
-  inset: 0;
-}
-
-.project-card__image img {
+.project-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  transition: transform 650ms cubic-bezier(0.2, 0.65, 0.25, 1);
 }
 
-.project-card__inner:hover .project-card__image img {
-  transform: scale(1.1);
+.project-card__link:hover .project-card__media img,
+.project-card__link:focus-visible .project-card__media img {
+  transform: scale(1.025);
 }
 
-/* Overlay */
-.project-card__overlay {
+.project-card__count {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  padding: 0.45rem 0.7rem;
+  color: var(--white);
+  background: rgba(26, 42, 42, 0.84);
+  backdrop-filter: blur(8px);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+.project-card__fallback {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--space-6);
-  background: linear-gradient(
-    to top,
-    rgba(26, 42, 42, 0.95) 0%,
-    rgba(26, 42, 42, 0.3) 60%,
-    transparent 100%
-  );
-  color: var(--white);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
+  display: grid;
+  place-items: center;
+  background: var(--primary-dark);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-widest);
 }
 
-.project-card__inner:hover .project-card__overlay {
-  opacity: 1;
-  transform: translateY(0);
+.project-card__content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5) 0 var(--space-8);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .project-card__category {
+  margin: 0 0 var(--space-2);
+  color: var(--primary-dark);
+  font-family: var(--font-heading);
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--primary-light);
-  margin-bottom: var(--space-2);
 }
 
 .project-card__title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  color: var(--white);
-  margin-bottom: var(--space-2);
-}
-
-.project-card__description {
-  font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.8);
   margin: 0;
-  line-height: var(--leading-relaxed);
+  color: var(--gray-900);
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-tight);
 }
 
-/* Always show overlay on mobile */
-@media (max-width: 768px) {
-  .project-card__overlay {
-    opacity: 1;
-    transform: translateY(0);
+.project-card__arrow {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--gray-300);
+  color: var(--primary-dark);
+  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.project-card__arrow svg {
+  width: 19px;
+  height: 19px;
+}
+
+.project-card__link:hover .project-card__arrow,
+.project-card__link:focus-visible .project-card__arrow {
+  color: var(--white);
+  background: var(--primary-dark);
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .project-card__media {
+    min-height: 210px;
+  }
+
+  .project-card__content {
+    padding-top: var(--space-4);
   }
 }
 </style>

@@ -1,230 +1,115 @@
 <template>
-  <section class="featured section">
+  <section class="featured" aria-labelledby="featured-heading">
     <div class="container">
-      <!-- Header -->
-      <AnimatedSection animation="fade-in" class="section-header">
-        <span class="featured__label">Our Work</span>
-        <h2>Featured Projects</h2>
-        <p>Discover our latest architectural achievements</p>
-      </AnimatedSection>
-
-      <!-- Projects Grid -->
-      <div class="featured__grid">
-        <AnimatedSection
-          v-for="(project, index) in featuredProjects"
-          :key="project.id"
-          animation="fade-in-up"
-          :delay="`${index * 0.15}s`"
-          class="featured__item"
-        >
-          <RouterLink :to="`/projects`" class="featured__card img-zoom">
-            <div class="featured__image">
-              <img
-                :src="getImagePath(project.image)"
-                :alt="project.name"
-                loading="lazy"
-              />
-            </div>
-            <div class="featured__overlay">
-              <span class="featured__category">{{ formatCategory(project.category) }}</span>
-              <h3 class="featured__title">{{ project.name }}</h3>
-              <p class="featured__description">{{ project.description }}</p>
-              <span class="featured__link">
-                View Project
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
-            </div>
-          </RouterLink>
-        </AnimatedSection>
+      <div class="featured__header">
+        <div>
+          <p class="featured__eyebrow">Selected work</p>
+          <h2 id="featured-heading">A closer look at recent projects.</h2>
+        </div>
+        <RouterLink to="/projects" class="featured__all">
+          Explore all projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </RouterLink>
       </div>
 
-      <!-- CTA -->
-      <AnimatedSection animation="fade-in" class="featured__cta">
-        <RouterLink to="/projects" class="btn btn-primary btn-lg">
-          View All Projects
-        </RouterLink>
-      </AnimatedSection>
+      <div class="featured__grid">
+        <ProjectCard
+          v-for="project in featuredProjects"
+          :key="project.slug"
+          :project="project"
+        />
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import AnimatedSection from '@/components/common/AnimatedSection.vue'
+import ProjectCard from '@/components/projects/ProjectCard.vue'
 import { useProjectsStore } from '@/stores/projects'
 
 const store = useProjectsStore()
 const featuredProjects = computed(() => store.featuredProjects)
-
-const getImagePath = (filename) => {
-  return new URL(`../../assets/images/${filename}`, import.meta.url).href
-}
-
-const formatCategory = (category) => {
-  return category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')
-}
 </script>
 
 <style scoped>
 .featured {
-  background-color: var(--bg-primary);
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  background: var(--off-white);
 }
 
-.featured__label {
-  display: inline-block;
+.featured__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-10);
+  margin-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+
+.featured__eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--primary-dark);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.featured h2 {
+  max-width: 760px;
+  margin: 0;
+  color: var(--gray-900);
+  font-size: clamp(2.2rem, 4.6vw, 4.5rem);
+  font-weight: var(--font-medium);
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.featured__all {
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-height: 44px;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--primary-dark);
+  border-bottom: 1px solid var(--primary-dark);
+  font-family: var(--font-heading);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--primary);
-  margin-bottom: var(--space-2);
 }
 
-/* Grid */
+.featured__all svg {
+  width: 19px;
+  height: 19px;
+  transition: transform var(--transition-fast);
+}
+
+.featured__all:hover svg,
+.featured__all:focus-visible svg {
+  transform: translateX(4px);
+}
+
 .featured__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
-  margin-bottom: var(--space-12);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-14, 3.5rem) var(--space-8);
 }
 
-/* Card */
-.featured__card {
-  display: block;
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  text-decoration: none;
-  aspect-ratio: 4/5;
-}
-
-.featured__image {
-  position: absolute;
-  inset: 0;
-}
-
-.featured__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.featured__card:hover .featured__image img {
-  transform: scale(1.08);
-}
-
-/* Overlay */
-.featured__overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--space-8);
-  background: linear-gradient(
-    to top,
-    rgba(26, 42, 42, 0.95) 0%,
-    rgba(26, 42, 42, 0.4) 50%,
-    transparent 100%
-  );
-  color: var(--white);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
-}
-
-.featured__card:hover .featured__overlay {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.featured__category {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  letter-spacing: var(--tracking-widest);
-  text-transform: uppercase;
-  color: var(--primary-light);
-  margin-bottom: var(--space-2);
-}
-
-.featured__title {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-semibold);
-  color: var(--white);
-  margin-bottom: var(--space-2);
-}
-
-.featured__description {
-  font-size: var(--text-sm);
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: var(--space-4);
-  line-height: var(--leading-relaxed);
-}
-
-.featured__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  letter-spacing: var(--tracking-wide);
-  color: var(--white);
-  transition: gap 0.3s ease;
-}
-
-.featured__card:hover .featured__link {
-  gap: var(--space-3);
-}
-
-.featured__link svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* CTA */
-.featured__cta {
-  text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .featured__grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 720px) {
+  .featured__header {
+    display: block;
   }
 
-  .featured__item:nth-child(3) {
-    grid-column: span 2;
+  .featured__all {
+    margin-top: var(--space-8);
   }
 
-  .featured__item:nth-child(3) .featured__card {
-    aspect-ratio: 16/9;
-  }
-}
-
-@media (max-width: 640px) {
   .featured__grid {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .featured__item:nth-child(3) {
-    grid-column: span 1;
-  }
-
-  .featured__item:nth-child(3) .featured__card {
-    aspect-ratio: 4/5;
-  }
-
-  .featured__card {
-    aspect-ratio: 3/4;
-  }
-
-  .featured__overlay {
-    opacity: 1;
-    transform: translateY(0);
+    gap: var(--space-8);
   }
 }
 </style>

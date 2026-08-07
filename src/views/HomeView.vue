@@ -1,9 +1,8 @@
 <template>
   <div class="home">
     <HeroSlider />
-    <AboutPreview />
     <FeaturedProjects />
-    <ClientLogos />
+    <AboutPreview />
 
     <!-- Services Preview Section -->
     <section class="services-preview section bg-accent">
@@ -56,7 +55,6 @@ import HeroSlider from '@/components/home/HeroSlider.vue'
 import AboutPreview from '@/components/home/AboutPreview.vue'
 import FeaturedProjects from '@/components/home/FeaturedProjects.vue'
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
-import ClientLogos from '@/components/common/ClientLogos.vue'
 
 // Service icons as render functions
 const ArchitectureIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.5' }, [
@@ -126,17 +124,16 @@ const services = [
 }
 
 .services-preview__card {
-  text-align: center;
+  text-align: left;
   padding: var(--space-8);
   background-color: var(--white);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow);
+  border-top: 2px solid var(--primary);
+  transition: transform var(--transition-base), border-color var(--transition-base);
 }
 
 .services-preview__card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  border-color: var(--primary-dark);
 }
 
 .services-preview__icon {
@@ -145,7 +142,6 @@ const services = [
   justify-content: center;
   width: 64px;
   height: 64px;
-  border-radius: var(--radius-full);
   background-color: var(--accent);
   color: var(--primary);
   margin-bottom: var(--space-6);

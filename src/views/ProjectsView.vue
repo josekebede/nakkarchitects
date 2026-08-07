@@ -1,191 +1,233 @@
 <template>
   <div class="projects-page">
-    <!-- Hero -->
-    <section class="projects-hero">
-      <div class="projects-hero__bg" :style="{ backgroundImage: `url(${heroImage})` }" />
-      <div class="projects-hero__overlay" />
-      <div class="projects-hero__content container">
-        <AnimatedSection animation="fade-in-up">
-          <h1 class="projects-hero__title">Our Projects</h1>
-          <p class="projects-hero__subtitle">
-            Explore our portfolio of architectural excellence
+    <header class="projects-intro">
+      <div class="container projects-intro__grid">
+        <div>
+          <p class="eyebrow">Selected portfolio</p>
+          <h1>Spaces shaped around how people live, work, and gather.</h1>
+        </div>
+        <div class="projects-intro__aside">
+          <p>
+            Explore residential, commercial, hospitality, interior, and institutional
+            work by NAKK Architecture in Addis Ababa.
           </p>
-        </AnimatedSection>
+          <dl class="projects-intro__stats" aria-label="Portfolio totals">
+            <div>
+              <dt>Projects</dt>
+              <dd>{{ projects.length }}</dd>
+            </div>
+            <div>
+              <dt>Images</dt>
+              <dd>{{ totalImages }}</dd>
+            </div>
+          </dl>
+        </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Projects Section -->
-    <section class="projects-section section">
+    <section class="projects-section" aria-labelledby="projects-heading">
       <div class="container">
-        <!-- Filter -->
-        <AnimatedSection animation="fade-in">
-          <ProjectFilter />
-        </AnimatedSection>
+        <h2 id="projects-heading" class="sr-only">Project gallery</h2>
+        <ProjectFilter />
 
-        <!-- Grid -->
         <TransitionGroup name="projects" tag="div" class="projects-grid">
           <ProjectCard
             v-for="project in filteredProjects"
-            :key="project.id"
+            :key="project.slug"
             :project="project"
           />
         </TransitionGroup>
 
-        <!-- Empty State -->
-        <div v-if="filteredProjects.length === 0" class="projects-empty">
-          <p>No projects found in this category.</p>
-        </div>
+        <p v-if="filteredProjects.length === 0" class="projects-empty">
+          No projects are available in this category yet.
+        </p>
       </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="projects-cta section bg-accent">
-      <div class="container">
-        <AnimatedSection animation="fade-in" class="projects-cta__content">
-          <h2>Have a Project in Mind?</h2>
-          <p>
-            We'd love to hear about your vision. Let's discuss how we can help
-            bring your architectural dreams to reality.
-          </p>
-          <RouterLink to="/contact" class="btn btn-primary btn-lg">
-            Start a Conversation
-          </RouterLink>
-        </AnimatedSection>
+    <section class="projects-cta">
+      <div class="container projects-cta__inner">
+        <div>
+          <p class="eyebrow eyebrow--light">Start a project</p>
+          <h2>Have a space in mind?</h2>
+        </div>
+        <div>
+          <p>Tell us what you are planning and where you would like to begin.</p>
+          <RouterLink to="/contact" class="btn btn-white">Start a conversation</RouterLink>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import AnimatedSection from '@/components/common/AnimatedSection.vue'
+import { computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import ProjectFilter from '@/components/projects/ProjectFilter.vue'
 import ProjectCard from '@/components/projects/ProjectCard.vue'
 import { useProjectsStore } from '@/stores/projects'
 
 const store = useProjectsStore()
-const filteredProjects = computed(() => store.filteredProjects)
+const route = useRoute()
+const router = useRouter()
 
-const heroImage = new URL('@/assets/images/img3.jpg', import.meta.url).href
+const projects = computed(() => store.projects)
+const filteredProjects = computed(() => store.filteredProjects)
+const totalImages = computed(() => store.totalImages)
+
+watch(
+  () => route.query.category,
+  (category) => {
+    const next = typeof category === 'string' ? category : 'all'
+    const isValid = store.categories.some((item) => item.id === next)
+    store.setActiveCategory(isValid ? next : 'all')
+
+    if (!isValid && category) {
+      const query = { ...route.query }
+      delete query.category
+      router.replace({ name: 'projects', query })
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>
 .projects-page {
   padding-top: var(--navbar-height);
+  background: var(--off-white);
 }
 
-/* Hero */
-.projects-hero {
-  position: relative;
-  height: 50vh;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.projects-hero__bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.projects-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(26, 42, 42, 0.7) 0%,
-    rgba(26, 42, 42, 0.5) 100%
-  );
-}
-
-.projects-hero__content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
+.projects-intro {
+  padding: clamp(5rem, 9vw, 9rem) 0 clamp(4rem, 7vw, 7rem);
   color: var(--white);
+  background:
+    linear-gradient(120deg, rgba(90, 125, 124, 0.22), transparent 46%),
+    var(--gray-900);
 }
 
-.projects-hero__title {
-  font-size: var(--text-5xl);
+.projects-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: end;
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--primary-dark);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  margin-bottom: var(--space-4);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.projects-hero__subtitle {
-  font-size: var(--text-xl);
-  font-weight: var(--font-light);
-  color: rgba(255, 255, 255, 0.9);
+.projects-intro .eyebrow,
+.eyebrow--light {
+  color: var(--primary-lighter);
+}
+
+.projects-intro h1 {
+  max-width: 900px;
   margin: 0;
+  color: var(--white);
+  font-size: clamp(2.4rem, 5.4vw, 5.4rem);
+  font-weight: var(--font-medium);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
 }
 
-/* Projects Section */
+.projects-intro__aside > p {
+  margin: 0 0 var(--space-8);
+  color: var(--gray-200);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.projects-intro__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.projects-intro__stats div {
+  padding-top: var(--space-4);
+}
+
+.projects-intro__stats dt {
+  color: var(--gray-300);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.projects-intro__stats dd {
+  margin: var(--space-1) 0 0;
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+}
+
 .projects-section {
-  background-color: var(--bg-secondary);
+  padding: 0 0 var(--space-24);
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-10) var(--space-8);
 }
 
-/* Transition animations */
 .projects-enter-active,
-.projects-leave-active {
-  transition: all 0.5s ease;
+.projects-leave-active,
+.projects-move {
+  transition: opacity 280ms ease, transform 280ms ease;
 }
 
-.projects-enter-from {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
+.projects-enter-from,
 .projects-leave-to {
   opacity: 0;
-  transform: scale(0.9);
+  transform: translateY(12px);
 }
 
-.projects-move {
-  transition: transform 0.5s ease;
-}
-
-/* Empty State */
 .projects-empty {
+  padding: var(--space-20) 0;
+  color: var(--text-secondary);
   text-align: center;
-  padding: var(--space-16);
-  color: var(--text-muted);
 }
 
-/* CTA Section */
 .projects-cta {
-  text-align: center;
+  padding: var(--space-20) 0;
+  background: var(--primary-dark);
 }
 
-.projects-cta__content {
-  max-width: 600px;
-  margin: 0 auto;
+.projects-cta__inner {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 0.65fr);
+  gap: var(--space-16);
+  align-items: end;
 }
 
 .projects-cta h2 {
-  color: var(--primary-dark);
-  margin-bottom: var(--space-4);
+  margin: 0;
+  color: var(--white);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-weight: var(--font-medium);
 }
 
-.projects-cta p {
-  font-size: var(--text-lg);
-  color: var(--text-secondary);
-  margin-bottom: var(--space-8);
+.projects-cta p:not(.eyebrow) {
+  margin: 0 0 var(--space-6);
+  color: var(--accent);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .projects-intro__grid {
+    gap: var(--space-12);
   }
 }
 
@@ -194,24 +236,21 @@ const heroImage = new URL('@/assets/images/img3.jpg', import.meta.url).href
     padding-top: var(--navbar-height-mobile);
   }
 
-  .projects-hero {
-    height: 40vh;
-    min-height: 300px;
+  .projects-intro__grid,
+  .projects-cta__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
   }
 
-  .projects-hero__title {
-    font-size: var(--text-4xl);
-  }
-
-  .projects-hero__subtitle {
-    font-size: var(--text-lg);
+  .projects-intro__aside {
+    max-width: 560px;
   }
 }
 
 @media (max-width: 640px) {
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-6);
+    gap: var(--space-8);
   }
 }
 </style>

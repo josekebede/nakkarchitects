@@ -294,3 +294,41 @@
 .text-reveal.visible span {
   transform: translateY(0);
 }
+
+/* Respect the user's motion preference while keeping revealed content visible. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .fade-in,
+  .fade-in-up,
+  .slide-in-left,
+  .slide-in-right,
+  .scale-in,
+  .reveal-fade,
+  .reveal-slide-up,
+  .text-reveal span {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .parallax-bg {
+    top: 0;
+    height: 100%;
+    transform: none !important;
+  }
+
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .img-zoom:hover img {
+    transform: none !important;
+  }
+}

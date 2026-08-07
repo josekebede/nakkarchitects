@@ -25,7 +25,12 @@
         <!-- Image -->
         <AnimatedSection animation="slide-in-right" class="about-preview__image-wrapper">
           <div class="about-preview__image img-zoom">
-            <img :src="getImagePath('img6.jpg')" alt="NAKK Architecture Office" loading="lazy" />
+            <img
+              src="/projects/abay-technical-trading/full/011.webp"
+              alt="Reception and workspace designed for Abay Technical & Trading PLC"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div class="about-preview__accent" />
         </AnimatedSection>
@@ -36,10 +41,6 @@
 
 <script setup>
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
-
-const getImagePath = (filename) => {
-  return new URL(`../../assets/images/${filename}`, import.meta.url).href
-}
 </script>
 
 <style scoped>

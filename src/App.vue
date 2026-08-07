@@ -1,7 +1,8 @@
 <template>
   <div id="app-wrapper">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <TheNavbar />
-    <main>
+    <main id="main-content" tabindex="-1">
       <RouterView v-slot="{ Component }">
         <Transition name="page" mode="out-in">
           <component :is="Component" />
@@ -28,6 +29,10 @@ main {
   flex: 1;
 }
 
+#main-content:focus {
+  outline: none;
+}
+
 /* Page transitions */
 .page-enter-active,
 .page-leave-active {
@@ -42,5 +47,18 @@ main {
 .page-leave-to {
   opacity: 0;
   transform: translateY(-10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+
+  .page-enter-from,
+  .page-leave-to {
+    opacity: 1;
+    transform: none;
+  }
 }
 </style>

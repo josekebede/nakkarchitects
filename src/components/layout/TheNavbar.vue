@@ -1,6 +1,7 @@
 <template>
   <nav
     class="navbar"
+    aria-label="Primary navigation"
     :class="{
       'navbar--scrolled': isScrolled,
       'navbar--transparent': isTransparent && !isScrolled,
@@ -9,9 +10,21 @@
   >
     <div class="navbar__container container">
       <!-- Logo -->
-      <RouterLink to="/" class="navbar__brand" @click="closeMobileMenu">
+      <RouterLink
+        to="/"
+        class="navbar__brand"
+        aria-label="NAKK Architecture home"
+        @click="closeMobileMenu"
+      >
         <div class="navbar__logo">
-          <svg class="navbar__logo-icon" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="navbar__logo-icon"
+            viewBox="0 0 60 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
             <!-- Simplified geometric building icon similar to NAKK logo -->
             <path d="M10 45V15L15 10V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
             <path d="M20 45V12L25 7V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
@@ -35,6 +48,7 @@
             :to="link.path"
             class="navbar__link"
             :class="{ 'navbar__link--active': isActive(link.path) }"
+            :aria-current="isActive(link.path) ? 'page' : undefined"
           >
             {{ link.name }}
           </RouterLink>
@@ -43,25 +57,34 @@
 
       <!-- Mobile Menu Toggle -->
       <button
+        ref="menuToggleRef"
         class="navbar__toggle"
         :class="{ 'navbar__toggle--active': isMobileMenuOpen }"
+        type="button"
         @click="toggleMobileMenu"
-        aria-label="Toggle menu"
+        :aria-label="isMobileMenuOpen ? 'Close menu' : 'Open menu'"
+        :aria-expanded="isMobileMenuOpen"
+        aria-controls="mobile-navigation"
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </button>
     </div>
 
     <!-- Mobile Menu -->
     <Transition name="mobile-menu">
-      <div v-if="isMobileMenuOpen" class="navbar__mobile">
+      <div
+        v-if="isMobileMenuOpen"
+        id="mobile-navigation"
+        class="navbar__mobile"
+      >
         <ul class="navbar__mobile-menu">
           <li v-for="(link, index) in navLinks" :key="link.path" :style="{ transitionDelay: `${index * 0.1}s` }">
             <RouterLink
               :to="link.path"
               class="navbar__mobile-link"
+              :aria-current="isActive(link.path) ? 'page' : undefined"
               @click="closeMobileMenu"
             >
               {{ link.name }}
@@ -74,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -88,6 +111,8 @@ const navLinks = [
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
+const menuToggleRef = ref(null)
+let bodyOverflowBeforeMenu = ''
 
 const isTransparent = computed(() => {
   return route.path === '/'
@@ -104,23 +129,68 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
+const setBodyScrollLocked = (isLocked) => {
+  if (isLocked) {
+    bodyOverflowBeforeMenu = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return
+  }
+
+  document.body.style.overflow = bodyOverflowBeforeMenu
+  bodyOverflowBeforeMenu = ''
+}
+
 const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : ''
+  const shouldOpen = !isMobileMenuOpen.value
+  isMobileMenuOpen.value = shouldOpen
+  setBodyScrollLocked(shouldOpen)
 }
 
 const closeMobileMenu = () => {
+  if (!isMobileMenuOpen.value) return
   isMobileMenuOpen.value = false
-  document.body.style.overflow = ''
+  setBodyScrollLocked(false)
 }
+
+const handleKeydown = (event) => {
+  if (!isMobileMenuOpen.value) return
+
+  if (event.key === 'Escape') {
+    closeMobileMenu()
+    nextTick(() => menuToggleRef.value?.focus())
+    return
+  }
+
+  if (event.key !== 'Tab') return
+
+  const menuLinks = Array.from(
+    document.querySelectorAll('#mobile-navigation a[href]')
+  )
+  const focusableElements = [menuToggleRef.value, ...menuLinks].filter(Boolean)
+  const firstFocusable = focusableElements[0]
+  const lastFocusable = focusableElements[focusableElements.length - 1]
+
+  if (event.shiftKey && document.activeElement === firstFocusable) {
+    event.preventDefault()
+    lastFocusable?.focus()
+  } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+    event.preventDefault()
+    firstFocusable?.focus()
+  }
+}
+
+watch(() => route.fullPath, closeMobileMenu)
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('keydown', handleKeydown)
   handleScroll()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('keydown', handleKeydown)
+  closeMobileMenu()
 })
 </script>
 
@@ -133,17 +203,28 @@ onUnmounted(() => {
   z-index: var(--z-fixed);
   height: var(--navbar-height);
   background-color: var(--white);
-  transition: all var(--transition-base);
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    color var(--transition-base);
 }
 
 .navbar--transparent {
-  background-color: transparent;
+  background-color: rgba(26, 42, 42, 0.9);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .navbar--scrolled {
   background-color: rgba(255, 255, 255, 0.98);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-md);
+}
+
+.navbar--open {
+  background-color: var(--white);
 }
 
 .navbar__container {
@@ -168,6 +249,10 @@ onUnmounted(() => {
 }
 
 .navbar--scrolled .navbar__brand {
+  color: var(--primary-dark);
+}
+
+.navbar--open .navbar__brand {
   color: var(--primary-dark);
 }
 
@@ -259,14 +344,31 @@ onUnmounted(() => {
   color: var(--white);
 }
 
+.navbar__brand:focus-visible,
+.navbar__link:focus-visible,
+.navbar__toggle:focus-visible {
+  outline-offset: 4px;
+}
+
+.navbar--transparent .navbar__brand:focus-visible,
+.navbar--transparent .navbar__link:focus-visible,
+.navbar--transparent .navbar__toggle:focus-visible {
+  outline-color: var(--white);
+}
+
+.navbar--open .navbar__toggle:focus-visible {
+  outline-color: var(--primary-dark);
+}
+
 /* Mobile Toggle */
 .navbar__toggle {
   display: none;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   background: none;
   border: none;
@@ -276,7 +378,7 @@ onUnmounted(() => {
 
 .navbar__toggle span {
   display: block;
-  width: 100%;
+  width: 30px;
   height: 2px;
   background-color: var(--text-primary);
   transition: all var(--transition-base);
@@ -343,6 +445,17 @@ onUnmounted(() => {
   color: var(--primary);
 }
 
+.navbar__mobile-link[aria-current='page'] {
+  color: var(--primary-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+.navbar__mobile-link:focus-visible {
+  outline-offset: 6px;
+}
+
 /* Mobile Menu Transitions */
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
@@ -370,6 +483,15 @@ onUnmounted(() => {
 
   .navbar__brand-tagline {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__mobile-menu li {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition-delay: 0s !important;
   }
 }
 </style>

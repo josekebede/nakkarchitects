@@ -5,6 +5,7 @@
     method="POST"
     data-netlify="true"
     netlify-honeypot="bot-field"
+    :aria-busy="isSubmitting"
     @submit.prevent="handleSubmit"
   >
     <input type="hidden" name="form-name" value="contact" />
@@ -15,38 +16,48 @@
       <label for="name" class="contact-form__label">Your Name *</label>
       <input
         id="name"
+        name="name"
         v-model="form.name"
         type="text"
         class="contact-form__input"
         :class="{ 'contact-form__input--error': errors.name }"
         placeholder="John Doe"
         required
+        autocomplete="name"
+        :aria-invalid="Boolean(errors.name)"
+        :aria-describedby="errors.name ? 'name-error' : undefined"
       />
-      <span v-if="errors.name" class="contact-form__error">{{ errors.name }}</span>
+      <span v-if="errors.name" id="name-error" class="contact-form__error" role="alert">{{ errors.name }}</span>
     </div>
 
     <div class="contact-form__group">
       <label for="email" class="contact-form__label">Email Address *</label>
       <input
         id="email"
+        name="email"
         v-model="form.email"
         type="email"
         class="contact-form__input"
         :class="{ 'contact-form__input--error': errors.email }"
         placeholder="john@example.com"
         required
+        autocomplete="email"
+        :aria-invalid="Boolean(errors.email)"
+        :aria-describedby="errors.email ? 'email-error' : undefined"
       />
-      <span v-if="errors.email" class="contact-form__error">{{ errors.email }}</span>
+      <span v-if="errors.email" id="email-error" class="contact-form__error" role="alert">{{ errors.email }}</span>
     </div>
 
     <div class="contact-form__group">
       <label for="phone" class="contact-form__label">Phone Number</label>
       <input
         id="phone"
+        name="phone"
         v-model="form.phone"
         type="tel"
         class="contact-form__input"
         placeholder="+251 XX XXX XXXX"
+        autocomplete="tel"
       />
     </div>
 
@@ -54,10 +65,13 @@
       <label for="subject" class="contact-form__label">Subject *</label>
       <select
         id="subject"
+        name="subject"
         v-model="form.subject"
         class="contact-form__input contact-form__select"
         :class="{ 'contact-form__input--error': errors.subject }"
         required
+        :aria-invalid="Boolean(errors.subject)"
+        :aria-describedby="errors.subject ? 'subject-error' : undefined"
       >
         <option value="">Select a subject</option>
         <option value="new-project">New Project Inquiry</option>
@@ -66,21 +80,24 @@
         <option value="general">General Question</option>
         <option value="other">Other</option>
       </select>
-      <span v-if="errors.subject" class="contact-form__error">{{ errors.subject }}</span>
+      <span v-if="errors.subject" id="subject-error" class="contact-form__error" role="alert">{{ errors.subject }}</span>
     </div>
 
     <div class="contact-form__group contact-form__group--full">
       <label for="message" class="contact-form__label">Your Message *</label>
       <textarea
         id="message"
+        name="message"
         v-model="form.message"
         class="contact-form__input contact-form__textarea"
         :class="{ 'contact-form__input--error': errors.message }"
         placeholder="Tell us about your project..."
         rows="5"
         required
+        :aria-invalid="Boolean(errors.message)"
+        :aria-describedby="errors.message ? 'message-error' : undefined"
       />
-      <span v-if="errors.message" class="contact-form__error">{{ errors.message }}</span>
+      <span v-if="errors.message" id="message-error" class="contact-form__error" role="alert">{{ errors.message }}</span>
     </div>
 
     <div class="contact-form__group contact-form__group--full">
@@ -101,7 +118,7 @@
 
     <!-- Success Message -->
     <Transition name="fade">
-      <div v-if="isSuccess" class="contact-form__success">
+      <div v-if="isSuccess" class="contact-form__success" role="status" aria-live="polite">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
           <polyline points="22 4 12 14.01 9 11.01" />
@@ -109,6 +126,10 @@
         <span>Thank you! Your message has been sent. We'll get back to you soon.</span>
       </div>
     </Transition>
+
+    <p v-if="submitError" class="contact-form__submit-error" role="alert">
+      {{ submitError }}
+    </p>
   </form>
 </template>
 
@@ -132,6 +153,7 @@ const errors = reactive({
 
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
+const submitError = ref('')
 
 const validateForm = () => {
   let isValid = true
@@ -174,6 +196,8 @@ const handleSubmit = async () => {
   if (!validateForm()) return
 
   isSubmitting.value = true
+  isSuccess.value = false
+  submitError.value = ''
 
   try {
     // Submit to Netlify Forms
@@ -185,11 +209,15 @@ const handleSubmit = async () => {
     formData.append('subject', form.subject)
     formData.append('message', form.message)
 
-    await fetch('/', {
+    const response = await fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(formData).toString()
     })
+
+    if (!response.ok) {
+      throw new Error(`Form submission failed with status ${response.status}`)
+    }
 
     isSuccess.value = true
 
@@ -204,7 +232,7 @@ const handleSubmit = async () => {
     }, 5000)
   } catch (error) {
     console.error('Form submission error:', error)
-    alert('There was an error sending your message. Please try again or contact us directly.')
+    submitError.value = 'We could not send your message. Please try again or email us directly.'
   } finally {
     isSubmitting.value = false
   }
@@ -328,6 +356,16 @@ const handleSubmit = async () => {
   color: #22c55e;
 }
 
+.contact-form__submit-error {
+  grid-column: span 2;
+  margin: 0;
+  padding: var(--space-4);
+  color: #8f1d1d;
+  background: #fff5f5;
+  border: 1px solid #f3b7b7;
+  font-size: var(--text-sm);
+}
+
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
@@ -350,6 +388,10 @@ const handleSubmit = async () => {
   }
 
   .contact-form__success {
+    grid-column: span 1;
+  }
+
+  .contact-form__submit-error {
     grid-column: span 1;
   }
 }
