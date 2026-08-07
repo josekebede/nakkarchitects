@@ -4,21 +4,15 @@
       <div class="footer__grid">
         <!-- Brand Column -->
         <div class="footer__brand">
-          <RouterLink to="/" class="footer__logo">
-            <div class="footer__logo-icon">
-              <svg viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 45V15L15 10V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M20 45V12L25 7V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M30 45V8L35 3V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M40 45V12L45 7V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M50 45V15L55 10V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M10 15L15 10M20 12L25 7M30 8L35 3M40 12L45 7M50 15L55 10" stroke="currentColor" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <div class="footer__logo-text">
-              <span class="footer__logo-name">NAKK</span>
-              <span class="footer__logo-tagline">ARCHITECTURE</span>
-            </div>
+          <RouterLink to="/" class="footer__logo" aria-label="NAKK Architecture home">
+            <img
+              src="/brand/nakk-logo-lockup-white.png"
+              alt=""
+              width="1200"
+              height="384"
+              loading="lazy"
+              decoding="async"
+            />
           </RouterLink>
           <p class="footer__description">
             Where heritage meets innovation. Creating architectural solutions that honor cultural context while embracing bold contemporary design.
@@ -110,44 +104,23 @@ const currentYear = computed(() => new Date().getFullYear())
 }
 
 .footer__logo {
-  display: flex;
+  display: inline-flex;
+  width: min(12rem, 100%);
+  min-height: 44px;
   align-items: center;
-  gap: var(--space-3);
   text-decoration: none;
-  color: var(--white);
   margin-bottom: var(--space-6);
+  transition: opacity var(--transition-fast);
 }
 
-.footer__logo-icon {
-  width: 48px;
-  height: 40px;
+.footer__logo:hover {
+  opacity: 0.82;
 }
 
-.footer__logo-icon svg {
+.footer__logo img {
+  display: block;
   width: 100%;
-  height: 100%;
-}
-
-.footer__logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.footer__logo-name {
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  letter-spacing: var(--tracking-wider);
-}
-
-.footer__logo-tagline {
-  font-family: var(--font-heading);
-  font-size: var(--text-xs);
-  font-weight: var(--font-normal);
-  letter-spacing: var(--tracking-widest);
-  margin-top: 2px;
-  color: var(--gray-400);
+  height: auto;
 }
 
 .footer__description {

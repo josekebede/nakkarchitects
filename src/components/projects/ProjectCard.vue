@@ -18,7 +18,13 @@
           @error="hasImageError = true"
         />
         <div v-if="hasImageError" class="project-card__fallback" aria-hidden="true">
-          <span>NAKK</span>
+          <img
+            class="project-card__fallback-logo"
+            src="/brand/nakk-mark-square.png"
+            alt=""
+            width="180"
+            height="180"
+          />
         </div>
         <span class="project-card__count">{{ project.imageCount }} images</span>
       </div>
@@ -120,10 +126,14 @@ const coverSrcset = computed(() => {
   display: grid;
   place-items: center;
   background: var(--primary-dark);
-  color: rgba(255, 255, 255, 0.72);
-  font-family: var(--font-heading);
-  font-size: var(--text-2xl);
-  letter-spacing: var(--tracking-widest);
+}
+
+.project-card__media .project-card__fallback-logo {
+  width: 78px;
+  height: 78px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  object-fit: cover;
+  opacity: 0.82;
 }
 
 .project-card__content {

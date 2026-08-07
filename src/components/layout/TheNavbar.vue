@@ -14,31 +14,16 @@
         to="/"
         class="navbar__brand"
         aria-label="NAKK Architecture home"
-        @click="closeMobileMenu"
+        @click="closeMobileMenu()"
       >
-        <div class="navbar__logo">
-          <svg
-            class="navbar__logo-icon"
-            viewBox="0 0 60 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <!-- Simplified geometric building icon similar to NAKK logo -->
-            <path d="M10 45V15L15 10V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M20 45V12L25 7V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M30 45V8L35 3V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M40 45V12L45 7V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50 45V15L55 10V45" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <!-- Connecting lines at top -->
-            <path d="M10 15L15 10M20 12L25 7M30 8L35 3M40 12L45 7M50 15L55 10" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <div class="navbar__brand-text">
-          <span class="navbar__brand-name">NAKK</span>
-          <span class="navbar__brand-tagline">ARCHITECTURE</span>
-        </div>
+        <img
+          class="navbar__brand-logo"
+          src="/brand/nakk-logo-lockup-white.png"
+          alt=""
+          width="1200"
+          height="384"
+          decoding="async"
+        />
       </RouterLink>
 
       <!-- Desktop Navigation -->
@@ -72,28 +57,37 @@
       </button>
     </div>
 
-    <!-- Mobile Menu -->
+  </nav>
+
+  <!--
+    Teleport keeps the fixed overlay tied to the viewport. In particular, it
+    prevents Safari's backdrop-filter containing block from constraining the
+    menu to the navbar's height.
+  -->
+  <Teleport to="body">
     <Transition name="mobile-menu">
-      <div
+      <nav
         v-if="isMobileMenuOpen"
         id="mobile-navigation"
+        ref="mobileMenuRef"
         class="navbar__mobile"
+        aria-label="Mobile navigation"
       >
         <ul class="navbar__mobile-menu">
-          <li v-for="(link, index) in navLinks" :key="link.path" :style="{ transitionDelay: `${index * 0.1}s` }">
+          <li v-for="link in navLinks" :key="link.path">
             <RouterLink
               :to="link.path"
               class="navbar__mobile-link"
               :aria-current="isActive(link.path) ? 'page' : undefined"
-              @click="closeMobileMenu"
+              @click="closeMobileMenu()"
             >
               {{ link.name }}
             </RouterLink>
           </li>
         </ul>
-      </div>
+      </nav>
     </Transition>
-  </nav>
+  </Teleport>
 </template>
 
 <script setup>
@@ -112,7 +106,12 @@ const navLinks = [
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 const menuToggleRef = ref(null)
-let bodyOverflowBeforeMenu = ''
+const mobileMenuRef = ref(null)
+let desktopMediaQuery
+let savedScrollY = 0
+let hasScrollLock = false
+let bodyStylesBeforeMenu
+let htmlStylesBeforeMenu
 
 const isTransparent = computed(() => {
   return route.path === '/'
@@ -131,13 +130,40 @@ const handleScroll = () => {
 
 const setBodyScrollLocked = (isLocked) => {
   if (isLocked) {
-    bodyOverflowBeforeMenu = document.body.style.overflow
+    if (hasScrollLock) return
+
+    savedScrollY = window.scrollY
+    bodyStylesBeforeMenu = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width
+    }
+    htmlStylesBeforeMenu = {
+      overflow: document.documentElement.style.overflow,
+      overscrollBehavior: document.documentElement.style.overscrollBehavior
+    }
+
+    document.documentElement.style.overflow = 'hidden'
+    document.documentElement.style.overscrollBehavior = 'none'
     document.body.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${savedScrollY}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.width = '100%'
+    hasScrollLock = true
     return
   }
 
-  document.body.style.overflow = bodyOverflowBeforeMenu
-  bodyOverflowBeforeMenu = ''
+  if (!hasScrollLock) return
+
+  Object.assign(document.body.style, bodyStylesBeforeMenu)
+  Object.assign(document.documentElement.style, htmlStylesBeforeMenu)
+  hasScrollLock = false
+  window.scrollTo(0, savedScrollY)
 }
 
 const toggleMobileMenu = () => {
@@ -146,31 +172,42 @@ const toggleMobileMenu = () => {
   setBodyScrollLocked(shouldOpen)
 }
 
-const closeMobileMenu = () => {
-  if (!isMobileMenuOpen.value) return
+const closeMobileMenu = (restoreToggleFocus = false) => {
+  if (!isMobileMenuOpen.value) {
+    setBodyScrollLocked(false)
+    return
+  }
+
   isMobileMenuOpen.value = false
   setBodyScrollLocked(false)
+
+  if (restoreToggleFocus) {
+    nextTick(() => menuToggleRef.value?.focus())
+  }
 }
 
 const handleKeydown = (event) => {
   if (!isMobileMenuOpen.value) return
 
   if (event.key === 'Escape') {
-    closeMobileMenu()
-    nextTick(() => menuToggleRef.value?.focus())
+    event.preventDefault()
+    closeMobileMenu(true)
     return
   }
 
   if (event.key !== 'Tab') return
 
-  const menuLinks = Array.from(
-    document.querySelectorAll('#mobile-navigation a[href]')
-  )
+  const menuLinks = Array.from(mobileMenuRef.value?.querySelectorAll('a[href]') || [])
   const focusableElements = [menuToggleRef.value, ...menuLinks].filter(Boolean)
   const firstFocusable = focusableElements[0]
   const lastFocusable = focusableElements[focusableElements.length - 1]
+  const activeElementIsTrapped = focusableElements.includes(document.activeElement)
 
-  if (event.shiftKey && document.activeElement === firstFocusable) {
+  if (!activeElementIsTrapped) {
+    event.preventDefault()
+    const focusTarget = event.shiftKey ? lastFocusable : firstFocusable
+    focusTarget?.focus()
+  } else if (event.shiftKey && document.activeElement === firstFocusable) {
     event.preventDefault()
     lastFocusable?.focus()
   } else if (!event.shiftKey && document.activeElement === lastFocusable) {
@@ -179,17 +216,24 @@ const handleKeydown = (event) => {
   }
 }
 
-watch(() => route.fullPath, closeMobileMenu)
+const handleDesktopViewport = (event) => {
+  if (event.matches) closeMobileMenu()
+}
+
+watch(() => route.fullPath, () => closeMobileMenu())
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('keydown', handleKeydown)
+  desktopMediaQuery = window.matchMedia('(min-width: 769px)')
+  desktopMediaQuery.addEventListener('change', handleDesktopViewport)
   handleScroll()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('keydown', handleKeydown)
+  desktopMediaQuery?.removeEventListener('change', handleDesktopViewport)
   closeMobileMenu()
 })
 </script>
@@ -225,6 +269,9 @@ onUnmounted(() => {
 
 .navbar--open {
   background-color: var(--white);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .navbar__container {
@@ -238,53 +285,30 @@ onUnmounted(() => {
 .navbar__brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  min-height: 44px;
   text-decoration: none;
-  color: var(--primary-dark);
-  transition: color var(--transition-fast);
+  transition: opacity var(--transition-fast);
 }
 
-.navbar--transparent .navbar__brand {
-  color: var(--white);
+.navbar__brand:hover {
+  opacity: 0.82;
 }
 
-.navbar--scrolled .navbar__brand {
-  color: var(--primary-dark);
+.navbar__brand-logo {
+  display: block;
+  width: clamp(9.25rem, 15vw, 11.5rem);
+  height: auto;
+  filter: brightness(0) saturate(100%) invert(14%) sepia(12%) saturate(1048%) hue-rotate(132deg) brightness(91%) contrast(88%);
+  transition: filter var(--transition-fast);
 }
 
-.navbar--open .navbar__brand {
-  color: var(--primary-dark);
+.navbar--transparent:not(.navbar--open) .navbar__brand-logo {
+  filter: none;
 }
 
-.navbar__logo {
-  width: 48px;
-  height: 40px;
-}
-
-.navbar__logo-icon {
-  width: 100%;
-  height: 100%;
-}
-
-.navbar__brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.navbar__brand-name {
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  letter-spacing: var(--tracking-wider);
-}
-
-.navbar__brand-tagline {
-  font-family: var(--font-heading);
-  font-size: var(--text-xs);
-  font-weight: var(--font-normal);
-  letter-spacing: var(--tracking-widest);
-  margin-top: 2px;
+.navbar--open .navbar__brand-logo,
+.navbar--scrolled .navbar__brand-logo {
+  filter: brightness(0) saturate(100%) invert(14%) sepia(12%) saturate(1048%) hue-rotate(132deg) brightness(91%) contrast(88%);
 }
 
 /* Desktop Menu */
@@ -408,36 +432,49 @@ onUnmounted(() => {
 /* Mobile Menu */
 .navbar__mobile {
   position: fixed;
-  top: 0;
+  top: calc(var(--navbar-height-mobile) + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
-  bottom: 0;
+  height: calc(100vh - var(--navbar-height-mobile) - env(safe-area-inset-top, 0px));
+  height: calc(100dvh - var(--navbar-height-mobile) - env(safe-area-inset-top, 0px));
   background-color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: var(--z-fixed);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    var(--space-6)
+    max(var(--space-6), env(safe-area-inset-right, 0px))
+    max(var(--space-6), env(safe-area-inset-bottom, 0px))
+    max(var(--space-6), env(safe-area-inset-left, 0px));
+  z-index: calc(var(--z-fixed) - 1);
+  isolation: isolate;
 }
 
 .navbar__mobile-menu {
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 32rem);
+  margin: auto;
   list-style: none;
   text-align: center;
-}
-
-.navbar__mobile-menu li {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.5s ease forwards;
+  transition: transform var(--transition-base);
 }
 
 .navbar__mobile-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.5rem;
   font-family: var(--font-heading);
-  font-size: var(--text-3xl);
+  font-size: clamp(var(--text-2xl), 6vw, var(--text-4xl));
   font-weight: var(--font-medium);
+  line-height: var(--leading-tight);
   color: var(--text-primary);
   text-decoration: none;
-  padding: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
   transition: color var(--transition-fast);
 }
 
@@ -459,7 +496,7 @@ onUnmounted(() => {
 /* Mobile Menu Transitions */
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-base);
 }
 
 .mobile-menu-enter-from,
@@ -467,10 +504,23 @@ onUnmounted(() => {
   opacity: 0;
 }
 
+.mobile-menu-enter-from .navbar__mobile-menu,
+.mobile-menu-leave-to .navbar__mobile-menu {
+  transform: translateY(-0.75rem);
+}
+
+.mobile-menu-leave-active {
+  pointer-events: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
-    height: var(--navbar-height-mobile);
+    height: calc(var(--navbar-height-mobile) + env(safe-area-inset-top, 0px));
+  }
+
+  .navbar__container {
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   .navbar__menu {
@@ -481,17 +531,22 @@ onUnmounted(() => {
     display: flex;
   }
 
-  .navbar__brand-tagline {
+  .navbar__brand-logo {
+    width: 10.25rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar__mobile {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navbar__mobile-menu li {
-    opacity: 1;
-    transform: none;
-    animation: none;
-    transition-delay: 0s !important;
+  .mobile-menu-enter-active,
+  .mobile-menu-leave-active,
+  .navbar__mobile-menu {
+    transition: none;
   }
 }
 </style>
