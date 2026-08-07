@@ -73,44 +73,47 @@
           </header>
 
           <div class="project-lightbox__stage" @click.self="closeLightbox">
-            <button
-              v-if="galleryImages.length > 1"
-              type="button"
-              class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--previous"
-              aria-label="Show previous image"
-              aria-keyshortcuts="ArrowLeft"
-              @click="showPrevious"
-            >
-              <span aria-hidden="true">&lsaquo;</span>
-            </button>
-
             <figure v-if="currentImage" class="project-lightbox__figure">
-              <img
-                :key="currentImage.full || currentImage.thumb"
-                class="project-lightbox__image"
-                :src="currentImage.full || currentImage.thumb"
-                :srcset="getSrcset(currentImage)"
-                sizes="100vw"
-                :alt="currentImage.alt"
-                :width="currentImage.width || undefined"
-                :height="currentImage.height || undefined"
-                decoding="async"
-              />
+              <div class="project-lightbox__media">
+                <button
+                  v-if="galleryImages.length > 1"
+                  type="button"
+                  class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--previous"
+                  aria-label="Show previous image"
+                  aria-keyshortcuts="ArrowLeft"
+                  @click="showPrevious"
+                >
+                  <span aria-hidden="true" />
+                </button>
+
+                <img
+                  :key="currentImage.full || currentImage.thumb"
+                  class="project-lightbox__image"
+                  :src="currentImage.full || currentImage.thumb"
+                  :srcset="getSrcset(currentImage)"
+                  sizes="100vw"
+                  :alt="currentImage.alt"
+                  :width="currentImage.width || undefined"
+                  :height="currentImage.height || undefined"
+                  decoding="async"
+                />
+
+                <button
+                  v-if="galleryImages.length > 1"
+                  type="button"
+                  class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--next"
+                  aria-label="Show next image"
+                  aria-keyshortcuts="ArrowRight"
+                  @click="showNext"
+                >
+                  <span aria-hidden="true" />
+                </button>
+              </div>
+
               <figcaption class="project-lightbox__caption">
                 {{ currentImage.alt }}
               </figcaption>
             </figure>
-
-            <button
-              v-if="galleryImages.length > 1"
-              type="button"
-              class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--next"
-              aria-label="Show next image"
-              aria-keyshortcuts="ArrowRight"
-              @click="showNext"
-            >
-              <span aria-hidden="true">&rsaquo;</span>
-            </button>
           </div>
 
           <div
@@ -549,20 +552,36 @@ onBeforeUnmount(() => {
 }
 
 .project-lightbox__stage {
-  display: grid;
+  display: flex;
   min-height: 0;
-  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: clamp(var(--space-3), 2vw, var(--space-8));
+  justify-content: center;
   padding: clamp(var(--space-3), 2vw, var(--space-6)) clamp(var(--space-4), 3vw, var(--space-10));
 }
 
 .project-lightbox__arrow {
-  font-size: 2.25rem;
+  font-size: 0;
+}
+
+.project-lightbox__arrow span {
+  display: block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+.project-lightbox__arrow--previous span {
+  transform: rotate(135deg);
+}
+
+.project-lightbox__arrow--next span {
+  transform: rotate(-45deg);
 }
 
 .project-lightbox__figure {
   display: flex;
+  width: 100%;
   min-width: 0;
   min-height: 0;
   height: 100%;
@@ -572,7 +591,18 @@ onBeforeUnmount(() => {
   margin: 0;
 }
 
+.project-lightbox__media {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(var(--space-3), 2vw, var(--space-8));
+}
+
 .project-lightbox__image {
+  justify-self: center;
   width: auto;
   max-width: 100%;
   height: auto;
@@ -684,18 +714,23 @@ onBeforeUnmount(() => {
   }
 
   .project-lightbox__stage {
-    position: relative;
-    grid-template-columns: minmax(0, 1fr);
     padding-right: var(--space-3);
     padding-left: var(--space-3);
+  }
+
+  .project-lightbox__media {
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
   }
 
   .project-lightbox__arrow {
     position: absolute;
     z-index: 2;
     top: 50%;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
+    height: 3rem;
     background: rgba(13, 23, 23, 0.6);
     transform: translateY(-50%);
   }
@@ -709,6 +744,7 @@ onBeforeUnmount(() => {
   }
 
   .project-lightbox__image {
+    display: block;
     max-height: calc(100dvh - 14rem);
   }
 

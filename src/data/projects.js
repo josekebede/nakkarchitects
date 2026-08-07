@@ -4,7 +4,7 @@ export const projects = [
   {
     "id": "woinu-residence",
     "slug": "woinu-residence",
-    "name": "Woinu's Residence Design",
+    "name": "Residence",
     "category": "residential",
     "categoryLabel": "Residential",
     "summary": "Residential architecture and interiors shaped around light, proportion, and everyday life.",
@@ -14,7 +14,7 @@ export const projects = [
     "cover": {
       "order": 9,
       "originalName": "Scene 116.png",
-      "alt": "Exterior courtyard view of Woinu's Residence Design",
+      "alt": "Exterior courtyard view of the residence",
       "full": "/projects/woinu-residence/full/009.webp",
       "thumb": "/projects/woinu-residence/thumb/009.webp",
       "width": 1309,
@@ -26,7 +26,7 @@ export const projects = [
       {
         "order": 1,
         "originalName": "Scene 95_1.png",
-        "alt": "Woinu's Residence Design, design view 1",
+        "alt": "Residence, design view 1",
         "full": "/projects/woinu-residence/full/001.webp",
         "thumb": "/projects/woinu-residence/thumb/001.webp",
         "width": 1309,
@@ -37,7 +37,7 @@ export const projects = [
       {
         "order": 2,
         "originalName": "Scene 97(1).png",
-        "alt": "Woinu's Residence Design, design view 2",
+        "alt": "Residence, design view 2",
         "full": "/projects/woinu-residence/full/002.webp",
         "thumb": "/projects/woinu-residence/thumb/002.webp",
         "width": 1309,
@@ -48,7 +48,7 @@ export const projects = [
       {
         "order": 3,
         "originalName": "Scene 101.png",
-        "alt": "Woinu's Residence Design, design view 3",
+        "alt": "Residence, design view 3",
         "full": "/projects/woinu-residence/full/003.webp",
         "thumb": "/projects/woinu-residence/thumb/003.webp",
         "width": 1309,
@@ -59,7 +59,7 @@ export const projects = [
       {
         "order": 4,
         "originalName": "Scene 102(2).png",
-        "alt": "Woinu's Residence Design, design view 4",
+        "alt": "Residence, design view 4",
         "full": "/projects/woinu-residence/full/004.webp",
         "thumb": "/projects/woinu-residence/thumb/004.webp",
         "width": 1309,
@@ -70,7 +70,7 @@ export const projects = [
       {
         "order": 5,
         "originalName": "Scene 103(1).png",
-        "alt": "Woinu's Residence Design, design view 5",
+        "alt": "Residence, design view 5",
         "full": "/projects/woinu-residence/full/005.webp",
         "thumb": "/projects/woinu-residence/thumb/005.webp",
         "width": 1920,
@@ -81,7 +81,7 @@ export const projects = [
       {
         "order": 6,
         "originalName": "Scene 104(1).png",
-        "alt": "Woinu's Residence Design, design view 6",
+        "alt": "Residence, design view 6",
         "full": "/projects/woinu-residence/full/006.webp",
         "thumb": "/projects/woinu-residence/thumb/006.webp",
         "width": 1309,
@@ -92,7 +92,7 @@ export const projects = [
       {
         "order": 7,
         "originalName": "Scene 113.png",
-        "alt": "Woinu's Residence Design, design view 7",
+        "alt": "Residence, design view 7",
         "full": "/projects/woinu-residence/full/007.webp",
         "thumb": "/projects/woinu-residence/thumb/007.webp",
         "width": 1920,
@@ -103,7 +103,7 @@ export const projects = [
       {
         "order": 8,
         "originalName": "Scene 115.png",
-        "alt": "Woinu's Residence Design, design view 8",
+        "alt": "Residence, design view 8",
         "full": "/projects/woinu-residence/full/008.webp",
         "thumb": "/projects/woinu-residence/thumb/008.webp",
         "width": 1310,
@@ -114,7 +114,7 @@ export const projects = [
       {
         "order": 9,
         "originalName": "Scene 116.png",
-        "alt": "Woinu's Residence Design, design view 9",
+        "alt": "Residence, design view 9",
         "full": "/projects/woinu-residence/full/009.webp",
         "thumb": "/projects/woinu-residence/thumb/009.webp",
         "width": 1309,
@@ -125,7 +125,7 @@ export const projects = [
       {
         "order": 10,
         "originalName": "Scene 117.png",
-        "alt": "Woinu's Residence Design, design view 10",
+        "alt": "Residence, design view 10",
         "full": "/projects/woinu-residence/full/010.webp",
         "thumb": "/projects/woinu-residence/thumb/010.webp",
         "width": 1309,
@@ -136,7 +136,7 @@ export const projects = [
       {
         "order": 11,
         "originalName": "Scene 119.png",
-        "alt": "Woinu's Residence Design, design view 11",
+        "alt": "Residence, design view 11",
         "full": "/projects/woinu-residence/full/011.webp",
         "thumb": "/projects/woinu-residence/thumb/011.webp",
         "width": 1309,
@@ -147,7 +147,7 @@ export const projects = [
       {
         "order": 12,
         "originalName": "Scene 120.png",
-        "alt": "Woinu's Residence Design, design view 12",
+        "alt": "Residence, design view 12",
         "full": "/projects/woinu-residence/full/012.webp",
         "thumb": "/projects/woinu-residence/thumb/012.webp",
         "width": 1309,
@@ -158,7 +158,7 @@ export const projects = [
       {
         "order": 13,
         "originalName": "Scene 121.png",
-        "alt": "Woinu's Residence Design, design view 13",
+        "alt": "Residence, design view 13",
         "full": "/projects/woinu-residence/full/013.webp",
         "thumb": "/projects/woinu-residence/thumb/013.webp",
         "width": 1309,
@@ -169,7 +169,7 @@ export const projects = [
       {
         "order": 14,
         "originalName": "Scene 124.png",
-        "alt": "Woinu's Residence Design, design view 14",
+        "alt": "Residence, design view 14",
         "full": "/projects/woinu-residence/full/014.webp",
         "thumb": "/projects/woinu-residence/thumb/014.webp",
         "width": 1309,
@@ -180,7 +180,7 @@ export const projects = [
       {
         "order": 15,
         "originalName": "Scene 125.png",
-        "alt": "Woinu's Residence Design, design view 15",
+        "alt": "Residence, design view 15",
         "full": "/projects/woinu-residence/full/015.webp",
         "thumb": "/projects/woinu-residence/thumb/015.webp",
         "width": 1920,
@@ -191,7 +191,7 @@ export const projects = [
       {
         "order": 16,
         "originalName": "Scene 127.png",
-        "alt": "Woinu's Residence Design, design view 16",
+        "alt": "Residence, design view 16",
         "full": "/projects/woinu-residence/full/016.webp",
         "thumb": "/projects/woinu-residence/thumb/016.webp",
         "width": 1920,
@@ -202,7 +202,7 @@ export const projects = [
       {
         "order": 17,
         "originalName": "Scene 128.png",
-        "alt": "Woinu's Residence Design, design view 17",
+        "alt": "Residence, design view 17",
         "full": "/projects/woinu-residence/full/017.webp",
         "thumb": "/projects/woinu-residence/thumb/017.webp",
         "width": 1920,
@@ -213,7 +213,7 @@ export const projects = [
       {
         "order": 18,
         "originalName": "Scene 129.png",
-        "alt": "Woinu's Residence Design, design view 18",
+        "alt": "Residence, design view 18",
         "full": "/projects/woinu-residence/full/018.webp",
         "thumb": "/projects/woinu-residence/thumb/018.webp",
         "width": 1920,
@@ -224,7 +224,7 @@ export const projects = [
       {
         "order": 19,
         "originalName": "Scene 130.png",
-        "alt": "Woinu's Residence Design, design view 19",
+        "alt": "Residence, design view 19",
         "full": "/projects/woinu-residence/full/019.webp",
         "thumb": "/projects/woinu-residence/thumb/019.webp",
         "width": 1920,
