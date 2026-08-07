@@ -130,7 +130,7 @@
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 import ContactForm from '@/components/common/ContactForm.vue'
 
-const heroImage = '/projects/selamwit-residence/full/001.webp'
+const heroImage = '/projects/residence-03/full/001.webp'
 </script>
 
 <style scoped>

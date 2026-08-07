@@ -10,6 +10,7 @@ The portfolio combines 20 original project cards with nine expanded project gall
 - `full/`: up to 1920 px WebP images for project covers and the lightbox
 
 Every project has a stable `/projects/:slug` page with a responsive gallery and keyboard-accessible lightbox.
+Client-named residential and apartment work uses generic numbered titles and slugs. Keep each project as a separate record within its typology, and add permanent redirects whenever a published slug changes.
 
 ## Local development
 

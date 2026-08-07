@@ -3,6 +3,56 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/projects/woinu-residence"
+  to = "/projects/residence-01"
+  status = 301
+
+[[redirects]]
+  from = "/projects/woinu-residence/*"
+  to = "/projects/residence-01/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/projects/ftisum-residence"
+  to = "/projects/residence-02"
+  status = 301
+
+[[redirects]]
+  from = "/projects/ftisum-residence/*"
+  to = "/projects/residence-02/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/projects/selamwit-residence"
+  to = "/projects/residence-03"
+  status = 301
+
+[[redirects]]
+  from = "/projects/selamwit-residence/*"
+  to = "/projects/residence-03/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/projects/ibrahim-apartment"
+  to = "/projects/apartment-01"
+  status = 301
+
+[[redirects]]
+  from = "/projects/ibrahim-apartment/*"
+  to = "/projects/apartment-01/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/projects/woinu-apartment"
+  to = "/projects/apartment-02"
+  status = 301
+
+[[redirects]]
+  from = "/projects/woinu-apartment/*"
+  to = "/projects/apartment-02/:splat"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
