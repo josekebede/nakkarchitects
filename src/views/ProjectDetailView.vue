@@ -199,7 +199,7 @@ const coverSrcset = computed(() => {
   if (!image?.thumb || !image?.full || image.thumb === image.full) return undefined
 
   const fullWidth = Number(image.width) || 1600
-  const thumbWidth = Math.min(720, Math.max(320, fullWidth))
+  const thumbWidth = Number(image.thumbWidth) || Math.min(720, Math.max(320, fullWidth))
   if (fullWidth <= thumbWidth) return undefined
   return `${image.thumb} ${thumbWidth}w, ${image.full} ${fullWidth}w`
 })

@@ -3,11 +3,14 @@ import { defineStore } from 'pinia'
 import { projects as projectData } from '@/data/projects'
 
 const categoryOrder = [
-  ['residential', 'Residential'],
-  ['interior', 'Interior Design'],
+  ['residence', 'Residences'],
+  ['apartment', 'Apartments'],
+  ['office', 'Offices'],
   ['commercial', 'Commercial'],
   ['hospitality', 'Hospitality'],
-  ['institutional', 'Institutional']
+  ['institutional', 'Institutional'],
+  ['mixed-use', 'Mixed-Use'],
+  ['sustainable', 'Sustainable']
 ]
 
 export const useProjectsStore = defineStore('projects', () => {
@@ -42,7 +45,15 @@ export const useProjectsStore = defineStore('projects', () => {
   })
 
   const totalImages = computed(() => {
-    return projects.value.reduce((total, project) => total + project.images.length, 0)
+    return projects.value.reduce((total, project) => {
+      const imageCount = Array.isArray(project.images)
+        ? project.images.length
+        : project.cover || project.image
+          ? 1
+          : 0
+
+      return total + imageCount
+    }, 0)
   })
 
   function setActiveCategory(category) {

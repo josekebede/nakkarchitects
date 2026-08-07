@@ -4,12 +4,12 @@
       <div class="container projects-intro__grid">
         <div>
           <p class="eyebrow">Selected portfolio</p>
-          <h1>Spaces shaped around how people live, work, and gather.</h1>
+          <h1>One portfolio, organized by the way each space is used.</h1>
         </div>
         <div class="projects-intro__aside">
           <p>
-            Explore residential, commercial, hospitality, interior, and institutional
-            work by NAKK Architecture in Addis Ababa.
+            Browse residences, apartments, offices, commercial, hospitality,
+            institutional, mixed-use, and sustainable work by NAKK Architecture.
           </p>
           <dl class="projects-intro__stats" aria-label="Portfolio totals">
             <div>

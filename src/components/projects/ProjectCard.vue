@@ -3,7 +3,7 @@
     <RouterLink
       class="project-card__link"
       :to="`/projects/${project.slug}`"
-      :aria-label="`View ${project.name}, ${project.imageCount} images`"
+      :aria-label="`View ${project.name}, ${imageCountLabel}`"
     >
       <div class="project-card__media" :style="mediaStyle">
         <img
@@ -26,7 +26,7 @@
             height="180"
           />
         </div>
-        <span class="project-card__count">{{ project.imageCount }} images</span>
+        <span class="project-card__count">{{ imageCountLabel }}</span>
       </div>
 
       <div class="project-card__content">
@@ -60,6 +60,11 @@ const props = defineProps({
 
 const hasImageError = ref(false)
 
+const imageCountLabel = computed(() => {
+  const count = Number(props.project.imageCount) || 0
+  return `${count} ${count === 1 ? 'image' : 'images'}`
+})
+
 const mediaStyle = computed(() => ({
   '--project-ratio': `${props.project.cover.width} / ${props.project.cover.height}`
 }))
@@ -69,7 +74,7 @@ const coverSrcset = computed(() => {
   if (!cover?.thumb || !cover?.full || cover.thumb === cover.full) return undefined
 
   const fullWidth = Number(cover.width) || 1920
-  const thumbWidth = Math.min(720, fullWidth)
+  const thumbWidth = Number(cover.thumbWidth) || Math.min(720, fullWidth)
   if (fullWidth <= thumbWidth) return undefined
   return `${cover.thumb} ${thumbWidth}w, ${cover.full} ${fullWidth}w`
 })

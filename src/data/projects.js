@@ -1,12 +1,14 @@
+import { legacyProjects } from './legacyProjects'
+
 // Generated from the NAKK Architecture Google Drive project library.
 // Keep the optimized files in public/projects in sync with this manifest.
-export const projects = [
+export const driveProjects = [
   {
     "id": "woinu-residence",
     "slug": "woinu-residence",
     "name": "Residence",
-    "category": "residential",
-    "categoryLabel": "Residential",
+    "category": "residence",
+    "categoryLabel": "Residence",
     "summary": "Residential architecture and interiors shaped around light, proportion, and everyday life.",
     "featured": true,
     "hero": true,
@@ -238,8 +240,8 @@ export const projects = [
     "id": "abay-technical-trading",
     "slug": "abay-technical-trading",
     "name": "Abay Technical & Trading PLC",
-    "category": "commercial",
-    "categoryLabel": "Commercial",
+    "category": "office",
+    "categoryLabel": "Office",
     "summary": "A contemporary workplace bringing focused work and shared spaces into one clear interior.",
     "featured": true,
     "hero": false,
@@ -1102,8 +1104,8 @@ export const projects = [
     "id": "nuclear-energy-commission",
     "slug": "nuclear-energy-commission",
     "name": "Nuclear Energy Commission Center",
-    "category": "institutional",
-    "categoryLabel": "Institutional",
+    "category": "office",
+    "categoryLabel": "Office",
     "summary": "An institutional workplace interior organized for clarity, collaboration, and a composed public arrival.",
     "featured": false,
     "hero": false,
@@ -1214,8 +1216,8 @@ export const projects = [
     "id": "ftisum-residence",
     "slug": "ftisum-residence",
     "name": "Ftisum Residence",
-    "category": "residential",
-    "categoryLabel": "Residential",
+    "category": "residence",
+    "categoryLabel": "Residence",
     "summary": "A contemporary residence composed through clean volumes, shaded terraces, and indoor–outdoor connection.",
     "featured": false,
     "hero": false,
@@ -1282,8 +1284,8 @@ export const projects = [
     "id": "ibrahim-apartment",
     "slug": "ibrahim-apartment",
     "name": "Ibrahim Apartment Interior Design",
-    "category": "interior",
-    "categoryLabel": "Interior Design",
+    "category": "apartment",
+    "categoryLabel": "Apartment",
     "summary": "A warm apartment interior using soft light, neutral materials, and efficient open-plan living.",
     "featured": false,
     "hero": false,
@@ -1482,8 +1484,8 @@ export const projects = [
     "id": "selamwit-residence",
     "slug": "selamwit-residence",
     "name": "Selamwit's Residence",
-    "category": "residential",
-    "categoryLabel": "Residential",
+    "category": "residence",
+    "categoryLabel": "Residence",
     "summary": "A modern multi-level residence with precise volumes, generous glazing, and landscaped edges.",
     "featured": false,
     "hero": false,
@@ -1605,8 +1607,8 @@ export const projects = [
     "id": "woinu-apartment",
     "slug": "woinu-apartment",
     "name": "Woinu's Apartment",
-    "category": "residential",
-    "categoryLabel": "Residential",
+    "category": "apartment",
+    "categoryLabel": "Apartment",
     "summary": "A contemporary apartment building defined by a clear vertical rhythm, active street frontage, and rooftop amenity.",
     "featured": false,
     "hero": false,
@@ -1736,3 +1738,5 @@ export const projects = [
     ]
   }
 ]
+
+export const projects = [...legacyProjects, ...driveProjects]
