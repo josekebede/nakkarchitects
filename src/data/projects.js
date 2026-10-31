@@ -93,6 +93,22 @@ const definitions = [
     ]
   },
   {
+    slug: "garden-terrace-villa",
+    name: "Garden Terrace Villa",
+    category: "houses",
+    kind: "render",
+    summary: "A multi-level white and stone villa framed by a dark tile canopy, with glass balustrades, hanging planters on the upper terraces, a slatted entry gate and a landscaped garden setting.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Front elevation with a dark tile canopy frame and slatted gate" },
+      { file: "002", w: 1920, h: 1219, tw: 720, th: 457, alt: "Street view with hanging planters and glass balustrades" },
+      { file: "003", w: 1920, h: 1217, tw: 720, th: 456, alt: "Close view of the stacked terraces and hanging planters" },
+      { file: "004", w: 1920, h: 1217, tw: 720, th: 456, alt: "Corner view from the drive with the entry gate" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side approach with a stone-clad wing and glass balconies" },
+      { file: "006", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side elevation with a timber slat screen and stone-clad volume" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Rear corner view with cypress trees and garden wall" }
+    ]
+  },
+  {
     slug: "villa-with-pool",
     name: "Villa with Pool",
     category: "houses",
@@ -286,6 +302,28 @@ const definitions = [
       { file: "030", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corridor with chequered floor" },
       { file: "031", w: 1920, h: 1080, tw: 720, th: 405, alt: "Restroom door in a marble-lined corridor" },
       { file: "032", w: 1920, h: 1080, tw: 720, th: 405, alt: "Restroom washbasin with mirror" }
+    ]
+  },
+  {
+    slug: "ice-cream-shop",
+    name: "Ice Cream Parlour",
+    category: "hospitality",
+    kind: "render",
+    cover: "004",
+    summary: "A playful ice cream parlour in soft pink, sage green and terrazzo: a scalloped facade with arched windows and striped awnings, a mural-lined dining hall with booth seating, and a compact service counter.",
+    images: [
+      { file: "001", w: 1920, h: 1353, tw: 720, th: 507, alt: "Street frontage with a striped green awning and terrazzo wall" },
+      { file: "002", w: 1920, h: 1404, tw: 720, th: 526, alt: "Entrance with folding glass doors and a striped awning" },
+      { file: "003", w: 1920, h: 1353, tw: 720, th: 507, alt: "Arched shopfront windows beside a waffle-cone photo feature" },
+      { file: "004", w: 1920, h: 1353, tw: 720, th: 507, alt: "Pastel scalloped facade with arched windows and outdoor counter seating" },
+      { file: "005", w: 1920, h: 1404, tw: 720, th: 526, alt: "Dining hall with pink booths and rounded timber ceiling clouds" },
+      { file: "006", w: 1920, h: 1353, tw: 720, th: 507, alt: "Dining hall looking toward the arched windows" },
+      { file: "007", w: 1920, h: 1353, tw: 720, th: 507, alt: "Dining hall, wide view beneath the timber ceiling clouds" },
+      { file: "008", w: 1920, h: 1404, tw: 720, th: 526, alt: "Seating area with an arched green door and sculptural pendant lights" },
+      { file: "009", w: 1920, h: 1353, tw: 720, th: 507, alt: "Pink booth seating beneath an ice-cream pattern mural" },
+      { file: "010", w: 1920, h: 1353, tw: 720, th: 507, alt: "Booth seating along the mural wall, long view" },
+      { file: "011", w: 1920, h: 1353, tw: 720, th: 507, alt: "Hand-wash area with a scalloped counter and arched mirrors" },
+      { file: "012", w: 1920, h: 1353, tw: 720, th: 507, alt: "Service counter with menu boards and display case" }
     ]
   },
   {
