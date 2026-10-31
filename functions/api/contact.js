@@ -69,20 +69,26 @@ export async function onRequestPost({ request, env }) {
     message
   ].join('\n')
 
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      from: env.CONTACT_FROM_EMAIL || 'NAKK Website <onboarding@resend.dev>',
-      to: [env.CONTACT_TO_EMAIL],
-      reply_to: email,
-      subject: `[NAKK website] ${subjectLabel} from ${name}`,
-      text
+  let response
+  try {
+    response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: env.CONTACT_FROM_EMAIL || 'NAKK Website <onboarding@resend.dev>',
+        to: [env.CONTACT_TO_EMAIL],
+        reply_to: email,
+        subject: `[NAKK website] ${subjectLabel} from ${name}`,
+        text
+      })
     })
-  })
+  } catch (error) {
+    console.error('Could not reach Resend', error)
+    return json({ error: 'Could not send your message.' }, 502)
+  }
 
   if (!response.ok) {
     console.error('Resend error', response.status, await response.text())
