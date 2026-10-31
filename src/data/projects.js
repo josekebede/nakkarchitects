@@ -396,10 +396,23 @@ const definitions = [
     category: "education",
     kind: "render",
     featured: true,
-    summary: "Training spaces for a creative academy, including a make-up studio with mirrored workstations and a photography classroom with a portrait wall.",
+    summary: "A beauty and fashion training academy in deep red, timber and pale concrete: a runway hall, make-up studio with ring-lit mirror stations, a nail station, long study counters, a photography classroom, reception and a manager's office.",
     images: [
-      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Make-up studio with mirrored workstation" },
-      { file: "002", w: 1309, h: 830, tw: 720, th: 457, alt: "Photography classroom with portrait wall" }
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Runway hall with white chairs either side of a black catwalk" },
+      { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Make-up studio with mirrored workstation" },
+      { file: "003", w: 1920, h: 1217, tw: 720, th: 456, alt: "Make-up studio with ring-lit mirror stations and director's chairs" },
+      { file: "004", w: 1920, h: 1217, tw: 720, th: 456, alt: "Make-up studio seen through mirrored and black panel partitions" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Nail station with a long marble-top table and roller blinds" },
+      { file: "006", w: 1920, h: 1217, tw: 720, th: 456, alt: "Waiting chairs in front of red and timber display columns" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Lift lobby with a deep-red leather wall, bench and glazed doors" },
+      { file: "008", w: 1920, h: 1217, tw: 720, th: 456, alt: "Lounge with large abstract paintings, a clothing rail and herringbone floor" },
+      { file: "009", w: 1920, h: 1217, tw: 720, th: 456, alt: "Manager's office with illuminated marble-block shelving" },
+      { file: "010", w: 1309, h: 830, tw: 720, th: 457, alt: "Photography classroom with portrait wall" },
+      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Classroom seen through glass partitions and a long timber bench" },
+      { file: "012", w: 1920, h: 1217, tw: 720, th: 456, alt: "Long study counter beside a glazed door and an olive tree" },
+      { file: "013", w: 1920, h: 1217, tw: 720, th: 456, alt: "Long study counter with grey chairs against a red textured wall" },
+      { file: "014", w: 1920, h: 1217, tw: 720, th: 456, alt: "Study counter, shampoo basin and display shelving beyond" },
+      { file: "015", w: 1920, h: 1217, tw: 720, th: 456, alt: "Reception desk with a red feature wall and glass coffee table" }
     ]
   }
 ]
