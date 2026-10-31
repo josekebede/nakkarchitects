@@ -3,14 +3,11 @@
     class="contact-form"
     name="contact"
     method="POST"
-    data-netlify="true"
-    netlify-honeypot="bot-field"
     :aria-busy="isSubmitting"
     @submit.prevent="handleSubmit"
   >
-    <input type="hidden" name="form-name" value="contact" />
-    <p class="hidden">
-      <label>Don't fill this out: <input name="bot-field" /></label>
+    <p class="hidden" aria-hidden="true">
+      <label>Don't fill this out: <input v-model="form.botField" name="bot-field" tabindex="-1" autocomplete="off" /></label>
     </p>
     <div class="contact-form__group">
       <label for="name" class="contact-form__label">Your Name *</label>
@@ -141,7 +138,8 @@ const form = reactive({
   email: '',
   phone: '',
   subject: '',
-  message: ''
+  message: '',
+  botField: ''
 })
 
 const errors = reactive({
@@ -200,19 +198,18 @@ const handleSubmit = async () => {
   submitError.value = ''
 
   try {
-    // Submit to Netlify Forms
-    const formData = new FormData()
-    formData.append('form-name', 'contact')
-    formData.append('name', form.name)
-    formData.append('email', form.email)
-    formData.append('phone', form.phone)
-    formData.append('subject', form.subject)
-    formData.append('message', form.message)
-
-    const response = await fetch('/', {
+    // Submit to the Cloudflare Pages Function in functions/api/contact.js
+    const response = await fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        subject: form.subject,
+        message: form.message,
+        botField: form.botField
+      })
     })
 
     if (!response.ok) {

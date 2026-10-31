@@ -38,4 +38,10 @@ npm run preview
 
 ## Deployment
 
-The included `netlify.toml` publishes `dist` and redirects unknown paths to `index.html`, which preserves Vue Router deep links. The contact page uses Netlify Forms; the static form definition in `index.html` must remain in place so Netlify can discover its fields during the build.
+The site is deployed on Cloudflare Pages, connected to this GitHub repository.
+
+- **Build settings:** build command `npm run build`, output directory `dist`. Node 24 comes from `.nvmrc`; if the build uses an older version, set a `NODE_VERSION` variable to `24`.
+- **Deep links:** with no top-level `404.html`, Cloudflare Pages serves `index.html` for unknown paths, so Vue Router deep links work without a catch-all rule.
+- **Redirects:** old project slugs are redirected in `public/_redirects`, which is copied into `dist` at build time. Add a permanent redirect there whenever a published slug changes.
+- **Contact form:** the form posts to `functions/api/contact.js` (a Pages Function at `/api/contact`), which emails the message through Resend. Set these in Cloudflare under Settings > Variables and Secrets: `RESEND_API_KEY` (secret), `CONTACT_TO_EMAIL`, and optionally `CONTACT_FROM_EMAIL` once the sending domain is verified in Resend. See `.dev.vars.example`.
+- **Testing the form locally:** `npm run dev` does not run Pages Functions. Run `npm run build`, copy `.dev.vars.example` to `.dev.vars`, then run `npx wrangler pages dev dist`.

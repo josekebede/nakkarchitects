@@ -1,0 +1,10 @@
+/projects/woinu-residence /projects/residence-01 301
+/projects/woinu-residence/* /projects/residence-01/:splat 301
+/projects/ftisum-residence /projects/residence-02 301
+/projects/ftisum-residence/* /projects/residence-02/:splat 301
+/projects/selamwit-residence /projects/residence-03 301
+/projects/selamwit-residence/* /projects/residence-03/:splat 301
+/projects/ibrahim-apartment /projects/apartment-01 301
+/projects/ibrahim-apartment/* /projects/apartment-01/:splat 301
+/projects/woinu-apartment /projects/apartment-02 301
+/projects/woinu-apartment/* /projects/apartment-02/:splat 301
