@@ -97,15 +97,19 @@ const definitions = [
     name: "Garden Terrace Villa",
     category: "houses",
     kind: "render",
-    summary: "A multi-level white and stone villa framed by a dark tile canopy, with glass balustrades, hanging planters on the upper terraces, a slatted entry gate and a landscaped garden setting.",
+    summary: "A multi-level white and stone villa framed by a dark tile canopy, with glass balustrades, hanging planters on the upper terraces, full-height glazing to the living and dining levels, a slatted entry gate and a landscaped garden setting.",
     images: [
       { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Front elevation with a dark tile canopy frame and slatted gate" },
       { file: "002", w: 1920, h: 1219, tw: 720, th: 457, alt: "Street view with hanging planters and glass balustrades" },
-      { file: "003", w: 1920, h: 1217, tw: 720, th: 456, alt: "Close view of the stacked terraces and hanging planters" },
+      { file: "003", w: 1920, h: 1217, tw: 720, th: 456, alt: "Street corner view at dusk with the entry gate and lamp posts" },
       { file: "004", w: 1920, h: 1217, tw: 720, th: 456, alt: "Corner view from the drive with the entry gate" },
-      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side approach with a stone-clad wing and glass balconies" },
-      { file: "006", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side elevation with a timber slat screen and stone-clad volume" },
-      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Rear corner view with cypress trees and garden wall" }
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Aerial view of the villa, its drive and garden plot" },
+      { file: "006", w: 1920, h: 1217, tw: 720, th: 456, alt: "Close view of the stacked terraces and hanging planters" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Close view of the living and dining levels behind full-height glass" },
+      { file: "008", w: 1920, h: 1219, tw: 720, th: 457, alt: "Corner glazing above the slatted entry gate" },
+      { file: "009", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side approach with a stone-clad wing and glass balconies" },
+      { file: "010", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side elevation with a timber slat screen and stone-clad volume" },
+      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Rear corner view with cypress trees and garden wall" }
     ]
   },
   {
@@ -252,6 +256,27 @@ const definitions = [
     images: [
       { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Tower rising above street-level planting" },
       { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Upper floors and cantilevered terrace of the tower" }
+    ]
+  },
+  {
+    slug: "menswear-store",
+    name: "Menswear Store",
+    category: "commercial",
+    kind: "render",
+    summary: "A menswear boutique in warm timber, black steel and dark marble: a glazed storefront with a fan of linear lights, slatted display walls, stepped shoe displays, lounge seating and a marble-based cash desk.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Clothing rails, mannequin and a stepped shoe display" },
+      { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Wide view of the shop floor with a central display table and lounge seating" },
+      { file: "003", w: 1920, h: 1217, tw: 720, th: 456, alt: "Lounge seating and display tables beneath a floating ceiling panel" },
+      { file: "004", w: 1920, h: 1219, tw: 720, th: 457, alt: "Central display table and slatted timber shelving wall" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Shirt rails against a slatted timber wall" },
+      { file: "006", w: 1920, h: 1217, tw: 720, th: 456, alt: "Display wall and hanging rails under linear ceiling lights" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Feature graphic panel on a slatted wall beside a mannequin" },
+      { file: "008", w: 1920, h: 1219, tw: 720, th: 457, alt: "Shop floor seen from the entrance beneath suspended linear lights" },
+      { file: "009", w: 1920, h: 1217, tw: 720, th: 456, alt: "Entrance zone with lounge chairs, looking toward the street" },
+      { file: "010", w: 1920, h: 1217, tw: 720, th: 456, alt: "Symmetrical view toward the cash desk between timber and black-steel shelving" },
+      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Cash desk with a dark marble base and glass display top" },
+      { file: "012", w: 1920, h: 1217, tw: 720, th: 456, alt: "Glazed storefront with mannequins and a fan of linear lights" }
     ]
   },
   {
