@@ -1,1742 +1,376 @@
-import { legacyProjects } from './legacyProjects'
+// Portfolio data. Every project belongs to exactly one category (project type).
+// Images live in public/projects/<slug>/{thumb,full}/<file>.webp
+// To add a project: drop its WebP files in that folder and add one entry below.
 
-// Generated from the NAKK Architecture Google Drive project library.
-// Keep the optimized files in public/projects in sync with this manifest.
-export const driveProjects = [
+export const categories = [
+  { id: "houses", name: "Houses & Villas", blurb: "Private villas and family homes, from concept visualisations to completed work." },
+  { id: "apartments", name: "Apartments", blurb: "Apartment buildings and apartment interiors." },
+  { id: "offices", name: "Offices & Workplaces", blurb: "Corporate and public-sector workplaces, from reception to boardroom." },
+  { id: "commercial", name: "Commercial & Industrial", blurb: "Towers, retail and industrial buildings." },
+  { id: "hospitality", name: "Hospitality & Dining", blurb: "Lounges, bars and cafes designed around atmosphere." },
+  { id: "healthcare", name: "Healthcare", blurb: "Clinics and pharmacies planned for calm, clear patient journeys." },
+  { id: "education", name: "Education & Training", blurb: "Teaching and training spaces for creative disciplines." }
+]
+
+// Old ?category= links keep working.
+export const categoryAliases = {
+  residence: 'houses',
+  apartment: 'apartments',
+  office: 'offices',
+  commercial: 'commercial',
+  hospitality: 'hospitality',
+  institutional: 'education',
+  'mixed-use': 'commercial',
+  sustainable: 'houses'
+}
+
+export const kinds = {
+  render: 'Design render',
+  photo: 'Completed work'
+}
+
+const definitions = [
   {
-    "id": "residence-01",
-    "slug": "residence-01",
-    "name": "Residence 01",
-    "category": "residence",
-    "categoryLabel": "Residence",
-    "summary": "Residential architecture and interiors shaped around light, proportion, and everyday life.",
-    "featured": true,
-    "hero": true,
-    "imageCount": 19,
-    "cover": {
-      "order": 9,
-      "originalName": "Scene 116.png",
-      "alt": "Exterior courtyard view of Residence 01",
-      "full": "/projects/residence-01/full/009.webp",
-      "thumb": "/projects/residence-01/thumb/009.webp",
-      "width": 1309,
-      "height": 830,
-      "fullBytes": 190250,
-      "thumbBytes": 40124
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "Scene 95_1.png",
-        "alt": "Residence 01, design view 1",
-        "full": "/projects/residence-01/full/001.webp",
-        "thumb": "/projects/residence-01/thumb/001.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 126582,
-        "thumbBytes": 26078
-      },
-      {
-        "order": 2,
-        "originalName": "Scene 97(1).png",
-        "alt": "Residence 01, design view 2",
-        "full": "/projects/residence-01/full/002.webp",
-        "thumb": "/projects/residence-01/thumb/002.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 182168,
-        "thumbBytes": 39830
-      },
-      {
-        "order": 3,
-        "originalName": "Scene 101.png",
-        "alt": "Residence 01, design view 3",
-        "full": "/projects/residence-01/full/003.webp",
-        "thumb": "/projects/residence-01/thumb/003.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 231794,
-        "thumbBytes": 50546
-      },
-      {
-        "order": 4,
-        "originalName": "Scene 102(2).png",
-        "alt": "Residence 01, design view 4",
-        "full": "/projects/residence-01/full/004.webp",
-        "thumb": "/projects/residence-01/thumb/004.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 165702,
-        "thumbBytes": 37280
-      },
-      {
-        "order": 5,
-        "originalName": "Scene 103(1).png",
-        "alt": "Residence 01, design view 5",
-        "full": "/projects/residence-01/full/005.webp",
-        "thumb": "/projects/residence-01/thumb/005.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 133968,
-        "thumbBytes": 20008
-      },
-      {
-        "order": 6,
-        "originalName": "Scene 104(1).png",
-        "alt": "Residence 01, design view 6",
-        "full": "/projects/residence-01/full/006.webp",
-        "thumb": "/projects/residence-01/thumb/006.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 99290,
-        "thumbBytes": 25860
-      },
-      {
-        "order": 7,
-        "originalName": "Scene 113.png",
-        "alt": "Residence 01, design view 7",
-        "full": "/projects/residence-01/full/007.webp",
-        "thumb": "/projects/residence-01/thumb/007.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 160560,
-        "thumbBytes": 21868
-      },
-      {
-        "order": 8,
-        "originalName": "Scene 115.png",
-        "alt": "Residence 01, design view 8",
-        "full": "/projects/residence-01/full/008.webp",
-        "thumb": "/projects/residence-01/thumb/008.webp",
-        "width": 1310,
-        "height": 830,
-        "fullBytes": 200488,
-        "thumbBytes": 43046
-      },
-      {
-        "order": 9,
-        "originalName": "Scene 116.png",
-        "alt": "Residence 01, design view 9",
-        "full": "/projects/residence-01/full/009.webp",
-        "thumb": "/projects/residence-01/thumb/009.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 190250,
-        "thumbBytes": 40124
-      },
-      {
-        "order": 10,
-        "originalName": "Scene 117.png",
-        "alt": "Residence 01, design view 10",
-        "full": "/projects/residence-01/full/010.webp",
-        "thumb": "/projects/residence-01/thumb/010.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 177816,
-        "thumbBytes": 38364
-      },
-      {
-        "order": 11,
-        "originalName": "Scene 119.png",
-        "alt": "Residence 01, design view 11",
-        "full": "/projects/residence-01/full/011.webp",
-        "thumb": "/projects/residence-01/thumb/011.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 201942,
-        "thumbBytes": 45510
-      },
-      {
-        "order": 12,
-        "originalName": "Scene 120.png",
-        "alt": "Residence 01, design view 12",
-        "full": "/projects/residence-01/full/012.webp",
-        "thumb": "/projects/residence-01/thumb/012.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 195922,
-        "thumbBytes": 42924
-      },
-      {
-        "order": 13,
-        "originalName": "Scene 121.png",
-        "alt": "Residence 01, design view 13",
-        "full": "/projects/residence-01/full/013.webp",
-        "thumb": "/projects/residence-01/thumb/013.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 117670,
-        "thumbBytes": 25780
-      },
-      {
-        "order": 14,
-        "originalName": "Scene 124.png",
-        "alt": "Residence 01, design view 14",
-        "full": "/projects/residence-01/full/014.webp",
-        "thumb": "/projects/residence-01/thumb/014.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 88692,
-        "thumbBytes": 18240
-      },
-      {
-        "order": 15,
-        "originalName": "Scene 125.png",
-        "alt": "Residence 01, design view 15",
-        "full": "/projects/residence-01/full/015.webp",
-        "thumb": "/projects/residence-01/thumb/015.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 220866,
-        "thumbBytes": 20318
-      },
-      {
-        "order": 16,
-        "originalName": "Scene 127.png",
-        "alt": "Residence 01, design view 16",
-        "full": "/projects/residence-01/full/016.webp",
-        "thumb": "/projects/residence-01/thumb/016.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 146962,
-        "thumbBytes": 17950
-      },
-      {
-        "order": 17,
-        "originalName": "Scene 128.png",
-        "alt": "Residence 01, design view 17",
-        "full": "/projects/residence-01/full/017.webp",
-        "thumb": "/projects/residence-01/thumb/017.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 168270,
-        "thumbBytes": 21828
-      },
-      {
-        "order": 18,
-        "originalName": "Scene 129.png",
-        "alt": "Residence 01, design view 18",
-        "full": "/projects/residence-01/full/018.webp",
-        "thumb": "/projects/residence-01/thumb/018.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 127130,
-        "thumbBytes": 20538
-      },
-      {
-        "order": 19,
-        "originalName": "Scene 130.png",
-        "alt": "Residence 01, design view 19",
-        "full": "/projects/residence-01/full/019.webp",
-        "thumb": "/projects/residence-01/thumb/019.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 122204,
-        "thumbBytes": 18384
-      }
+    slug: "limestone-villa",
+    name: "Limestone Villa",
+    category: "houses",
+    kind: "render",
+    featured: true,
+    hero: true,
+    cover: "009",
+    summary: "A multi-level family villa in pale limestone and black steel glazing. A double-height dining space with an open stair ties the entry court to the living areas, with a private main suite, dressing room and spa-style bathroom.",
+    images: [
+      { file: "001", w: 1309, h: 830, tw: 720, th: 457, alt: "Dining area and open stair behind folding glass doors" },
+      { file: "002", w: 1309, h: 830, tw: 720, th: 457, alt: "Double-height dining area with sculptural stair" },
+      { file: "003", w: 1309, h: 830, tw: 720, th: 457, alt: "Entry drive and stair seen from above" },
+      { file: "004", w: 1309, h: 830, tw: 720, th: 457, alt: "Dining area looking toward the living room" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Living room with illuminated media wall" },
+      { file: "006", w: 1309, h: 830, tw: 720, th: 457, alt: "Living room and media wall, wide view" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Kitchen and dining area with sculptural pendant" },
+      { file: "008", w: 1310, h: 830, tw: 720, th: 456, alt: "Street facade with glass balcony and car port" },
+      { file: "009", w: 1309, h: 830, tw: 720, th: 457, alt: "Entry court with landscaping" },
+      { file: "010", w: 1309, h: 830, tw: 720, th: 457, alt: "Front facade with ground-floor terrace" },
+      { file: "011", w: 1309, h: 830, tw: 720, th: 457, alt: "Corner view of the limestone facade" },
+      { file: "012", w: 1309, h: 830, tw: 720, th: 457, alt: "Side elevation seen from the drive" },
+      { file: "013", w: 1309, h: 830, tw: 720, th: 457, alt: "Bathroom with double vanity and steel-framed glazing" },
+      { file: "014", w: 1309, h: 830, tw: 720, th: 457, alt: "Bathroom with freestanding tub and glass shower" },
+      { file: "015", w: 1920, h: 1217, tw: 720, th: 456, alt: "Bathroom vanity and soaking tub" },
+      { file: "016", w: 1920, h: 1217, tw: 720, th: 456, alt: "Main bedroom with upholstered bench" },
+      { file: "017", w: 1920, h: 1217, tw: 720, th: 456, alt: "Bedroom with reading chairs by the window" },
+      { file: "018", w: 1920, h: 1217, tw: 720, th: 456, alt: "Walk-in wardrobe with central island" },
+      { file: "019", w: 1920, h: 1217, tw: 720, th: 456, alt: "Dressing table and wardrobe" }
     ]
   },
   {
-    "id": "abay-technical-trading",
-    "slug": "abay-technical-trading",
-    "name": "Abay Technical & Trading PLC",
-    "category": "office",
-    "categoryLabel": "Office",
-    "summary": "A contemporary workplace bringing focused work and shared spaces into one clear interior.",
-    "featured": true,
-    "hero": false,
-    "imageCount": 21,
-    "cover": {
-      "order": 11,
-      "originalName": "Scene 13(1).png",
-      "alt": "Reception desk and glazed offices at Abay Technical & Trading PLC",
-      "full": "/projects/abay-technical-trading/full/011.webp",
-      "thumb": "/projects/abay-technical-trading/thumb/011.webp",
-      "width": 1920,
-      "height": 1287,
-      "fullBytes": 165440,
-      "thumbBytes": 19614
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "Scene 2_1(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 1",
-        "full": "/projects/abay-technical-trading/full/001.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/001.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 268892,
-        "thumbBytes": 30128
-      },
-      {
-        "order": 2,
-        "originalName": "Scene 3(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 2",
-        "full": "/projects/abay-technical-trading/full/002.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/002.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 197820,
-        "thumbBytes": 23344
-      },
-      {
-        "order": 3,
-        "originalName": "Scene 4(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 3",
-        "full": "/projects/abay-technical-trading/full/003.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/003.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 180742,
-        "thumbBytes": 23300
-      },
-      {
-        "order": 4,
-        "originalName": "Scene 5(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 4",
-        "full": "/projects/abay-technical-trading/full/004.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/004.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 188370,
-        "thumbBytes": 23394
-      },
-      {
-        "order": 5,
-        "originalName": "Scene 6(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 5",
-        "full": "/projects/abay-technical-trading/full/005.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/005.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 179060,
-        "thumbBytes": 28540
-      },
-      {
-        "order": 6,
-        "originalName": "Scene 7(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 6",
-        "full": "/projects/abay-technical-trading/full/006.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/006.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 286048,
-        "thumbBytes": 27550
-      },
-      {
-        "order": 7,
-        "originalName": "Scene 9(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 7",
-        "full": "/projects/abay-technical-trading/full/007.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/007.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 243424,
-        "thumbBytes": 31768
-      },
-      {
-        "order": 8,
-        "originalName": "Scene 10(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 8",
-        "full": "/projects/abay-technical-trading/full/008.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/008.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 268738,
-        "thumbBytes": 36250
-      },
-      {
-        "order": 9,
-        "originalName": "Scene 11(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 9",
-        "full": "/projects/abay-technical-trading/full/009.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/009.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 226490,
-        "thumbBytes": 30448
-      },
-      {
-        "order": 10,
-        "originalName": "Scene 12(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 10",
-        "full": "/projects/abay-technical-trading/full/010.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/010.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 230302,
-        "thumbBytes": 27962
-      },
-      {
-        "order": 11,
-        "originalName": "Scene 13(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 11",
-        "full": "/projects/abay-technical-trading/full/011.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/011.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 165440,
-        "thumbBytes": 19614
-      },
-      {
-        "order": 12,
-        "originalName": "Scene 14(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 12",
-        "full": "/projects/abay-technical-trading/full/012.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/012.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 196440,
-        "thumbBytes": 27298
-      },
-      {
-        "order": 13,
-        "originalName": "Scene 15(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 13",
-        "full": "/projects/abay-technical-trading/full/013.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/013.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 193160,
-        "thumbBytes": 25186
-      },
-      {
-        "order": 14,
-        "originalName": "Scene 16(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 14",
-        "full": "/projects/abay-technical-trading/full/014.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/014.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 192534,
-        "thumbBytes": 31320
-      },
-      {
-        "order": 15,
-        "originalName": "Scene 18(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 15",
-        "full": "/projects/abay-technical-trading/full/015.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/015.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 199030,
-        "thumbBytes": 25262
-      },
-      {
-        "order": 16,
-        "originalName": "Scene 19(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 16",
-        "full": "/projects/abay-technical-trading/full/016.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/016.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 237660,
-        "thumbBytes": 29314
-      },
-      {
-        "order": 17,
-        "originalName": "Scene 20(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 17",
-        "full": "/projects/abay-technical-trading/full/017.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/017.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 103366,
-        "thumbBytes": 16790
-      },
-      {
-        "order": 18,
-        "originalName": "Scene 21(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 18",
-        "full": "/projects/abay-technical-trading/full/018.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/018.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 174092,
-        "thumbBytes": 26588
-      },
-      {
-        "order": 19,
-        "originalName": "Scene 22(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 19",
-        "full": "/projects/abay-technical-trading/full/019.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/019.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 188482,
-        "thumbBytes": 22706
-      },
-      {
-        "order": 20,
-        "originalName": "Scene 23(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 20",
-        "full": "/projects/abay-technical-trading/full/020.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/020.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 265818,
-        "thumbBytes": 27294
-      },
-      {
-        "order": 21,
-        "originalName": "Scene 24(1).png",
-        "alt": "Abay Technical & Trading PLC, design view 21",
-        "full": "/projects/abay-technical-trading/full/021.webp",
-        "thumb": "/projects/abay-technical-trading/thumb/021.webp",
-        "width": 1920,
-        "height": 1287,
-        "fullBytes": 143470,
-        "thumbBytes": 19992
-      }
+    slug: "contemporary-villa",
+    name: "Contemporary Villa",
+    category: "houses",
+    kind: "render",
+    summary: "Exterior studies of a contemporary corner villa with timber screening, generous terraces and a landscaped frontage, shown by day and at dusk.",
+    images: [
+      { file: "001", w: 1920, h: 1080, tw: 720, th: 405, alt: "Evening view of the terraced facade" },
+      { file: "002", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corner view with landscaped frontage" },
+      { file: "003", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corner view with glazed balconies" },
+      { file: "004", w: 1920, h: 1080, tw: 720, th: 405, alt: "Front elevation with car port" }
     ]
   },
   {
-    "id": "cigar-bar",
-    "slug": "cigar-bar",
-    "name": "Cigar Bar Design",
-    "category": "hospitality",
-    "categoryLabel": "Hospitality",
-    "summary": "An intimate hospitality interior built around warm materiality, layered lighting, and a relaxed social atmosphere.",
-    "featured": true,
-    "hero": false,
-    "imageCount": 31,
-    "cover": {
-      "order": 4,
-      "originalName": "3_14 - Photo.jpg",
-      "alt": "Cigar bar lounge with green seating and a warmly lit bar",
-      "full": "/projects/cigar-bar/full/004.webp",
-      "thumb": "/projects/cigar-bar/thumb/004.webp",
-      "width": 1920,
-      "height": 1080,
-      "fullBytes": 240602,
-      "thumbBytes": 31478
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "3_11 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 1",
-        "full": "/projects/cigar-bar/full/001.webp",
-        "thumb": "/projects/cigar-bar/thumb/001.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 89232,
-        "thumbBytes": 12560
-      },
-      {
-        "order": 2,
-        "originalName": "3_12 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 2",
-        "full": "/projects/cigar-bar/full/002.webp",
-        "thumb": "/projects/cigar-bar/thumb/002.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 103036,
-        "thumbBytes": 15378
-      },
-      {
-        "order": 3,
-        "originalName": "3_13 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 3",
-        "full": "/projects/cigar-bar/full/003.webp",
-        "thumb": "/projects/cigar-bar/thumb/003.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 146554,
-        "thumbBytes": 18842
-      },
-      {
-        "order": 4,
-        "originalName": "3_14 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 4",
-        "full": "/projects/cigar-bar/full/004.webp",
-        "thumb": "/projects/cigar-bar/thumb/004.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 240602,
-        "thumbBytes": 31478
-      },
-      {
-        "order": 5,
-        "originalName": "3_15 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 5",
-        "full": "/projects/cigar-bar/full/005.webp",
-        "thumb": "/projects/cigar-bar/thumb/005.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 149908,
-        "thumbBytes": 20000
-      },
-      {
-        "order": 6,
-        "originalName": "3_16 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 6",
-        "full": "/projects/cigar-bar/full/006.webp",
-        "thumb": "/projects/cigar-bar/thumb/006.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 132400,
-        "thumbBytes": 10034
-      },
-      {
-        "order": 7,
-        "originalName": "3_17 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 7",
-        "full": "/projects/cigar-bar/full/007.webp",
-        "thumb": "/projects/cigar-bar/thumb/007.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 131014,
-        "thumbBytes": 9856
-      },
-      {
-        "order": 8,
-        "originalName": "3_18 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 8",
-        "full": "/projects/cigar-bar/full/008.webp",
-        "thumb": "/projects/cigar-bar/thumb/008.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 159702,
-        "thumbBytes": 23610
-      },
-      {
-        "order": 9,
-        "originalName": "3_19 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 9",
-        "full": "/projects/cigar-bar/full/009.webp",
-        "thumb": "/projects/cigar-bar/thumb/009.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 205276,
-        "thumbBytes": 28970
-      },
-      {
-        "order": 10,
-        "originalName": "3_20 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 10",
-        "full": "/projects/cigar-bar/full/010.webp",
-        "thumb": "/projects/cigar-bar/thumb/010.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 224534,
-        "thumbBytes": 25044
-      },
-      {
-        "order": 11,
-        "originalName": "4_1 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 11",
-        "full": "/projects/cigar-bar/full/011.webp",
-        "thumb": "/projects/cigar-bar/thumb/011.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 159256,
-        "thumbBytes": 16262
-      },
-      {
-        "order": 12,
-        "originalName": "4_2 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 12",
-        "full": "/projects/cigar-bar/full/012.webp",
-        "thumb": "/projects/cigar-bar/thumb/012.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 197146,
-        "thumbBytes": 27140
-      },
-      {
-        "order": 13,
-        "originalName": "4_3 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 13",
-        "full": "/projects/cigar-bar/full/013.webp",
-        "thumb": "/projects/cigar-bar/thumb/013.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 294042,
-        "thumbBytes": 31160
-      },
-      {
-        "order": 14,
-        "originalName": "4_4 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 14",
-        "full": "/projects/cigar-bar/full/014.webp",
-        "thumb": "/projects/cigar-bar/thumb/014.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 266280,
-        "thumbBytes": 36486
-      },
-      {
-        "order": 15,
-        "originalName": "4_5 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 15",
-        "full": "/projects/cigar-bar/full/015.webp",
-        "thumb": "/projects/cigar-bar/thumb/015.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 175744,
-        "thumbBytes": 20226
-      },
-      {
-        "order": 16,
-        "originalName": "4_6 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 16",
-        "full": "/projects/cigar-bar/full/016.webp",
-        "thumb": "/projects/cigar-bar/thumb/016.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 162832,
-        "thumbBytes": 19074
-      },
-      {
-        "order": 17,
-        "originalName": "4_7 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 17",
-        "full": "/projects/cigar-bar/full/017.webp",
-        "thumb": "/projects/cigar-bar/thumb/017.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 201878,
-        "thumbBytes": 21014
-      },
-      {
-        "order": 18,
-        "originalName": "4_8 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 18",
-        "full": "/projects/cigar-bar/full/018.webp",
-        "thumb": "/projects/cigar-bar/thumb/018.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 152288,
-        "thumbBytes": 18760
-      },
-      {
-        "order": 19,
-        "originalName": "4_9 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 19",
-        "full": "/projects/cigar-bar/full/019.webp",
-        "thumb": "/projects/cigar-bar/thumb/019.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 171288,
-        "thumbBytes": 21660
-      },
-      {
-        "order": 20,
-        "originalName": "4_10 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 20",
-        "full": "/projects/cigar-bar/full/020.webp",
-        "thumb": "/projects/cigar-bar/thumb/020.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 195726,
-        "thumbBytes": 23548
-      },
-      {
-        "order": 21,
-        "originalName": "5_17 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 21",
-        "full": "/projects/cigar-bar/full/021.webp",
-        "thumb": "/projects/cigar-bar/thumb/021.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 112010,
-        "thumbBytes": 10988
-      },
-      {
-        "order": 23,
-        "originalName": "6.jpg",
-        "alt": "Cigar Bar Design, design view 22",
-        "full": "/projects/cigar-bar/full/023.webp",
-        "thumb": "/projects/cigar-bar/thumb/023.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 119974,
-        "thumbBytes": 12626
-      },
-      {
-        "order": 24,
-        "originalName": "7_16 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 23",
-        "full": "/projects/cigar-bar/full/024.webp",
-        "thumb": "/projects/cigar-bar/thumb/024.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 99980,
-        "thumbBytes": 9810
-      },
-      {
-        "order": 25,
-        "originalName": "7_17 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 24",
-        "full": "/projects/cigar-bar/full/025.webp",
-        "thumb": "/projects/cigar-bar/thumb/025.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 140834,
-        "thumbBytes": 14280
-      },
-      {
-        "order": 26,
-        "originalName": "7_19 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 25",
-        "full": "/projects/cigar-bar/full/026.webp",
-        "thumb": "/projects/cigar-bar/thumb/026.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 189360,
-        "thumbBytes": 18104
-      },
-      {
-        "order": 27,
-        "originalName": "10_24 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 26",
-        "full": "/projects/cigar-bar/full/027.webp",
-        "thumb": "/projects/cigar-bar/thumb/027.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 142864,
-        "thumbBytes": 12974
-      },
-      {
-        "order": 28,
-        "originalName": "11_24 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 27",
-        "full": "/projects/cigar-bar/full/028.webp",
-        "thumb": "/projects/cigar-bar/thumb/028.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 144888,
-        "thumbBytes": 13626
-      },
-      {
-        "order": 29,
-        "originalName": "11_25 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 28",
-        "full": "/projects/cigar-bar/full/029.webp",
-        "thumb": "/projects/cigar-bar/thumb/029.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 136074,
-        "thumbBytes": 19628
-      },
-      {
-        "order": 30,
-        "originalName": "11_26 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 29",
-        "full": "/projects/cigar-bar/full/030.webp",
-        "thumb": "/projects/cigar-bar/thumb/030.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 134682,
-        "thumbBytes": 14466
-      },
-      {
-        "order": 31,
-        "originalName": "11_28 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 30",
-        "full": "/projects/cigar-bar/full/031.webp",
-        "thumb": "/projects/cigar-bar/thumb/031.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 137416,
-        "thumbBytes": 15550
-      },
-      {
-        "order": 32,
-        "originalName": "11_29 - Photo.jpg",
-        "alt": "Cigar Bar Design, design view 31",
-        "full": "/projects/cigar-bar/full/032.webp",
-        "thumb": "/projects/cigar-bar/thumb/032.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 108840,
-        "thumbBytes": 14006
-      }
+    slug: "cubic-white-villa",
+    name: "Cubic White Villa",
+    category: "houses",
+    kind: "render",
+    summary: "A crisp white villa composed of stacked volumes, with glazed terraces, teal-tinted balustrades and a recessed entry with covered parking.",
+    images: [
+      { file: "001", w: 1920, h: 1080, tw: 720, th: 405, alt: "Front elevation from the street" },
+      { file: "002", w: 1920, h: 1080, tw: 720, th: 405, alt: "Front facade with entry car port" },
+      { file: "003", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corner view with glazed terraces" },
+      { file: "004", w: 1920, h: 1080, tw: 720, th: 405, alt: "Side view framed by cypress trees" },
+      { file: "005", w: 1920, h: 1080, tw: 720, th: 405, alt: "Rear elevation with terrace" },
+      { file: "006", w: 1920, h: 1080, tw: 720, th: 405, alt: "Facade detail with stone panel" },
+      { file: "007", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street-side view of the stacked volumes" },
+      { file: "008", w: 1920, h: 1080, tw: 720, th: 405, alt: "Entrance and covered parking" },
+      { file: "009", w: 1920, h: 1080, tw: 720, th: 405, alt: "Aerial view of the plot" }
     ]
   },
   {
-    "id": "skinclub",
-    "slug": "skinclub",
-    "name": "Skinclub",
-    "category": "commercial",
-    "categoryLabel": "Commercial",
-    "summary": "A calm commercial interior balancing treatment spaces, reception, retail, and visitor comfort.",
-    "featured": true,
-    "hero": false,
-    "imageCount": 20,
-    "cover": {
-      "order": 8,
-      "originalName": "Scene 187.png",
-      "alt": "Reception desk and lounge at Skinclub",
-      "full": "/projects/skinclub/full/008.webp",
-      "thumb": "/projects/skinclub/thumb/008.webp",
-      "width": 1309,
-      "height": 830,
-      "fullBytes": 96070,
-      "thumbBytes": 24234
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "Scene 181.png",
-        "alt": "Skinclub, design view 1",
-        "full": "/projects/skinclub/full/001.webp",
-        "thumb": "/projects/skinclub/thumb/001.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 209380,
-        "thumbBytes": 25702
-      },
-      {
-        "order": 2,
-        "originalName": "Scene 182.png",
-        "alt": "Skinclub, design view 2",
-        "full": "/projects/skinclub/full/002.webp",
-        "thumb": "/projects/skinclub/thumb/002.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 89546,
-        "thumbBytes": 21026
-      },
-      {
-        "order": 3,
-        "originalName": "Scene 183.png",
-        "alt": "Skinclub, design view 3",
-        "full": "/projects/skinclub/full/003.webp",
-        "thumb": "/projects/skinclub/thumb/003.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 106238,
-        "thumbBytes": 25580
-      },
-      {
-        "order": 4,
-        "originalName": "Scene 184.png",
-        "alt": "Skinclub, design view 4",
-        "full": "/projects/skinclub/full/004.webp",
-        "thumb": "/projects/skinclub/thumb/004.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 63772,
-        "thumbBytes": 14944
-      },
-      {
-        "order": 5,
-        "originalName": "Scene 185_1.png",
-        "alt": "Skinclub, design view 5",
-        "full": "/projects/skinclub/full/005.webp",
-        "thumb": "/projects/skinclub/thumb/005.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 186176,
-        "thumbBytes": 19372
-      },
-      {
-        "order": 6,
-        "originalName": "Scene 185.png",
-        "alt": "Skinclub, design view 6",
-        "full": "/projects/skinclub/full/006.webp",
-        "thumb": "/projects/skinclub/thumb/006.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 108086,
-        "thumbBytes": 21698
-      },
-      {
-        "order": 7,
-        "originalName": "Scene 186.png",
-        "alt": "Skinclub, design view 7",
-        "full": "/projects/skinclub/full/007.webp",
-        "thumb": "/projects/skinclub/thumb/007.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 78042,
-        "thumbBytes": 18456
-      },
-      {
-        "order": 8,
-        "originalName": "Scene 187.png",
-        "alt": "Skinclub, design view 8",
-        "full": "/projects/skinclub/full/008.webp",
-        "thumb": "/projects/skinclub/thumb/008.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 96070,
-        "thumbBytes": 24234
-      },
-      {
-        "order": 9,
-        "originalName": "Scene 188.png",
-        "alt": "Skinclub, design view 9",
-        "full": "/projects/skinclub/full/009.webp",
-        "thumb": "/projects/skinclub/thumb/009.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 136442,
-        "thumbBytes": 32906
-      },
-      {
-        "order": 10,
-        "originalName": "Scene 190.png",
-        "alt": "Skinclub, design view 10",
-        "full": "/projects/skinclub/full/010.webp",
-        "thumb": "/projects/skinclub/thumb/010.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 125702,
-        "thumbBytes": 24924
-      },
-      {
-        "order": 11,
-        "originalName": "Scene 191.png",
-        "alt": "Skinclub, design view 11",
-        "full": "/projects/skinclub/full/011.webp",
-        "thumb": "/projects/skinclub/thumb/011.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 87670,
-        "thumbBytes": 19854
-      },
-      {
-        "order": 12,
-        "originalName": "Scene 192.png",
-        "alt": "Skinclub, design view 12",
-        "full": "/projects/skinclub/full/012.webp",
-        "thumb": "/projects/skinclub/thumb/012.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 88252,
-        "thumbBytes": 20866
-      },
-      {
-        "order": 13,
-        "originalName": "Scene 193.png",
-        "alt": "Skinclub, design view 13",
-        "full": "/projects/skinclub/full/013.webp",
-        "thumb": "/projects/skinclub/thumb/013.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 166650,
-        "thumbBytes": 42420
-      },
-      {
-        "order": 14,
-        "originalName": "Scene 194.png",
-        "alt": "Skinclub, design view 14",
-        "full": "/projects/skinclub/full/014.webp",
-        "thumb": "/projects/skinclub/thumb/014.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 179920,
-        "thumbBytes": 43186
-      },
-      {
-        "order": 15,
-        "originalName": "Scene 195.png",
-        "alt": "Skinclub, design view 15",
-        "full": "/projects/skinclub/full/015.webp",
-        "thumb": "/projects/skinclub/thumb/015.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 174104,
-        "thumbBytes": 41772
-      },
-      {
-        "order": 16,
-        "originalName": "Scene 196.png",
-        "alt": "Skinclub, design view 16",
-        "full": "/projects/skinclub/full/016.webp",
-        "thumb": "/projects/skinclub/thumb/016.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 114304,
-        "thumbBytes": 24358
-      },
-      {
-        "order": 17,
-        "originalName": "Scene 197.png",
-        "alt": "Skinclub, design view 17",
-        "full": "/projects/skinclub/full/017.webp",
-        "thumb": "/projects/skinclub/thumb/017.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 34410,
-        "thumbBytes": 10772
-      },
-      {
-        "order": 18,
-        "originalName": "Scene 198.png",
-        "alt": "Skinclub, design view 18",
-        "full": "/projects/skinclub/full/018.webp",
-        "thumb": "/projects/skinclub/thumb/018.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 61360,
-        "thumbBytes": 17122
-      },
-      {
-        "order": 19,
-        "originalName": "Scene 199.png",
-        "alt": "Skinclub, design view 19",
-        "full": "/projects/skinclub/full/019.webp",
-        "thumb": "/projects/skinclub/thumb/019.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 55658,
-        "thumbBytes": 11906
-      },
-      {
-        "order": 20,
-        "originalName": "Scene 200.png",
-        "alt": "Skinclub, design view 20",
-        "full": "/projects/skinclub/full/020.webp",
-        "thumb": "/projects/skinclub/thumb/020.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 113770,
-        "thumbBytes": 27490
-      }
+    slug: "villa-with-pool",
+    name: "Villa with Pool",
+    category: "houses",
+    kind: "photo",
+    summary: "Photographs of a completed villa: a double-height living hall with a glass-block feature wall, a glazed stair landing, a marble-clad bathroom and a garden terrace with swimming pool.",
+    images: [
+      { file: "001", w: 1920, h: 1440, tw: 720, th: 540, alt: "Rear elevation with swimming pool and lawn" },
+      { file: "002", w: 1920, h: 2560, tw: 540, th: 720, alt: "Entrance court with pool edge and glass canopy" },
+      { file: "003", w: 1920, h: 2560, tw: 540, th: 720, alt: "Entrance hall with glass-block wall and stair, looking toward the pool" },
+      { file: "004", w: 1920, h: 1440, tw: 720, th: 540, alt: "Double-height living hall" },
+      { file: "005", w: 1920, h: 1440, tw: 720, th: 540, alt: "Living hall, wide view" },
+      { file: "006", w: 1920, h: 2560, tw: 540, th: 720, alt: "Glass-block column beneath the glazed stair landing" },
+      { file: "007", w: 1920, h: 2560, tw: 540, th: 720, alt: "Bathroom with freestanding tub and marble wall" },
+      { file: "008", w: 1920, h: 1440, tw: 720, th: 540, alt: "Swimming pool and stone terrace" }
     ]
   },
   {
-    "id": "nuclear-energy-commission",
-    "slug": "nuclear-energy-commission",
-    "name": "Nuclear Energy Commission Center",
-    "category": "office",
-    "categoryLabel": "Office",
-    "summary": "An institutional workplace interior organized for clarity, collaboration, and a composed public arrival.",
-    "featured": false,
-    "hero": false,
-    "imageCount": 8,
-    "cover": {
-      "order": 2,
-      "originalName": "Scene 29.png",
-      "alt": "Circular-lit reception at the Nuclear Energy Commission Center",
-      "full": "/projects/nuclear-energy-commission/full/002.webp",
-      "thumb": "/projects/nuclear-energy-commission/thumb/002.webp",
-      "width": 1920,
-      "height": 1217,
-      "fullBytes": 141276,
-      "thumbBytes": 20230
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "Scene 10.png",
-        "alt": "Nuclear Energy Commission Center, design view 1",
-        "full": "/projects/nuclear-energy-commission/full/001.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/001.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 189896,
-        "thumbBytes": 19096
-      },
-      {
-        "order": 2,
-        "originalName": "Scene 29.png",
-        "alt": "Nuclear Energy Commission Center, design view 2",
-        "full": "/projects/nuclear-energy-commission/full/002.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/002.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 141276,
-        "thumbBytes": 20230
-      },
-      {
-        "order": 3,
-        "originalName": "Scene 29(1).png",
-        "alt": "Nuclear Energy Commission Center, design view 3",
-        "full": "/projects/nuclear-energy-commission/full/003.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/003.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 145448,
-        "thumbBytes": 20284
-      },
-      {
-        "order": 4,
-        "originalName": "Scene 31.png",
-        "alt": "Nuclear Energy Commission Center, design view 4",
-        "full": "/projects/nuclear-energy-commission/full/004.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/004.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 145716,
-        "thumbBytes": 20132
-      },
-      {
-        "order": 5,
-        "originalName": "Scene 33.png",
-        "alt": "Nuclear Energy Commission Center, design view 5",
-        "full": "/projects/nuclear-energy-commission/full/005.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/005.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 170156,
-        "thumbBytes": 21564
-      },
-      {
-        "order": 6,
-        "originalName": "Scene 36.png",
-        "alt": "Nuclear Energy Commission Center, design view 6",
-        "full": "/projects/nuclear-energy-commission/full/006.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/006.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 110128,
-        "thumbBytes": 32262
-      },
-      {
-        "order": 7,
-        "originalName": "Scene 37.png",
-        "alt": "Nuclear Energy Commission Center, design view 7",
-        "full": "/projects/nuclear-energy-commission/full/007.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/007.webp",
-        "width": 1309,
-        "height": 830,
-        "fullBytes": 103094,
-        "thumbBytes": 28812
-      },
-      {
-        "order": 8,
-        "originalName": "Scene 38.png",
-        "alt": "Nuclear Energy Commission Center, design view 8",
-        "full": "/projects/nuclear-energy-commission/full/008.webp",
-        "thumb": "/projects/nuclear-energy-commission/thumb/008.webp",
-        "width": 1920,
-        "height": 1217,
-        "fullBytes": 158694,
-        "thumbBytes": 20376
-      }
+    slug: "courtyard-house",
+    name: "Courtyard House",
+    category: "houses",
+    kind: "photo",
+    summary: "Photographs of a courtyard house, showing an arched entrance and a stone-paved garden court with a sculptural steel stair.",
+    images: [
+      { file: "001", w: 1920, h: 1440, tw: 720, th: 540, alt: "Courtyard entrance with arched door and cobbled paving" },
+      { file: "002", w: 1920, h: 1440, tw: 720, th: 540, alt: "Garden court with stone steps and sculptural stair" }
     ]
   },
   {
-    "id": "residence-02",
-    "slug": "residence-02",
-    "name": "Residence 02",
-    "category": "residence",
-    "categoryLabel": "Residence",
-    "summary": "A contemporary residence composed through clean volumes, shaded terraces, and indoor–outdoor connection.",
-    "featured": false,
-    "hero": false,
-    "imageCount": 4,
-    "cover": {
-      "order": 4,
-      "originalName": "89.jpg",
-      "alt": "Street elevation of Residence 02",
-      "full": "/projects/residence-02/full/004.webp",
-      "thumb": "/projects/residence-02/thumb/004.webp",
-      "width": 1920,
-      "height": 1080,
-      "fullBytes": 249498,
-      "thumbBytes": 31404
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "60_Photo - 17.jpg",
-        "alt": "Residence 02, design view 1",
-        "full": "/projects/residence-02/full/001.webp",
-        "thumb": "/projects/residence-02/thumb/001.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 302546,
-        "thumbBytes": 37628
-      },
-      {
-        "order": 2,
-        "originalName": "76_Photo - 13.jpg",
-        "alt": "Residence 02, design view 2",
-        "full": "/projects/residence-02/full/002.webp",
-        "thumb": "/projects/residence-02/thumb/002.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 425732,
-        "thumbBytes": 51688
-      },
-      {
-        "order": 3,
-        "originalName": "83_Photo - 16.jpg",
-        "alt": "Residence 02, design view 3",
-        "full": "/projects/residence-02/full/003.webp",
-        "thumb": "/projects/residence-02/thumb/003.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 303672,
-        "thumbBytes": 41040
-      },
-      {
-        "order": 4,
-        "originalName": "89.jpg",
-        "alt": "Residence 02, design view 4",
-        "full": "/projects/residence-02/full/004.webp",
-        "thumb": "/projects/residence-02/thumb/004.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 249498,
-        "thumbBytes": 31404
-      }
+    slug: "mid-rise-apartment-building",
+    name: "Mid-Rise Apartment Building",
+    category: "apartments",
+    kind: "render",
+    featured: true,
+    summary: "A mid-rise apartment building with shopfronts at street level, timber-edged balconies and a landscaped rooftop terrace.",
+    images: [
+      { file: "001", w: 1440, h: 960, tw: 720, th: 480, alt: "Upper floors with timber-edged terraces" },
+      { file: "002", w: 1920, h: 1280, tw: 720, th: 480, alt: "Rooftop terrace and upper facade" },
+      { file: "003", w: 1920, h: 1280, tw: 720, th: 480, alt: "Street elevation of the building" },
+      { file: "004", w: 1920, h: 1280, tw: 720, th: 480, alt: "Corner view with rooftop terrace" },
+      { file: "005", w: 1920, h: 1280, tw: 720, th: 480, alt: "Ground-floor shopfronts and street" },
+      { file: "006", w: 1260, h: 840, tw: 720, th: 480, alt: "Entrance and street frontage" },
+      { file: "007", w: 1920, h: 1278, tw: 720, th: 479, alt: "Upper terrace levels" },
+      { file: "008", w: 1440, h: 959, tw: 720, th: 480, alt: "Corner view from the street" },
+      { file: "009", w: 1920, h: 1280, tw: 720, th: 480, alt: "Corner massing seen from above" },
+      { file: "010", w: 1920, h: 1280, tw: 720, th: 480, alt: "Building seen from the avenue" }
     ]
   },
   {
-    "id": "apartment-01",
-    "slug": "apartment-01",
-    "name": "Apartment 01",
-    "category": "apartment",
-    "categoryLabel": "Apartment",
-    "summary": "A warm apartment interior using soft light, neutral materials, and efficient open-plan living.",
-    "featured": false,
-    "hero": false,
-    "imageCount": 16,
-    "cover": {
-      "order": 6,
-      "originalName": "4_5 - Photo.jpg",
-      "alt": "Open-plan living and dining interior at Apartment 01",
-      "full": "/projects/apartment-01/full/006.webp",
-      "thumb": "/projects/apartment-01/thumb/006.webp",
-      "width": 1920,
-      "height": 1080,
-      "fullBytes": 190974,
-      "thumbBytes": 30168
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "3_1 - Photo.jpg",
-        "alt": "Apartment 01, design view 1",
-        "full": "/projects/apartment-01/full/001.webp",
-        "thumb": "/projects/apartment-01/thumb/001.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 137608,
-        "thumbBytes": 18312
-      },
-      {
-        "order": 2,
-        "originalName": "4_1 - Photo.jpg",
-        "alt": "Apartment 01, design view 2",
-        "full": "/projects/apartment-01/full/002.webp",
-        "thumb": "/projects/apartment-01/thumb/002.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 139326,
-        "thumbBytes": 18798
-      },
-      {
-        "order": 3,
-        "originalName": "4_2 - Photo.jpg",
-        "alt": "Apartment 01, design view 3",
-        "full": "/projects/apartment-01/full/003.webp",
-        "thumb": "/projects/apartment-01/thumb/003.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 178402,
-        "thumbBytes": 20280
-      },
-      {
-        "order": 4,
-        "originalName": "4_3 - Photo.jpg",
-        "alt": "Apartment 01, design view 4",
-        "full": "/projects/apartment-01/full/004.webp",
-        "thumb": "/projects/apartment-01/thumb/004.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 152990,
-        "thumbBytes": 16754
-      },
-      {
-        "order": 5,
-        "originalName": "4_4 - Photo.jpg",
-        "alt": "Apartment 01, design view 5",
-        "full": "/projects/apartment-01/full/005.webp",
-        "thumb": "/projects/apartment-01/thumb/005.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 126030,
-        "thumbBytes": 16530
-      },
-      {
-        "order": 6,
-        "originalName": "4_5 - Photo.jpg",
-        "alt": "Apartment 01, design view 6",
-        "full": "/projects/apartment-01/full/006.webp",
-        "thumb": "/projects/apartment-01/thumb/006.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 190974,
-        "thumbBytes": 30168
-      },
-      {
-        "order": 7,
-        "originalName": "4_6 - Photo.jpg",
-        "alt": "Apartment 01, design view 7",
-        "full": "/projects/apartment-01/full/007.webp",
-        "thumb": "/projects/apartment-01/thumb/007.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 125740,
-        "thumbBytes": 16370
-      },
-      {
-        "order": 8,
-        "originalName": "4_9 - Photo.jpg",
-        "alt": "Apartment 01, design view 8",
-        "full": "/projects/apartment-01/full/008.webp",
-        "thumb": "/projects/apartment-01/thumb/008.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 114776,
-        "thumbBytes": 13882
-      },
-      {
-        "order": 9,
-        "originalName": "5_1 - Photo.jpg",
-        "alt": "Apartment 01, design view 9",
-        "full": "/projects/apartment-01/full/009.webp",
-        "thumb": "/projects/apartment-01/thumb/009.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 137564,
-        "thumbBytes": 18548
-      },
-      {
-        "order": 10,
-        "originalName": "5_2 - Photo.jpg",
-        "alt": "Apartment 01, design view 10",
-        "full": "/projects/apartment-01/full/010.webp",
-        "thumb": "/projects/apartment-01/thumb/010.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 174422,
-        "thumbBytes": 19420
-      },
-      {
-        "order": 11,
-        "originalName": "5_3 - Photo.jpg",
-        "alt": "Apartment 01, design view 11",
-        "full": "/projects/apartment-01/full/011.webp",
-        "thumb": "/projects/apartment-01/thumb/011.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 150272,
-        "thumbBytes": 16734
-      },
-      {
-        "order": 12,
-        "originalName": "5_4 - Photo.jpg",
-        "alt": "Apartment 01, design view 12",
-        "full": "/projects/apartment-01/full/012.webp",
-        "thumb": "/projects/apartment-01/thumb/012.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 124584,
-        "thumbBytes": 16242
-      },
-      {
-        "order": 13,
-        "originalName": "5_5 - Photo.jpg",
-        "alt": "Apartment 01, design view 13",
-        "full": "/projects/apartment-01/full/013.webp",
-        "thumb": "/projects/apartment-01/thumb/013.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 187850,
-        "thumbBytes": 29758
-      },
-      {
-        "order": 14,
-        "originalName": "5_6 - Photo.jpg",
-        "alt": "Apartment 01, design view 14",
-        "full": "/projects/apartment-01/full/014.webp",
-        "thumb": "/projects/apartment-01/thumb/014.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 124772,
-        "thumbBytes": 16056
-      },
-      {
-        "order": 15,
-        "originalName": "5_7 - Photo.jpg",
-        "alt": "Apartment 01, design view 15",
-        "full": "/projects/apartment-01/full/015.webp",
-        "thumb": "/projects/apartment-01/thumb/015.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 133520,
-        "thumbBytes": 20584
-      },
-      {
-        "order": 16,
-        "originalName": "5_9 - Photo.jpg",
-        "alt": "Apartment 01, design view 16",
-        "full": "/projects/apartment-01/full/016.webp",
-        "thumb": "/projects/apartment-01/thumb/016.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 114602,
-        "thumbBytes": 13970
-      }
+    slug: "apartment-living-interior",
+    name: "Apartment Living & Dining",
+    category: "apartments",
+    kind: "render",
+    summary: "Living and dining interior for an apartment, using warm neutrals, tactile sofas, timber panelling and sculptural lighting to make a calm, layered home.",
+    images: [
+      { file: "001", w: 1920, h: 1080, tw: 720, th: 405, alt: "Living room with sectional sofa and media wall" },
+      { file: "003", w: 1920, h: 1080, tw: 720, th: 405, alt: "Living area and coffee table looking toward the dining area" },
+      { file: "004", w: 1920, h: 1080, tw: 720, th: 405, alt: "Sectional sofa and lit display niches" },
+      { file: "005", w: 1920, h: 1080, tw: 720, th: 405, alt: "Dining area with sculptural pendant" },
+      { file: "006", w: 1920, h: 1080, tw: 720, th: 405, alt: "Living room with climbing plants" },
+      { file: "007", w: 1920, h: 1080, tw: 720, th: 405, alt: "Dining table and media wall" },
+      { file: "008", w: 1920, h: 1080, tw: 720, th: 405, alt: "Dining area with round mirror" },
+      { file: "009", w: 1920, h: 1080, tw: 720, th: 405, alt: "Living room, wide view" }
     ]
   },
   {
-    "id": "residence-03",
-    "slug": "residence-03",
-    "name": "Residence 03",
-    "category": "residence",
-    "categoryLabel": "Residence",
-    "summary": "A modern multi-level residence with precise volumes, generous glazing, and landscaped edges.",
-    "featured": false,
-    "hero": false,
-    "imageCount": 9,
-    "cover": {
-      "order": 2,
-      "originalName": "1_Photo - 2.jpg",
-      "alt": "Front view of Residence 03",
-      "full": "/projects/residence-03/full/002.webp",
-      "thumb": "/projects/residence-03/thumb/002.webp",
-      "width": 1920,
-      "height": 1080,
-      "fullBytes": 132696,
-      "thumbBytes": 21750
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "1_Photo - 1.jpg",
-        "alt": "Residence 03, design view 1",
-        "full": "/projects/residence-03/full/001.webp",
-        "thumb": "/projects/residence-03/thumb/001.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 114218,
-        "thumbBytes": 18354
-      },
-      {
-        "order": 2,
-        "originalName": "1_Photo - 2.jpg",
-        "alt": "Residence 03, design view 2",
-        "full": "/projects/residence-03/full/002.webp",
-        "thumb": "/projects/residence-03/thumb/002.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 132696,
-        "thumbBytes": 21750
-      },
-      {
-        "order": 3,
-        "originalName": "1_Photo - 3.jpg",
-        "alt": "Residence 03, design view 3",
-        "full": "/projects/residence-03/full/003.webp",
-        "thumb": "/projects/residence-03/thumb/003.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 141766,
-        "thumbBytes": 23718
-      },
-      {
-        "order": 4,
-        "originalName": "1_Photo - 4.jpg",
-        "alt": "Residence 03, design view 4",
-        "full": "/projects/residence-03/full/004.webp",
-        "thumb": "/projects/residence-03/thumb/004.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 182448,
-        "thumbBytes": 29588
-      },
-      {
-        "order": 5,
-        "originalName": "1_Photo - 5.jpg",
-        "alt": "Residence 03, design view 5",
-        "full": "/projects/residence-03/full/005.webp",
-        "thumb": "/projects/residence-03/thumb/005.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 105390,
-        "thumbBytes": 15740
-      },
-      {
-        "order": 6,
-        "originalName": "1_Photo - 6.jpg",
-        "alt": "Residence 03, design view 6",
-        "full": "/projects/residence-03/full/006.webp",
-        "thumb": "/projects/residence-03/thumb/006.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 200736,
-        "thumbBytes": 30974
-      },
-      {
-        "order": 7,
-        "originalName": "1_Photo - 8.jpg",
-        "alt": "Residence 03, design view 7",
-        "full": "/projects/residence-03/full/007.webp",
-        "thumb": "/projects/residence-03/thumb/007.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 155056,
-        "thumbBytes": 25178
-      },
-      {
-        "order": 8,
-        "originalName": "1_Photo - 9.jpg",
-        "alt": "Residence 03, design view 8",
-        "full": "/projects/residence-03/full/008.webp",
-        "thumb": "/projects/residence-03/thumb/008.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 147482,
-        "thumbBytes": 22724
-      },
-      {
-        "order": 9,
-        "originalName": "1_Photo - 10.jpg",
-        "alt": "Residence 03, design view 9",
-        "full": "/projects/residence-03/full/009.webp",
-        "thumb": "/projects/residence-03/thumb/009.webp",
-        "width": 1920,
-        "height": 1080,
-        "fullBytes": 159948,
-        "thumbBytes": 24882
-      }
+    slug: "open-plan-corporate-office",
+    name: "Open-Plan Corporate Office",
+    category: "offices",
+    kind: "render",
+    featured: true,
+    summary: "A corporate office fit-out combining open-plan workstations, glazed meeting rooms, executive suites and informal lounges, organised around views of the city.",
+    images: [
+      { file: "001", w: 1920, h: 1280, tw: 720, th: 480, alt: "Executive lounge with shelving wall" },
+      { file: "002", w: 1920, h: 1287, tw: 720, th: 483, alt: "Executive office with sculpted desk" },
+      { file: "003", w: 1920, h: 1287, tw: 720, th: 483, alt: "Executive office and glazed corridor" },
+      { file: "004", w: 1920, h: 1287, tw: 720, th: 483, alt: "Executive desk with glass partitions" },
+      { file: "005", w: 1920, h: 1287, tw: 720, th: 483, alt: "Private office with meeting corner" },
+      { file: "006", w: 1920, h: 1287, tw: 720, th: 483, alt: "Executive suite with lounge seating" },
+      { file: "007", w: 1920, h: 1287, tw: 720, th: 483, alt: "Lounge area with city views" },
+      { file: "008", w: 1920, h: 1287, tw: 720, th: 483, alt: "Open-plan workstations along the glazed edge" },
+      { file: "009", w: 1920, h: 1287, tw: 720, th: 483, alt: "Open-plan workstations, long view" },
+      { file: "010", w: 1920, h: 1287, tw: 720, th: 483, alt: "Reception hall beyond a timber partition" },
+      { file: "011", w: 1920, h: 1287, tw: 720, th: 483, alt: "Reception desk with stone counter" },
+      { file: "012", w: 1920, h: 1287, tw: 720, th: 483, alt: "Informal meeting lounge" },
+      { file: "013", w: 1920, h: 1287, tw: 720, th: 483, alt: "Collaboration lounge with round tables" },
+      { file: "014", w: 1920, h: 1287, tw: 720, th: 483, alt: "Break lounge with display wall" },
+      { file: "015", w: 1920, h: 1287, tw: 720, th: 483, alt: "Glazed meeting nooks" },
+      { file: "016", w: 1920, h: 1287, tw: 720, th: 483, alt: "Lounge and glazed meeting rooms" },
+      { file: "017", w: 1920, h: 1287, tw: 720, th: 483, alt: "Boardroom with long table" },
+      { file: "018", w: 1920, h: 1287, tw: 720, th: 483, alt: "Boardroom, angled view" },
+      { file: "019", w: 1920, h: 1287, tw: 720, th: 483, alt: "Private meeting room behind a timber screen" },
+      { file: "020", w: 1920, h: 1287, tw: 720, th: 483, alt: "Corridor with planting and workstations" },
+      { file: "021", w: 1920, h: 1287, tw: 720, th: 483, alt: "Stair landing with wall art" }
     ]
   },
   {
-    "id": "apartment-02",
-    "slug": "apartment-02",
-    "name": "Apartment 02",
-    "category": "apartment",
-    "categoryLabel": "Apartment",
-    "summary": "A contemporary apartment building defined by a clear vertical rhythm, active street frontage, and rooftop amenity.",
-    "featured": false,
-    "hero": false,
-    "imageCount": 10,
-    "cover": {
-      "order": 8,
-      "originalName": "Scene 27(1).png",
-      "alt": "Street view of Apartment 02 building",
-      "full": "/projects/apartment-02/full/008.webp",
-      "thumb": "/projects/apartment-02/thumb/008.webp",
-      "width": 1440,
-      "height": 959,
-      "fullBytes": 186322,
-      "thumbBytes": 40704
-    },
-    "images": [
-      {
-        "order": 1,
-        "originalName": "Image_107.png",
-        "alt": "Apartment 02, design view 1",
-        "full": "/projects/apartment-02/full/001.webp",
-        "thumb": "/projects/apartment-02/thumb/001.webp",
-        "width": 1440,
-        "height": 960,
-        "fullBytes": 167164,
-        "thumbBytes": 32014
-      },
-      {
-        "order": 2,
-        "originalName": "Image_117.png",
-        "alt": "Apartment 02, design view 2",
-        "full": "/projects/apartment-02/full/002.webp",
-        "thumb": "/projects/apartment-02/thumb/002.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 201472,
-        "thumbBytes": 24728
-      },
-      {
-        "order": 3,
-        "originalName": "Image_120.png",
-        "alt": "Apartment 02, design view 3",
-        "full": "/projects/apartment-02/full/003.webp",
-        "thumb": "/projects/apartment-02/thumb/003.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 235584,
-        "thumbBytes": 31102
-      },
-      {
-        "order": 4,
-        "originalName": "Image_121.png",
-        "alt": "Apartment 02, design view 4",
-        "full": "/projects/apartment-02/full/004.webp",
-        "thumb": "/projects/apartment-02/thumb/004.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 293850,
-        "thumbBytes": 38836
-      },
-      {
-        "order": 5,
-        "originalName": "Image_122.png",
-        "alt": "Apartment 02, design view 5",
-        "full": "/projects/apartment-02/full/005.webp",
-        "thumb": "/projects/apartment-02/thumb/005.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 255668,
-        "thumbBytes": 33906
-      },
-      {
-        "order": 6,
-        "originalName": "Scene 14.png",
-        "alt": "Apartment 02, design view 6",
-        "full": "/projects/apartment-02/full/006.webp",
-        "thumb": "/projects/apartment-02/thumb/006.webp",
-        "width": 1260,
-        "height": 840,
-        "fullBytes": 160260,
-        "thumbBytes": 41746
-      },
-      {
-        "order": 7,
-        "originalName": "Scene 18(1).png",
-        "alt": "Apartment 02, design view 7",
-        "full": "/projects/apartment-02/full/007.webp",
-        "thumb": "/projects/apartment-02/thumb/007.webp",
-        "width": 1920,
-        "height": 1278,
-        "fullBytes": 135070,
-        "thumbBytes": 17270
-      },
-      {
-        "order": 8,
-        "originalName": "Scene 27(1).png",
-        "alt": "Apartment 02, design view 8",
-        "full": "/projects/apartment-02/full/008.webp",
-        "thumb": "/projects/apartment-02/thumb/008.webp",
-        "width": 1440,
-        "height": 959,
-        "fullBytes": 186322,
-        "thumbBytes": 40704
-      },
-      {
-        "order": 9,
-        "originalName": "Scene 29_1.png",
-        "alt": "Apartment 02, design view 9",
-        "full": "/projects/apartment-02/full/009.webp",
-        "thumb": "/projects/apartment-02/thumb/009.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 248974,
-        "thumbBytes": 35536
-      },
-      {
-        "order": 10,
-        "originalName": "Scene 29.png",
-        "alt": "Apartment 02, design view 10",
-        "full": "/projects/apartment-02/full/010.webp",
-        "thumb": "/projects/apartment-02/thumb/010.webp",
-        "width": 1920,
-        "height": 1280,
-        "fullBytes": 363396,
-        "thumbBytes": 49886
-      }
+    slug: "public-sector-office",
+    name: "Public-Sector Office",
+    category: "offices",
+    kind: "render",
+    summary: "Reception and workplace interiors for a public-sector office, with a sculpted reception desk, open-plan workstations and a conference room.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Reception lounge with marble feature wall" },
+      { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Curved reception desk beneath a circular ceiling feature" },
+      { file: "004", w: 1920, h: 1217, tw: 720, th: 456, alt: "Reception desk and waiting seats" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Open-plan office around a central column" },
+      { file: "006", w: 1309, h: 830, tw: 720, th: 457, alt: "Open-plan workstations beneath a slatted ceiling" },
+      { file: "007", w: 1309, h: 830, tw: 720, th: 457, alt: "Workstation rows, side view" },
+      { file: "008", w: 1920, h: 1217, tw: 720, th: 456, alt: "Meeting room with large conference table" }
+    ]
+  },
+  {
+    slug: "completed-office-interiors",
+    name: "Completed Office Interiors",
+    category: "offices",
+    kind: "photo",
+    cover: "007",
+    summary: "Photographs of completed office interiors: glazed partitions, a timber-screened reception, boardrooms and executive offices finished in warm timber and textured stone.",
+    images: [
+      { file: "001", w: 1920, h: 2560, tw: 540, th: 720, alt: "Open-plan office with glazed partition and lounge" },
+      { file: "002", w: 1920, h: 2560, tw: 540, th: 720, alt: "Reception corridor with glazed partitions" },
+      { file: "003", w: 1920, h: 2560, tw: 540, th: 720, alt: "Reception desk with timber screen" },
+      { file: "004", w: 1920, h: 2560, tw: 540, th: 720, alt: "Reception waiting area with red armchairs" },
+      { file: "005", w: 1920, h: 2560, tw: 540, th: 720, alt: "Reception waiting area with timber slats" },
+      { file: "006", w: 1920, h: 2560, tw: 540, th: 720, alt: "Glazed corridor along the workstations" },
+      { file: "007", w: 1920, h: 2560, tw: 540, th: 720, alt: "Boardroom with oval table" },
+      { file: "008", w: 1920, h: 2560, tw: 540, th: 720, alt: "Meeting room with long table" },
+      { file: "009", w: 1920, h: 2560, tw: 540, th: 720, alt: "Executive office with textured stone wall" },
+      { file: "010", w: 1920, h: 2560, tw: 540, th: 720, alt: "Executive office with feature wall" },
+      { file: "011", w: 1920, h: 2560, tw: 540, th: 720, alt: "Manager's office with shelving wall" },
+      { file: "012", w: 1920, h: 2560, tw: 540, th: 720, alt: "Office with round meeting table" },
+      { file: "013", w: 1920, h: 2560, tw: 540, th: 720, alt: "Break lounge with coloured seating" }
+    ]
+  },
+  {
+    slug: "glass-high-rise-tower",
+    name: "Glass High-Rise Tower",
+    category: "commercial",
+    kind: "render",
+    summary: "A glass-clad high-rise tower with a cantilevered sky terrace, studied in its urban setting.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Tower rising above street-level planting" },
+      { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Upper floors and cantilevered terrace of the tower" }
+    ]
+  },
+  {
+    slug: "industrial-hall",
+    name: "Industrial Hall",
+    category: "commercial",
+    kind: "photo",
+    summary: "A long-span, steel-framed industrial hall photographed under construction.",
+    images: [
+      { file: "001", w: 1920, h: 1440, tw: 720, th: 540, alt: "Steel-framed hall under construction" }
+    ]
+  },
+  {
+    slug: "cigar-lounge",
+    name: "Cigar Lounge & Bar",
+    category: "hospitality",
+    kind: "render",
+    featured: true,
+    summary: "A cigar lounge and bar designed as a warm, dark and richly layered interior: leather seating, an illuminated green-stone bar, ornamental screens and a discreet street entrance.",
+    images: [
+      { file: "001", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge corner with low lighting" },
+      { file: "002", w: 1920, h: 1080, tw: 720, th: 405, alt: "Entry reception pedestal" },
+      { file: "003", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge seating with green leather chairs" },
+      { file: "004", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar with illuminated back shelves" },
+      { file: "005", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar and lounge, wide view" },
+      { file: "006", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street frontage at night" },
+      { file: "007", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street frontage at dusk" },
+      { file: "008", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge with ornamental screen and armchairs" },
+      { file: "009", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar with green stools and lounge" },
+      { file: "010", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar counter and shelving" },
+      { file: "011", w: 1920, h: 1080, tw: 720, th: 405, alt: "Reading corner with sofa and bookshelves" },
+      { file: "012", w: 1920, h: 1080, tw: 720, th: 405, alt: "Armchairs beside an ornamental screen" },
+      { file: "013", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar counter with green stools" },
+      { file: "014", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar back wall and stone counter" },
+      { file: "015", w: 1920, h: 1080, tw: 720, th: 405, alt: "Chesterfield seating area" },
+      { file: "016", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge seating beneath feature artwork" },
+      { file: "017", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar stools and private table" },
+      { file: "018", w: 1920, h: 1080, tw: 720, th: 405, alt: "Bar seen across the lounge" },
+      { file: "019", w: 1920, h: 1080, tw: 720, th: 405, alt: "Chesterfield sofas under chandeliers" },
+      { file: "020", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge seating area, wide view" },
+      { file: "021", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street frontage with glazed screen" },
+      { file: "023", w: 1920, h: 1080, tw: 720, th: 405, alt: "Entrance doors with canopy lighting" },
+      { file: "024", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street frontage in the evening" },
+      { file: "025", w: 1920, h: 1080, tw: 720, th: 405, alt: "Street frontage with warm cove lighting" },
+      { file: "026", w: 1920, h: 1080, tw: 720, th: 405, alt: "Entrance doors at street level" },
+      { file: "028", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corridor to the restrooms with illuminated sign" },
+      { file: "029", w: 1920, h: 1080, tw: 720, th: 405, alt: "Restroom corridor, long view" },
+      { file: "030", w: 1920, h: 1080, tw: 720, th: 405, alt: "Corridor with chequered floor" },
+      { file: "031", w: 1920, h: 1080, tw: 720, th: 405, alt: "Restroom door in a marble-lined corridor" },
+      { file: "032", w: 1920, h: 1080, tw: 720, th: 405, alt: "Restroom washbasin with mirror" }
+    ]
+  },
+  {
+    slug: "cafe-interior",
+    name: "Cafe Interior",
+    category: "hospitality",
+    kind: "photo",
+    summary: "A compact cafe interior built around a charred-timber bar, exposed pendant lighting and a suspended timber canopy.",
+    images: [
+      { file: "001", w: 1920, h: 2560, tw: 540, th: 720, alt: "Cafe with timber bar and pendant lighting" }
+    ]
+  },
+  {
+    slug: "medical-clinic-and-pharmacy",
+    name: "Medical Clinic & Pharmacy",
+    category: "healthcare",
+    kind: "render",
+    featured: true,
+    summary: "A medical and dental clinic with a calm reception hall, treatment rooms with city views, and a retail pharmacy finished in copper, timber and terrazzo.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Dental treatment room with city views" },
+      { file: "002", w: 1309, h: 830, tw: 720, th: 457, alt: "Consulting room with reception desk" },
+      { file: "003", w: 1309, h: 830, tw: 720, th: 457, alt: "Treatment room with dental chair" },
+      { file: "004", w: 1309, h: 830, tw: 720, th: 457, alt: "Entrance hall with feature wall" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Waiting-room doors with planting" },
+      { file: "007", w: 1309, h: 830, tw: 720, th: 457, alt: "Waiting hall with lounge seating" },
+      { file: "008", w: 1309, h: 830, tw: 720, th: 457, alt: "Reception desk with sculptural lighting" },
+      { file: "009", w: 1309, h: 830, tw: 720, th: 457, alt: "Reception and feature wall" },
+      { file: "010", w: 1309, h: 830, tw: 720, th: 457, alt: "Private lounge with wall display" },
+      { file: "011", w: 1309, h: 830, tw: 720, th: 457, alt: "Waiting lounge with display screen" },
+      { file: "012", w: 1309, h: 830, tw: 720, th: 457, alt: "Waiting area and corridor" },
+      { file: "013", w: 1309, h: 830, tw: 720, th: 457, alt: "Pharmacy retail counter" },
+      { file: "014", w: 1309, h: 830, tw: 720, th: 457, alt: "Pharmacy shelving, wide view" },
+      { file: "015", w: 1309, h: 830, tw: 720, th: 457, alt: "Pharmacy and retail counter" },
+      { file: "016", w: 1309, h: 830, tw: 720, th: 457, alt: "Glazed pharmacy frontage" },
+      { file: "017", w: 1309, h: 830, tw: 720, th: 457, alt: "Glass entrance to the clinic" },
+      { file: "018", w: 1309, h: 830, tw: 720, th: 457, alt: "Entrance atrium with glazing" },
+      { file: "019", w: 1309, h: 830, tw: 720, th: 457, alt: "Treatment corridor" },
+      { file: "020", w: 1309, h: 830, tw: 720, th: 457, alt: "Reception and waiting hall" }
+    ]
+  },
+  {
+    slug: "creative-training-academy",
+    name: "Creative Training Academy",
+    category: "education",
+    kind: "render",
+    featured: true,
+    summary: "Training spaces for a creative academy, including a make-up studio with mirrored workstations and a photography classroom with a portrait wall.",
+    images: [
+      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Make-up studio with mirrored workstation" },
+      { file: "002", w: 1309, h: 830, tw: 720, th: 457, alt: "Photography classroom with portrait wall" }
     ]
   }
 ]
 
-export const projects = [...legacyProjects, ...driveProjects]
+const categoryNames = Object.fromEntries(categories.map((category) => [category.id, category.name]))
+
+const toImage = (slug, image, index) => ({
+  order: index + 1,
+  alt: image.alt,
+  thumb: `/projects/${slug}/thumb/${image.file}.webp`,
+  full: `/projects/${slug}/full/${image.file}.webp`,
+  width: image.w,
+  height: image.h,
+  thumbWidth: image.tw,
+  thumbHeight: image.th
+})
+
+export const projects = definitions.map((project) => {
+  const images = project.images.map((image, index) => toImage(project.slug, image, index))
+  const cover = images.find((image) => image.full.endsWith(`/${project.cover}.webp`)) || images[0]
+
+  return {
+    id: project.slug,
+    slug: project.slug,
+    name: project.name,
+    category: project.category,
+    categoryLabel: categoryNames[project.category],
+    kind: project.kind,
+    kindLabel: kinds[project.kind],
+    summary: project.summary,
+    featured: Boolean(project.featured),
+    hero: Boolean(project.hero),
+    imageCount: images.length,
+    cover,
+    images
+  }
+})

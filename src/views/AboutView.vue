@@ -43,8 +43,8 @@
           <AnimatedSection animation="slide-in-right" class="about-story__image-wrapper">
             <div class="about-story__image img-zoom">
               <img
-                src="/projects/abay-technical-trading/full/011.webp"
-                alt="Reception and workspace designed for Abay Technical & Trading PLC"
+                src="/projects/open-plan-corporate-office/full/007.webp"
+                alt="Lounge area with city views in an open-plan corporate office"
                 loading="lazy"
                 decoding="async"
               />
@@ -148,7 +148,7 @@
 import { h } from 'vue'
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 
-const heroImage = '/projects/nuclear-energy-commission/full/001.webp'
+const heroImage = '/projects/public-sector-office/full/001.webp'
 
 const values = [
   {

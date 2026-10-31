@@ -28,6 +28,10 @@
                   <dt>Category</dt>
                   <dd>{{ categoryLabel }}</dd>
                 </div>
+                <div v-if="project.kindLabel">
+                  <dt>Format</dt>
+                  <dd>{{ project.kindLabel }}</dd>
+                </div>
                 <div>
                   <dt>Gallery</dt>
                   <dd>{{ imageCount }} {{ imageCount === 1 ? 'image' : 'images' }}</dd>
@@ -55,7 +59,7 @@
         <div class="container">
           <div class="project-gallery-section__heading">
             <div>
-              <p class="project-gallery-section__eyebrow">Project photography</p>
+              <p class="project-gallery-section__eyebrow">Project gallery</p>
               <h2 id="project-gallery-heading">Explore the work</h2>
             </div>
             <p>
@@ -216,7 +220,7 @@ watch(
     const canonicalUrl = new URL(route.path, 'https://nakkarchitecture.com').href
     const imageUrl = coverImage.value?.full
       ? new URL(coverImage.value.full, 'https://nakkarchitecture.com').href
-      : 'https://nakkarchitecture.com/projects/residence-01/full/009.webp'
+      : 'https://nakkarchitecture.com/projects/limestone-villa/full/009.webp'
 
     document.title = title
     document.querySelector('meta[name="description"]')?.setAttribute('content', description)

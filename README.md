@@ -4,13 +4,24 @@ Portfolio website for NAKK Architecture, built with Vue 3, Vite, Vue Router, and
 
 ## Portfolio structure
 
-The portfolio combines 20 original project cards with nine expanded project galleries, for 29 projects in total. Projects are grouped by typology in the manifest assembled by `src/data/projects.js`. Optimized gallery media is stored in `public/projects/<slug>/`, while original single-image project covers are imported from `src/assets/images/` with optimized listing thumbnails in `public/projects/legacy/`:
+Every project belongs to exactly one project type (category). The categories, projects and image lists all live in `src/data/projects.js`:
 
-- `thumb/`: 720 px WebP images for listings and gallery previews
-- `full/`: up to 1920 px WebP images for project covers and the lightbox
+- Houses & Villas
+- Apartments
+- Offices & Workplaces
+- Commercial & Industrial
+- Hospitality & Dining
+- Healthcare
+- Education & Training
 
-Every project has a stable `/projects/:slug` page with a responsive gallery and keyboard-accessible lightbox.
-Client-named residential and apartment work uses generic numbered titles and slugs. Keep each project as a separate record within its typology, and add permanent redirects whenever a published slug changes.
+A category only appears on the site once it holds at least one project. Each project is marked as a *Design visualization* (render) or a *Completed project* (photographs).
+
+Images are stored as WebP in `public/projects/<slug>/`:
+
+- `thumb/`: 720 px images for listings and gallery previews
+- `full/`: up to 1920 px images (2560 px tall for portrait photos) for covers and the lightbox
+
+Every project has a stable `/projects/:slug` page with a responsive gallery and keyboard-accessible lightbox. Titles, summaries, alt text, slugs and file names describe the type of project only; they never name the client. Add a permanent redirect in `public/_redirects` whenever a published slug changes.
 
 ## Local development
 
@@ -31,9 +42,9 @@ npm run preview
 
 ## Updating projects
 
-1. Optimize new source images into matching `thumb` and `full` WebP files.
-2. Add gallery records to `src/data/projects.js` or single-image project records to `src/data/legacyProjects.js`.
-3. Keep image paths rooted at `/projects/<slug>/...`.
+1. Optimize the new images into matching `thumb` and `full` WebP files in `public/projects/<slug>/` (files numbered `001.webp`, `002.webp`, ...).
+2. Add one entry to `definitions` in `src/data/projects.js`: pick the category, set `kind` (`render` or `photo`), write a client-free title and summary, and give every image descriptive alt text.
+3. Add the slug to `public/sitemap.xml`.
 4. Run `npm run build` and verify every referenced file exists before publishing.
 
 ## Deployment

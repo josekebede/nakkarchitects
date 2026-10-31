@@ -70,8 +70,8 @@ router.afterEach((to) => {
   const title = to.meta.title || 'NAKK Architecture'
   const description = to.meta.description || 'Architecture and interiors by NAKK Architecture.'
   const canonicalUrl = new URL(to.path, 'https://nakkarchitecture.com').href
-  const defaultImage = 'https://nakkarchitecture.com/projects/residence-01/full/009.webp'
-  const defaultImageAlt = 'Exterior courtyard view of Residence 01'
+  const defaultImage = 'https://nakkarchitecture.com/projects/limestone-villa/full/009.webp'
+  const defaultImageAlt = 'Entry court and facade of a limestone villa'
 
   document.title = title
   document.querySelector('meta[name="description"]')?.setAttribute('content', description)

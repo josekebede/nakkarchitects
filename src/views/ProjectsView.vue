@@ -8,8 +8,8 @@
         </div>
         <div class="projects-intro__aside">
           <p>
-            Browse residences, apartments, offices, commercial, hospitality,
-            institutional, mixed-use, and sustainable work by NAKK Architecture.
+            Browse houses and villas, apartments, offices, commercial and industrial
+            buildings, hospitality, healthcare, and education work by NAKK Architecture.
           </p>
           <dl class="projects-intro__stats" aria-label="Portfolio totals">
             <div>
@@ -30,13 +30,45 @@
         <h2 id="projects-heading" class="sr-only">Project gallery</h2>
         <ProjectFilter />
 
-        <TransitionGroup name="projects" tag="div" class="projects-grid">
-          <ProjectCard
-            v-for="project in filteredProjects"
-            :key="project.slug"
-            :project="project"
-          />
-        </TransitionGroup>
+        <!-- All projects: one section per project type -->
+        <template v-if="activeCategory === 'all'">
+          <section
+            v-for="group in groups"
+            :key="group.id"
+            class="projects-group"
+            :aria-labelledby="`group-${group.id}`"
+          >
+            <header class="projects-group__header">
+              <div>
+                <h2 :id="`group-${group.id}`">{{ group.name }}</h2>
+                <p>{{ group.blurb }}</p>
+              </div>
+              <button type="button" class="projects-group__count" @click="showCategory(group.id)">
+                {{ group.projects.length }} {{ group.projects.length === 1 ? 'project' : 'projects' }}
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </header>
+            <div class="projects-grid">
+              <ProjectCard
+                v-for="project in group.projects"
+                :key="project.slug"
+                :project="project"
+              />
+            </div>
+          </section>
+        </template>
+
+        <!-- A single project type -->
+        <template v-else>
+          <p v-if="activeGroup" class="projects-category-note">{{ activeGroup.blurb }}</p>
+          <TransitionGroup name="projects" tag="div" class="projects-grid">
+            <ProjectCard
+              v-for="project in filteredProjects"
+              :key="project.slug"
+              :project="project"
+            />
+          </TransitionGroup>
+        </template>
 
         <p v-if="filteredProjects.length === 0" class="projects-empty">
           No projects are available in this category yet.
@@ -64,26 +96,36 @@ import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProjectFilter from '@/components/projects/ProjectFilter.vue'
 import ProjectCard from '@/components/projects/ProjectCard.vue'
-import { useProjectsStore } from '@/stores/projects'
+import { resolveCategoryId, useProjectsStore } from '@/stores/projects'
 
 const store = useProjectsStore()
 const route = useRoute()
 const router = useRouter()
 
 const projects = computed(() => store.projects)
+const groups = computed(() => store.groups)
+const activeCategory = computed(() => store.activeCategory)
+const activeGroup = computed(() => store.activeGroup)
 const filteredProjects = computed(() => store.filteredProjects)
 const totalImages = computed(() => store.totalImages)
+
+const showCategory = (categoryId) => {
+  router.push({ name: 'projects', query: { ...route.query, category: categoryId } })
+}
 
 watch(
   () => route.query.category,
   (category) => {
-    const next = typeof category === 'string' ? category : 'all'
-    const isValid = store.categories.some((item) => item.id === next)
-    store.setActiveCategory(isValid ? next : 'all')
+    const requested = typeof category === 'string' ? category : 'all'
+    const resolved = resolveCategoryId(requested)
+    const isValid = Boolean(resolved) && store.categories.some((item) => item.id === resolved)
+    store.setActiveCategory(isValid ? resolved : 'all')
 
-    if (!isValid && category) {
+    // Clean up unknown values and map old category names to the new ones.
+    if (category && (!isValid || resolved !== requested)) {
       const query = { ...route.query }
-      delete query.category
+      if (isValid && resolved !== 'all') query.category = resolved
+      else delete query.category
       router.replace({ name: 'projects', query })
     }
   },
@@ -179,6 +221,71 @@ watch(
   gap: var(--space-10) var(--space-8);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.projects-group {
+  padding-bottom: var(--space-12);
+}
+
+.projects-group + .projects-group {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+.projects-group__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding-top: var(--space-8);
+}
+
+.projects-group__header h2 {
+  margin: 0 0 var(--space-2);
+  color: var(--gray-900);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-tight);
+}
+
+.projects-group__header p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.projects-group__count {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: var(--space-2) 0;
+  color: var(--primary-dark);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--primary-dark);
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+}
+
+.projects-category-note {
+  max-width: 640px;
+  margin: 0 0 var(--space-8);
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+}
+
 .projects-enter-active,
 .projects-leave-active,
 .projects-move {
@@ -251,6 +358,14 @@ watch(
   .projects-grid {
     grid-template-columns: 1fr;
     gap: var(--space-8);
+  }
+
+  .projects-group__header {
+    display: block;
+  }
+
+  .projects-group__count {
+    margin-top: var(--space-4);
   }
 }
 </style>

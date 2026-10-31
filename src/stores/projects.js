@@ -1,39 +1,44 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { projects as projectData } from '@/data/projects'
+import { categories as categoryData, categoryAliases, projects as projectData } from '@/data/projects'
 
-const categoryOrder = [
-  ['residence', 'Residences'],
-  ['apartment', 'Apartments'],
-  ['office', 'Offices'],
-  ['commercial', 'Commercial'],
-  ['hospitality', 'Hospitality'],
-  ['institutional', 'Institutional'],
-  ['mixed-use', 'Mixed-Use'],
-  ['sustainable', 'Sustainable']
-]
+export const resolveCategoryId = (value) => {
+  const id = typeof value === 'string' ? value : ''
+  if (id === 'all' || categoryData.some((category) => category.id === id)) return id
+  return categoryAliases[id] || ''
+}
 
 export const useProjectsStore = defineStore('projects', () => {
   const projects = ref(projectData)
   const activeCategory = ref('all')
 
-  const categories = computed(() => {
-    const counts = projects.value.reduce((result, project) => {
-      result[project.category] = (result[project.category] || 0) + 1
-      return result
-    }, {})
-
-    return [
-      { id: 'all', name: 'All Projects', count: projects.value.length },
-      ...categoryOrder
-        .filter(([id]) => counts[id])
-        .map(([id, name]) => ({ id, name, count: counts[id] }))
-    ]
+  // Only categories that currently hold projects are shown.
+  const groups = computed(() => {
+    return categoryData
+      .map((category) => ({
+        ...category,
+        projects: projects.value.filter((project) => project.category === category.id)
+      }))
+      .filter((group) => group.projects.length > 0)
   })
+
+  const categories = computed(() => [
+    { id: 'all', name: 'All Projects', count: projects.value.length },
+    ...groups.value.map((group) => ({
+      id: group.id,
+      name: group.name,
+      blurb: group.blurb,
+      count: group.projects.length
+    }))
+  ])
 
   const filteredProjects = computed(() => {
     if (activeCategory.value === 'all') return projects.value
     return projects.value.filter((project) => project.category === activeCategory.value)
+  })
+
+  const activeGroup = computed(() => {
+    return groups.value.find((group) => group.id === activeCategory.value) || null
   })
 
   const featuredProjects = computed(() => {
@@ -45,15 +50,7 @@ export const useProjectsStore = defineStore('projects', () => {
   })
 
   const totalImages = computed(() => {
-    return projects.value.reduce((total, project) => {
-      const imageCount = Array.isArray(project.images)
-        ? project.images.length
-        : project.cover || project.image
-          ? 1
-          : 0
-
-      return total + imageCount
-    }, 0)
+    return projects.value.reduce((total, project) => total + (project.images?.length || 0), 0)
   })
 
   function setActiveCategory(category) {
@@ -67,8 +64,10 @@ export const useProjectsStore = defineStore('projects', () => {
 
   return {
     projects,
+    groups,
     categories,
     activeCategory,
+    activeGroup,
     filteredProjects,
     featuredProjects,
     heroProject,
