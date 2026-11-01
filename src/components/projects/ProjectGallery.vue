@@ -57,7 +57,7 @@
             <div class="project-lightbox__heading">
               <span class="project-lightbox__project">{{ projectName }}</span>
               <span class="project-lightbox__position" aria-hidden="true">
-                {{ activeIndex + 1 }} / {{ galleryImages.length }}
+                {{ shownIndex + 1 }} / {{ galleryImages.length }}
               </span>
             </div>
             <button
@@ -74,59 +74,62 @@
 
           <div
             class="project-lightbox__stage"
-            @click.self="closeLightbox"
+            @click="onStageClick"
             @touchstart.passive="onTouchStart"
             @touchmove="onTouchMove"
             @touchend="onTouchEnd"
             @touchcancel="onTouchCancel"
           >
-            <figure
-              v-if="currentImage"
-              class="project-lightbox__figure"
-              :class="{ 'project-lightbox__figure--dragging': isDragging }"
-              :style="figureStyle"
+            <div
+              ref="trackRef"
+              class="project-lightbox__track"
+              @transitionend.self="onTrackTransitionEnd"
             >
-              <div class="project-lightbox__media">
-                <button
-                  v-if="galleryImages.length > 1"
-                  type="button"
-                  class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--previous"
-                  aria-label="Show previous image"
-                  aria-keyshortcuts="ArrowLeft"
-                  @click="showPrevious"
-                >
-                  <span aria-hidden="true" />
-                </button>
-
+              <figure
+                v-for="slide in slides"
+                :key="slide.key"
+                class="project-lightbox__slide"
+                :style="{ '--slide-offset': slide.offset }"
+                :aria-hidden="slide.offset === 0 ? undefined : 'true'"
+              >
                 <img
-                  :key="currentImage.full || currentImage.thumb"
                   class="project-lightbox__image"
-                  :class="slideDirection ? `project-lightbox__image--from-${slideDirection}` : ''"
-                  :src="currentImage.full || currentImage.thumb"
-                  :srcset="getSrcset(currentImage)"
+                  :src="slide.image.full || slide.image.thumb"
+                  :srcset="getSrcset(slide.image)"
                   sizes="100vw"
-                  :alt="currentImage.alt"
-                  :width="currentImage.width || undefined"
-                  :height="currentImage.height || undefined"
+                  :alt="slide.offset === 0 ? slide.image.alt : ''"
+                  :width="slide.image.width || undefined"
+                  :height="slide.image.height || undefined"
                   decoding="async"
+                  draggable="false"
                 />
+                <figcaption class="project-lightbox__caption">
+                  {{ slide.image.alt }}
+                </figcaption>
+              </figure>
+            </div>
 
-                <button
-                  v-if="galleryImages.length > 1"
-                  type="button"
-                  class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--next"
-                  aria-label="Show next image"
-                  aria-keyshortcuts="ArrowRight"
-                  @click="showNext"
-                >
-                  <span aria-hidden="true" />
-                </button>
-              </div>
+            <button
+              v-if="galleryImages.length > 1"
+              type="button"
+              class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--previous"
+              aria-label="Show previous image"
+              aria-keyshortcuts="ArrowLeft"
+              @click="showPrevious"
+            >
+              <span aria-hidden="true" />
+            </button>
 
-              <figcaption class="project-lightbox__caption">
-                {{ currentImage.alt }}
-              </figcaption>
-            </figure>
+            <button
+              v-if="galleryImages.length > 1"
+              type="button"
+              class="project-lightbox__control project-lightbox__arrow project-lightbox__arrow--next"
+              aria-label="Show next image"
+              aria-keyshortcuts="ArrowRight"
+              @click="showNext"
+            >
+              <span aria-hidden="true" />
+            </button>
           </div>
 
           <div
@@ -140,10 +143,10 @@
               :key="`lightbox-${image.full || image.thumb || index}`"
               type="button"
               class="project-lightbox__thumbnail"
-              :class="{ 'project-lightbox__thumbnail--active': index === activeIndex }"
+              :class="{ 'project-lightbox__thumbnail--active': index === shownIndex }"
               :aria-label="`Show image ${index + 1}: ${image.alt}`"
-              :aria-current="index === activeIndex ? 'true' : undefined"
-              @click="showImage(index, index > activeIndex ? 'next' : 'prev')"
+              :aria-current="index === shownIndex ? 'true' : undefined"
+              @click="goTo(index)"
             >
               <img :src="image.thumb || image.full" alt="" loading="lazy" decoding="async" />
             </button>
@@ -234,95 +237,294 @@ const closeLightbox = () => {
   isOpen.value = false
 }
 
-// Which side the next picture slides in from ('next' = from the right).
-const slideDirection = ref('')
+// ---- The sliding strip ----
+// Three pictures sit side by side: the previous one (offset -1), the current
+// one (0) and the next one (1). Moving the whole strip is what slides them, so
+// a finger drag, an arrow tap and the keyboard all move the same way.
+const mod = (value, count) => ((value % count) + count) % count
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max)
 
-const showImage = (index, direction = '') => {
-  const count = galleryImages.value.length
-  if (!count) return
-  slideDirection.value = direction
-  activeIndex.value = ((index % count) + count) % count
-}
+const trackRef = ref(null)
 
-const showPrevious = () => showImage(activeIndex.value - 1, 'prev')
-const showNext = () => showImage(activeIndex.value + 1, 'next')
+// Set only while sliding to a picture that is not the direct neighbour
+// (tapping a thumbnail far away): that picture takes the neighbour's place.
+const slideTarget = ref(null)
 
-// ---- Swipe left / right on touch screens ----
-// The picture follows the finger; letting go past a short distance (or with a
-// quick flick) moves to the next / previous picture, otherwise it snaps back.
-const SWIPE_DISTANCE = 40
-const SWIPE_FLICK_DISTANCE = 20
-const SWIPE_FLICK_SPEED = 0.3 // pixels per millisecond
+// The picture the strip is gliding to. The counter and the thumbnail strip
+// follow it straight away instead of waiting for the glide to end.
+const pendingIndex = ref(null)
+const shownIndex = computed(() => pendingIndex.value ?? activeIndex.value)
 
-const isDragging = ref(false)
-const dragX = ref(0)
+const slides = computed(() => {
+  const images = galleryImages.value
+  const count = images.length
+  if (!count) return []
+  if (count === 1) return [{ key: 'i0', offset: 0, index: 0, image: images[0] }]
 
-let touchStart = null
+  const here = activeIndex.value
+  const override = slideTarget.value
+  const previous = override?.direction === -1 ? override.index : mod(here - 1, count)
+  const next = override?.direction === 1 ? override.index : mod(here + 1, count)
 
-const figureStyle = computed(() => {
-  return dragX.value ? { transform: `translateX(${dragX.value}px)` } : undefined
+  return [
+    // With only two pictures previous and next are the same one: give it a second key
+    { key: previous === next ? `i${previous}-p` : `i${previous}`, offset: -1, index: previous },
+    { key: `i${here}`, offset: 0, index: here },
+    { key: `i${next}`, offset: 1, index: next }
+  ].map((slide) => ({ ...slide, image: images[slide.index] }))
 })
 
-const resetDrag = () => {
-  touchStart = null
-  isDragging.value = false
-  dragX.value = 0
+const SLIDE_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)' // quick start, long soft landing
+const SNAP_SPEED = 0.3 // pixels per millisecond: a flick faster than this always turns the page
+const SNAP_MIN_MOVE = 16 // ...as long as the finger moved at least this far
+const SLIDE_MIN_MS = 200
+const SLIDE_MAX_MS = 440
+
+const prefersReducedMotion = () => {
+  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 }
 
-const onTouchStart = (event) => {
-  if (galleryImages.value.length < 2 || event.touches.length !== 1) {
-    resetDrag()
+let trackX = 0 // where the strip is, in pixels (0 = current picture centred)
+let gesture = null // the finger currently on the screen
+let settling = null // the strip gliding to rest: { slot, index, timer }
+let lastDragEnd = 0
+
+const stageWidth = () => trackRef.value?.parentElement?.clientWidth || window.innerWidth
+
+const setTrack = (x, durationMs = 0) => {
+  trackX = x
+  const el = trackRef.value
+  if (!el) return
+  if (durationMs > 0) {
+    // Read a layout value first so the browser starts the glide from where the
+    // strip really is, even if it was moved a moment ago.
+    void el.offsetWidth
+    el.style.transition = `transform ${durationMs}ms ${SLIDE_EASING}`
+  } else {
+    el.style.transition = 'none'
+  }
+  el.style.transform = `translate3d(${x}px, 0, 0)`
+}
+
+const readTrackX = () => {
+  const el = trackRef.value
+  if (!el) return trackX
+  const matrix = new DOMMatrixReadOnly(window.getComputedStyle(el).transform)
+  return matrix.m41
+}
+
+// The glide is over (or cut short): make the picture that arrived the current
+// one and put the strip back to rest, in the same instant so nothing flickers.
+// restX is where the strip was if someone grabbed it mid-glide.
+const finishSettle = (restX = null) => {
+  if (!settling) return
+  const { slot, index, timer } = settling
+  clearTimeout(timer)
+  settling = null
+
+  const width = stageWidth()
+  const from = restX === null ? -slot * width : restX
+  if (index !== null && index !== activeIndex.value) activeIndex.value = index
+  slideTarget.value = null
+  pendingIndex.value = null
+  setTrack(from + slot * width)
+}
+
+const onTrackTransitionEnd = (event) => {
+  if (event.propertyName === 'transform') finishSettle()
+}
+
+// Glide the strip so that picture number `slot` (-1, 0 or 1) ends up in view.
+const settleTo = (slot, { velocity = 0, index = null } = {}) => {
+  const width = stageWidth()
+  const targetX = -slot * width
+  const distance = Math.abs(targetX - trackX)
+
+  let landing = null
+  if (slot !== 0) {
+    landing = index ?? slides.value.find((slide) => slide.offset === slot)?.index ?? null
+  }
+
+  let duration = 0
+  if (!prefersReducedMotion() && distance >= 1) {
+    duration = Math.abs(velocity) > 0.1
+      ? clamp(distance / Math.abs(velocity), SLIDE_MIN_MS, SLIDE_MAX_MS)
+      : clamp(SLIDE_MAX_MS * (distance / width), SLIDE_MIN_MS, SLIDE_MAX_MS)
+  }
+
+  pendingIndex.value = landing
+
+  settling = {
+    slot,
+    index: landing,
+    // Safety net in case the browser never reports the end of the glide
+    timer: setTimeout(() => finishSettle(), duration + 120)
+  }
+
+  if (duration === 0) {
+    setTrack(targetX)
+    finishSettle()
     return
   }
+  setTrack(targetX, duration)
+}
+
+// A finger lands on a strip that is still gliding: stop it right where it is
+// and let the finger carry on from there.
+const grabStrip = () => {
+  if (!settling) return
+  finishSettle(readTrackX())
+}
+
+const goTo = (index, direction = 0) => {
+  const count = galleryImages.value.length
+  if (count < 2) return
+
+  gesture = null
+  finishSettle()
+
+  const target = mod(index, count)
+  if (target === activeIndex.value) return
+
+  const way = direction || (target > activeIndex.value ? 1 : -1)
+  if (target !== mod(activeIndex.value + way, count)) {
+    slideTarget.value = { direction: way, index: target }
+  }
+  settleTo(way, { index: target })
+}
+
+// Finish any glide in progress first, so quick repeated taps each move one step
+const showPrevious = () => {
+  finishSettle()
+  goTo(activeIndex.value - 1, -1)
+}
+
+const showNext = () => {
+  finishSettle()
+  goTo(activeIndex.value + 1, 1)
+}
+
+const resetStrip = () => {
+  if (settling) clearTimeout(settling.timer)
+  settling = null
+  gesture = null
+  slideTarget.value = null
+  pendingIndex.value = null
+  trackX = 0
+  if (trackRef.value) setTrack(0)
+}
+
+// ---- Swipe left / right on touch screens ----
+// The strip follows the finger one-to-one. On letting go it glides on from the
+// finger's speed: a short flick or a drag of a fifth of the screen turns the
+// page, anything less settles back.
+const onTouchStart = (event) => {
+  if (galleryImages.value.length < 2 || event.touches.length !== 1) {
+    gesture = null
+    return
+  }
+
+  grabStrip()
+
   const touch = event.touches[0]
-  touchStart = { x: touch.clientX, y: touch.clientY, time: Date.now(), horizontal: null }
+  gesture = {
+    startX: touch.clientX,
+    startY: touch.clientY,
+    startTrackX: trackX,
+    // The picture the strip is resting on (or closest to) when the finger lands
+    base: Math.round(-trackX / stageWidth()),
+    horizontal: null,
+    samples: [{ x: touch.clientX, t: performance.now() }]
+  }
 }
 
 const onTouchMove = (event) => {
-  if (!touchStart) return
+  if (!gesture) return
   if (event.touches.length !== 1) {
-    resetDrag()
+    cancelGesture()
     return
   }
 
   const touch = event.touches[0]
-  const dx = touch.clientX - touchStart.x
-  const dy = touch.clientY - touchStart.y
 
-  if (touchStart.horizontal === null) {
-    if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
-    touchStart.horizontal = Math.abs(dx) > Math.abs(dy)
+  if (gesture.horizontal === null) {
+    const dx = touch.clientX - gesture.startX
+    const dy = touch.clientY - gesture.startY
+    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+    gesture.horizontal = Math.abs(dx) > Math.abs(dy)
+    // Start following from here so the strip does not jump by the first few pixels
+    gesture.startX = touch.clientX
   }
 
-  if (!touchStart.horizontal) return
+  if (!gesture.horizontal) return
 
   if (event.cancelable) event.preventDefault()
-  isDragging.value = true
-  dragX.value = dx
+
+  const width = stageWidth()
+  setTrack(clamp(gesture.startTrackX + (touch.clientX - gesture.startX), -width, width))
+
+  const now = performance.now()
+  gesture.samples.push({ x: touch.clientX, t: now })
+  while (gesture.samples.length > 2 && now - gesture.samples[0].t > 100) gesture.samples.shift()
 }
 
-const onTouchEnd = (event) => {
-  if (!touchStart) return
-
-  const touch = event.changedTouches[0]
-  const dx = touch ? touch.clientX - touchStart.x : dragX.value
-  const elapsed = Math.max(Date.now() - touchStart.time, 1)
-  const speed = Math.abs(dx) / elapsed
-  const wasHorizontal = touchStart.horizontal === true
-
-  resetDrag()
-
-  if (!wasHorizontal) return
-
-  const farEnough = Math.abs(dx) >= SWIPE_DISTANCE
-  const quickFlick = Math.abs(dx) >= SWIPE_FLICK_DISTANCE && speed >= SWIPE_FLICK_SPEED
-  if (!farEnough && !quickFlick) return
-
-  if (dx < 0) showNext()
-  else showPrevious()
+// Finger speed in pixels per millisecond over the last moments of the drag
+// (0 if the finger rested before lifting).
+const fingerSpeed = (samples) => {
+  const now = performance.now()
+  const last = samples[samples.length - 1]
+  const first = samples[0]
+  if (!last || samples.length < 2 || now - last.t > 90) return 0
+  const elapsed = last.t - first.t
+  return elapsed > 0 ? (last.x - first.x) / elapsed : 0
 }
 
-const onTouchCancel = () => resetDrag()
+// A finger that grabbed a gliding strip and let go without really dragging
+// must not leave the strip stuck half way: settle it onto the nearest picture.
+const settleIfOffRest = (finished) => {
+  if (Math.abs(trackX + finished.base * stageWidth()) >= 1) settleTo(finished.base)
+}
+
+const onTouchEnd = () => {
+  if (!gesture) return
+  const finished = gesture
+  gesture = null
+  if (finished.horizontal !== true) {
+    settleIfOffRest(finished)
+    return
+  }
+
+  lastDragEnd = Date.now()
+
+  const width = stageWidth()
+  const velocity = fingerSpeed(finished.samples)
+  const moved = trackX - finished.startTrackX
+
+  let slot = finished.base
+  if (Math.abs(velocity) >= SNAP_SPEED && Math.abs(moved) >= SNAP_MIN_MOVE) {
+    slot += velocity < 0 ? 1 : -1
+  } else if (Math.abs(moved) >= Math.min(width * 0.18, 64)) {
+    slot += moved < 0 ? 1 : -1
+  }
+
+  settleTo(clamp(slot, -1, 1), { velocity })
+}
+
+function cancelGesture() {
+  if (!gesture) return
+  const cancelled = gesture
+  gesture = null
+  settleIfOffRest(cancelled)
+}
+
+const onTouchCancel = () => cancelGesture()
+
+// A tap on the dark background closes the viewer (but not the end of a swipe).
+const onStageClick = (event) => {
+  if (Date.now() - lastDragEnd < 350) return
+  if (event.target.closest?.('button, img, figcaption')) return
+  closeLightbox()
+}
 
 // Keep the thumbnail of the current picture in view in the strip below.
 const centerActiveThumbnail = () => {
@@ -437,10 +639,9 @@ const handleKeydown = (event) => {
 const preloadAdjacentImages = () => {
   if (!isOpen.value || galleryImages.value.length < 2) return
 
-  const adjacentIndexes = [
-    (activeIndex.value - 1 + galleryImages.value.length) % galleryImages.value.length,
-    (activeIndex.value + 1) % galleryImages.value.length
-  ]
+  // Two pictures each way, so a quick run of swipes never waits on a download
+  const count = galleryImages.value.length
+  const adjacentIndexes = [-2, -1, 1, 2].map((step) => mod(shownIndex.value + step, count))
 
   adjacentIndexes.forEach((index) => {
     const source = galleryImages.value[index]?.full
@@ -453,6 +654,7 @@ const preloadAdjacentImages = () => {
 
 watch(isOpen, async (open) => {
   if (open) {
+    resetStrip()
     lockBodyScroll()
     document.addEventListener('keydown', handleKeydown, true)
     await nextTick()
@@ -465,8 +667,7 @@ watch(isOpen, async (open) => {
     return
   }
 
-  resetDrag()
-  slideDirection.value = ''
+  resetStrip()
 
   document.removeEventListener('keydown', handleKeydown, true)
   restoreBackground()
@@ -475,7 +676,7 @@ watch(isOpen, async (open) => {
   if (lastTriggerRef.value?.isConnected) lastTriggerRef.value.focus()
 })
 
-watch(activeIndex, async () => {
+watch(shownIndex, async () => {
   preloadAdjacentImages()
   await nextTick()
   centerActiveThumbnail()
@@ -673,20 +874,32 @@ onBeforeUnmount(() => {
 }
 
 .project-lightbox__stage {
-  display: flex;
+  position: relative;
   min-height: 0;
+  /* clip: the off-screen neighbours can never be scrolled into view */
   overflow: hidden;
-  align-items: center;
-  justify-content: center;
+  overflow: clip;
   /* Up/down stays with the browser, left/right is ours (swipe to change picture) */
   touch-action: pan-y pinch-zoom;
   -webkit-user-select: none;
   user-select: none;
-  padding: clamp(var(--space-3), 2vw, var(--space-6)) clamp(var(--space-4), 3vw, var(--space-10));
 }
 
 .project-lightbox__arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
   font-size: 0;
+  background: rgba(13, 23, 23, 0.6);
+  transform: translateY(-50%);
+}
+
+.project-lightbox__arrow--previous {
+  left: clamp(var(--space-3), 2vw, var(--space-8));
+}
+
+.project-lightbox__arrow--next {
+  right: clamp(var(--space-3), 2vw, var(--space-8));
 }
 
 .project-lightbox__arrow span {
@@ -705,35 +918,33 @@ onBeforeUnmount(() => {
   transform: rotate(-45deg);
 }
 
-.project-lightbox__figure {
+/* The strip: previous, current and next picture sit side by side. The strip
+   itself moves (set from script) so the pictures follow the finger. */
+.project-lightbox__track {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.project-lightbox__slide {
+  position: absolute;
+  inset: 0;
   display: flex;
-  width: 100%;
   min-width: 0;
   min-height: 0;
-  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0;
-  transition: transform var(--transition-base);
-}
-
-.project-lightbox__figure--dragging {
-  transition: none;
-}
-
-.project-lightbox__media {
-  display: grid;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: clamp(var(--space-3), 2vw, var(--space-8));
+  /* Side padding keeps the picture clear of the arrow buttons on wide screens */
+  padding: clamp(var(--space-3), 2vw, var(--space-6)) clamp(5rem, 9vw, 7.5rem);
+  /* -1 = one screen to the left, 0 = in view, 1 = one screen to the right */
+  transform: translate3d(calc(var(--slide-offset, 0) * 100%), 0, 0);
+  backface-visibility: hidden;
 }
 
 .project-lightbox__image {
-  justify-self: center;
+  display: block;
   width: auto;
   max-width: 100%;
   height: auto;
@@ -741,38 +952,6 @@ onBeforeUnmount(() => {
   object-fit: contain;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
   -webkit-user-drag: none;
-}
-
-.project-lightbox__image--from-next {
-  animation: lightbox-slide-from-next 0.28s ease-out;
-}
-
-.project-lightbox__image--from-prev {
-  animation: lightbox-slide-from-prev 0.28s ease-out;
-}
-
-@keyframes lightbox-slide-from-next {
-  from {
-    opacity: 0;
-    transform: translateX(28px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes lightbox-slide-from-prev {
-  from {
-    opacity: 0;
-    transform: translateX(-28px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .project-lightbox__caption {
@@ -877,26 +1056,9 @@ onBeforeUnmount(() => {
     gap: var(--space-3);
   }
 
-  .project-lightbox__stage {
+  .project-lightbox__slide {
     padding-right: var(--space-3);
     padding-left: var(--space-3);
-  }
-
-  .project-lightbox__media {
-    position: relative;
-    display: block;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  .project-lightbox__arrow {
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    width: 3rem;
-    height: 3rem;
-    background: rgba(13, 23, 23, 0.6);
-    transform: translateY(-50%);
   }
 
   .project-lightbox__arrow--previous {
@@ -908,7 +1070,6 @@ onBeforeUnmount(() => {
   }
 
   .project-lightbox__image {
-    display: block;
     max-height: calc(100dvh - 14rem);
   }
 
@@ -923,15 +1084,9 @@ onBeforeUnmount(() => {
   .project-gallery__shade,
   .project-lightbox__control,
   .project-lightbox__thumbnail,
-  .project-lightbox__figure,
   .project-lightbox-enter-active,
   .project-lightbox-leave-active {
     transition: none;
-  }
-
-  .project-lightbox__image--from-next,
-  .project-lightbox__image--from-prev {
-    animation: none;
   }
 
   .project-gallery__trigger:hover .project-gallery__image,
