@@ -44,6 +44,22 @@
   transform: translateX(0);
 }
 
+/* Smaller slide on phones so nothing starts far outside the screen */
+@media (max-width: 768px) {
+  .slide-in-left {
+    transform: translateX(-24px);
+  }
+
+  .slide-in-right {
+    transform: translateX(24px);
+  }
+
+  .slide-in-left.visible,
+  .slide-in-right.visible {
+    transform: translateX(0);
+  }
+}
+
 /* Scale Animations */
 .scale-in {
   opacity: 0;

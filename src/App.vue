@@ -27,6 +27,12 @@ import TheFooter from '@/components/layout/TheFooter.vue'
 
 main {
   flex: 1;
+  /* Slide-in sections start a few pixels off to the side. Clip them so they
+     can never make the page wider than the screen (this is what let the page
+     slide sideways on phones). clip keeps sticky elements working. */
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 #main-content:focus {

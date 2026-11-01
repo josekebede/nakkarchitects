@@ -62,7 +62,8 @@ const router = createRouter({
     if (to.hash) {
       return { el: to.hash, behavior: 'smooth' }
     }
-    return { top: 0, behavior: 'smooth' }
+    // left: 0 too, so a page that was nudged sideways never stays that way
+    return { top: 0, left: 0, behavior: 'smooth' }
   }
 })
 
