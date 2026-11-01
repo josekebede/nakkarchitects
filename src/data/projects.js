@@ -109,7 +109,16 @@ const definitions = [
       { file: "008", w: 1920, h: 1219, tw: 720, th: 457, alt: "Corner glazing above the slatted entry gate" },
       { file: "009", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side approach with a stone-clad wing and glass balconies" },
       { file: "010", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side elevation with a timber slat screen and stone-clad volume" },
-      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Rear corner view with cypress trees and garden wall" }
+      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Rear corner view with cypress trees and garden wall" },
+      { file: "012", w: 1920, h: 1217, tw: 720, th: 456, alt: "Front elevation at dusk with the slatted gate, car port and lit garden wall" },
+      { file: "013", w: 1920, h: 1219, tw: 720, th: 457, alt: "Street corner view with the lit gate and hedged frontage" },
+      { file: "014", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side-angle street view with the entry gate and boundary wall" },
+      { file: "015", w: 1920, h: 1217, tw: 720, th: 456, alt: "Close view of the terraced facade with hanging planters and a glass-balustrade balcony" },
+      { file: "016", w: 1920, h: 1217, tw: 720, th: 456, alt: "Car port beside the double-height glazed dining and stair hall" },
+      { file: "017", w: 1920, h: 1217, tw: 720, th: 456, alt: "Side elevation from the garden, with stacked terraces and a stone-clad tower" },
+      { file: "018", w: 1920, h: 1217, tw: 720, th: 456, alt: "Raised corner view of the hanging planters, timber screen and glazed living levels" },
+      { file: "019", w: 1920, h: 1217, tw: 720, th: 456, alt: "Street-side view with the lit gate, boundary wall and tree-lined plot" },
+      { file: "020", w: 1920, h: 1217, tw: 720, th: 456, alt: "Garden-side corner view of the stone-clad tower and glazed stair hall" }
     ]
   },
   {
@@ -252,10 +261,22 @@ const definitions = [
     name: "Glass High-Rise Tower",
     category: "commercial",
     kind: "render",
-    summary: "A glass-clad high-rise tower with a cantilevered sky terrace, studied in its urban setting.",
+    summary: "A glass-clad high-rise tower of stacked, offset volumes with planted terraces, a timber-lined cantilevered sky terrace and a double-height glazed entrance, studied by day and at dusk in its waterfront setting.",
     images: [
-      { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Tower rising above street-level planting" },
-      { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Upper floors and cantilevered terrace of the tower" }
+      { file: "001", w: 1920, h: 1280, tw: 720, th: 480, alt: "Corner view of the glass tower from the avenue, with stacked terraces and a timber-lined sky terrace" },
+      { file: "002", w: 1920, h: 1280, tw: 720, th: 480, alt: "White side wall and glazed facade seen from the avenue" },
+      { file: "003", w: 1920, h: 1280, tw: 720, th: 480, alt: "Entrance corner with a timber soffit, glazed lobby and agave planting" },
+      { file: "004", w: 1920, h: 1219, tw: 720, th: 457, alt: "Looking up at the tower from the road between palms" },
+      { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Slim front elevation of the tower with palms and street planting" },
+      { file: "006", w: 1920, h: 1219, tw: 720, th: 457, alt: "White side wall at dusk with the tower's offset volumes" },
+      { file: "007", w: 1920, h: 1217, tw: 720, th: 456, alt: "Corner view at dusk from the avenue" },
+      { file: "008", w: 1920, h: 1217, tw: 720, th: 456, alt: "Tower from the paved plaza across the avenue" },
+      { file: "009", w: 1920, h: 1280, tw: 720, th: 480, alt: "Lower floors, planted terrace and glazed entrance from the avenue" },
+      { file: "010", w: 1920, h: 1217, tw: 720, th: 456, alt: "Street view from the road, with traffic and palms in front of the tower" },
+      { file: "011", w: 1920, h: 1217, tw: 720, th: 456, alt: "Glazed entrance and timber soffit seen from the pavement at dusk" },
+      { file: "012", w: 1920, h: 1217, tw: 720, th: 456, alt: "Front elevation at dusk rising above street-level planting" },
+      { file: "013", w: 1920, h: 1217, tw: 720, th: 456, alt: "Aerial view of the tower and its riverside surroundings" },
+      { file: "014", w: 1920, h: 1217, tw: 720, th: 456, alt: "Aerial view of the upper floors and cantilevered terrace" }
     ]
   },
   {
