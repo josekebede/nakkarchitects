@@ -151,7 +151,7 @@ const definitions = [
   },
   {
     slug: "mid-rise-apartment-building",
-    name: "Mid-Rise Apartment Building",
+    name: "WS Apartment",
     category: "apartments",
     kind: "render",
     featured: true,
@@ -188,7 +188,7 @@ const definitions = [
   },
   {
     slug: "open-plan-corporate-office",
-    name: "Open-Plan Corporate Office",
+    name: "Abay Technical & Trading",
     category: "offices",
     kind: "render",
     featured: true,
@@ -219,7 +219,7 @@ const definitions = [
   },
   {
     slug: "public-sector-office",
-    name: "Public-Sector Office",
+    name: "Ethiopian Nuclear Energy Commission Office",
     category: "offices",
     kind: "render",
     summary: "Reception and workplace interiors for a public-sector office, with a sculpted reception desk, open-plan workstations and a conference room.",
@@ -235,7 +235,7 @@ const definitions = [
   },
   {
     slug: "completed-office-interiors",
-    name: "Completed Office Interiors",
+    name: "Abay Technical & Trading",
     category: "offices",
     kind: "photo",
     cover: "007",
@@ -258,7 +258,7 @@ const definitions = [
   },
   {
     slug: "glass-high-rise-tower",
-    name: "Glass High-Rise Tower",
+    name: "Dousin Mixed-Use Building",
     category: "commercial",
     kind: "render",
     summary: "A glass-clad high-rise tower of stacked, offset volumes with planted terraces, a timber-lined cantilevered sky terrace and a double-height glazed entrance, studied by day and at dusk in its waterfront setting.",
@@ -281,7 +281,7 @@ const definitions = [
   },
   {
     slug: "menswear-store",
-    name: "Menswear Store",
+    name: "Mebri Menswear Store",
     category: "commercial",
     kind: "render",
     summary: "A menswear boutique in warm timber, black steel and dark marble: a glazed storefront with a fan of linear lights, slatted display walls, stepped shoe displays, lounge seating and a marble-based cash desk.",
@@ -312,7 +312,7 @@ const definitions = [
   },
   {
     slug: "cigar-lounge",
-    name: "Cigar Lounge & Bar",
+    name: "Pace Cigar Lounge & Bar",
     category: "hospitality",
     kind: "render",
     featured: true,
@@ -352,7 +352,7 @@ const definitions = [
   },
   {
     slug: "ice-cream-shop",
-    name: "Ice Cream Parlour",
+    name: "Scoops & Bites Ice Cream Shop",
     category: "hospitality",
     kind: "render",
     cover: "004",
@@ -384,7 +384,7 @@ const definitions = [
   },
   {
     slug: "medical-clinic-and-pharmacy",
-    name: "Medical Clinic & Pharmacy",
+    name: "Ayzon Medical Center",
     category: "healthcare",
     kind: "render",
     featured: true,
@@ -413,7 +413,7 @@ const definitions = [
   },
   {
     slug: "creative-training-academy",
-    name: "Creative Training Academy",
+    name: "Hasset Academy",
     category: "education",
     kind: "render",
     featured: true,
