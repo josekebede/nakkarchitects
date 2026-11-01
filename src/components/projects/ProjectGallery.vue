@@ -72,8 +72,20 @@
             </button>
           </header>
 
-          <div class="project-lightbox__stage" @click.self="closeLightbox">
-            <figure v-if="currentImage" class="project-lightbox__figure">
+          <div
+            class="project-lightbox__stage"
+            @click.self="closeLightbox"
+            @touchstart.passive="onTouchStart"
+            @touchmove="onTouchMove"
+            @touchend="onTouchEnd"
+            @touchcancel="onTouchCancel"
+          >
+            <figure
+              v-if="currentImage"
+              class="project-lightbox__figure"
+              :class="{ 'project-lightbox__figure--dragging': isDragging }"
+              :style="figureStyle"
+            >
               <div class="project-lightbox__media">
                 <button
                   v-if="galleryImages.length > 1"
@@ -89,6 +101,7 @@
                 <img
                   :key="currentImage.full || currentImage.thumb"
                   class="project-lightbox__image"
+                  :class="slideDirection ? `project-lightbox__image--from-${slideDirection}` : ''"
                   :src="currentImage.full || currentImage.thumb"
                   :srcset="getSrcset(currentImage)"
                   sizes="100vw"
@@ -130,7 +143,7 @@
               :class="{ 'project-lightbox__thumbnail--active': index === activeIndex }"
               :aria-label="`Show image ${index + 1}: ${image.alt}`"
               :aria-current="index === activeIndex ? 'true' : undefined"
-              @click="showImage(index)"
+              @click="showImage(index, index > activeIndex ? 'next' : 'prev')"
             >
               <img :src="image.thumb || image.full" alt="" loading="lazy" decoding="async" />
             </button>
@@ -221,14 +234,104 @@ const closeLightbox = () => {
   isOpen.value = false
 }
 
-const showImage = (index) => {
+// Which side the next picture slides in from ('next' = from the right).
+const slideDirection = ref('')
+
+const showImage = (index, direction = '') => {
   const count = galleryImages.value.length
   if (!count) return
+  slideDirection.value = direction
   activeIndex.value = ((index % count) + count) % count
 }
 
-const showPrevious = () => showImage(activeIndex.value - 1)
-const showNext = () => showImage(activeIndex.value + 1)
+const showPrevious = () => showImage(activeIndex.value - 1, 'prev')
+const showNext = () => showImage(activeIndex.value + 1, 'next')
+
+// ---- Swipe left / right on touch screens ----
+// The picture follows the finger; letting go past a short distance (or with a
+// quick flick) moves to the next / previous picture, otherwise it snaps back.
+const SWIPE_DISTANCE = 40
+const SWIPE_FLICK_DISTANCE = 20
+const SWIPE_FLICK_SPEED = 0.3 // pixels per millisecond
+
+const isDragging = ref(false)
+const dragX = ref(0)
+
+let touchStart = null
+
+const figureStyle = computed(() => {
+  return dragX.value ? { transform: `translateX(${dragX.value}px)` } : undefined
+})
+
+const resetDrag = () => {
+  touchStart = null
+  isDragging.value = false
+  dragX.value = 0
+}
+
+const onTouchStart = (event) => {
+  if (galleryImages.value.length < 2 || event.touches.length !== 1) {
+    resetDrag()
+    return
+  }
+  const touch = event.touches[0]
+  touchStart = { x: touch.clientX, y: touch.clientY, time: Date.now(), horizontal: null }
+}
+
+const onTouchMove = (event) => {
+  if (!touchStart) return
+  if (event.touches.length !== 1) {
+    resetDrag()
+    return
+  }
+
+  const touch = event.touches[0]
+  const dx = touch.clientX - touchStart.x
+  const dy = touch.clientY - touchStart.y
+
+  if (touchStart.horizontal === null) {
+    if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
+    touchStart.horizontal = Math.abs(dx) > Math.abs(dy)
+  }
+
+  if (!touchStart.horizontal) return
+
+  if (event.cancelable) event.preventDefault()
+  isDragging.value = true
+  dragX.value = dx
+}
+
+const onTouchEnd = (event) => {
+  if (!touchStart) return
+
+  const touch = event.changedTouches[0]
+  const dx = touch ? touch.clientX - touchStart.x : dragX.value
+  const elapsed = Math.max(Date.now() - touchStart.time, 1)
+  const speed = Math.abs(dx) / elapsed
+  const wasHorizontal = touchStart.horizontal === true
+
+  resetDrag()
+
+  if (!wasHorizontal) return
+
+  const farEnough = Math.abs(dx) >= SWIPE_DISTANCE
+  const quickFlick = Math.abs(dx) >= SWIPE_FLICK_DISTANCE && speed >= SWIPE_FLICK_SPEED
+  if (!farEnough && !quickFlick) return
+
+  if (dx < 0) showNext()
+  else showPrevious()
+}
+
+const onTouchCancel = () => resetDrag()
+
+// Keep the thumbnail of the current picture in view in the strip below.
+const centerActiveThumbnail = () => {
+  const strip = lightboxRef.value?.querySelector('.project-lightbox__filmstrip')
+  const active = strip?.querySelector('.project-lightbox__thumbnail--active')
+  if (!strip || !active) return
+  const target = active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2
+  strip.scrollTo({ left: Math.max(target, 0), behavior: 'smooth' })
+}
 
 const lockBodyScroll = () => {
   previousBodyStyles = {
@@ -354,11 +457,16 @@ watch(isOpen, async (open) => {
     document.addEventListener('keydown', handleKeydown, true)
     await nextTick()
     if (!isOpen.value) return
-    closeButtonRef.value?.focus()
+    // preventScroll: focusing must never slide the viewer sideways
+    closeButtonRef.value?.focus({ preventScroll: true })
     isolateBackground()
     preloadAdjacentImages()
+    centerActiveThumbnail()
     return
   }
+
+  resetDrag()
+  slideDirection.value = ''
 
   document.removeEventListener('keydown', handleKeydown, true)
   restoreBackground()
@@ -367,7 +475,11 @@ watch(isOpen, async (open) => {
   if (lastTriggerRef.value?.isConnected) lastTriggerRef.value.focus()
 })
 
-watch(activeIndex, preloadAdjacentImages)
+watch(activeIndex, async () => {
+  preloadAdjacentImages()
+  await nextTick()
+  centerActiveThumbnail()
+})
 
 watch(
   () => props.images,
@@ -479,12 +591,20 @@ onBeforeUnmount(() => {
   inset: 0;
   z-index: var(--z-modal);
   display: grid;
+  /* One column that can never grow wider than the screen. Without this, a long
+     project title stretched the viewer past the screen edge and it opened
+     shifted to the left with the left side cut off. */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   width: 100%;
   height: 100dvh;
   overflow: hidden;
   background: rgba(13, 23, 23, 0.985);
   color: var(--white);
+}
+
+.project-lightbox > * {
+  min-width: 0;
 }
 
 .project-lightbox__header {
@@ -505,6 +625,7 @@ onBeforeUnmount(() => {
 }
 
 .project-lightbox__project {
+  min-width: 0;
   overflow: hidden;
   color: var(--white);
   font-family: var(--font-heading);
@@ -554,8 +675,13 @@ onBeforeUnmount(() => {
 .project-lightbox__stage {
   display: flex;
   min-height: 0;
+  overflow: hidden;
   align-items: center;
   justify-content: center;
+  /* Up/down stays with the browser, left/right is ours (swipe to change picture) */
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
   padding: clamp(var(--space-3), 2vw, var(--space-6)) clamp(var(--space-4), 3vw, var(--space-10));
 }
 
@@ -589,6 +715,11 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   margin: 0;
+  transition: transform var(--transition-base);
+}
+
+.project-lightbox__figure--dragging {
+  transition: none;
 }
 
 .project-lightbox__media {
@@ -609,6 +740,39 @@ onBeforeUnmount(() => {
   max-height: calc(100dvh - 13rem);
   object-fit: contain;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
+  -webkit-user-drag: none;
+}
+
+.project-lightbox__image--from-next {
+  animation: lightbox-slide-from-next 0.28s ease-out;
+}
+
+.project-lightbox__image--from-prev {
+  animation: lightbox-slide-from-prev 0.28s ease-out;
+}
+
+@keyframes lightbox-slide-from-next {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lightbox-slide-from-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .project-lightbox__caption {
@@ -759,9 +923,15 @@ onBeforeUnmount(() => {
   .project-gallery__shade,
   .project-lightbox__control,
   .project-lightbox__thumbnail,
+  .project-lightbox__figure,
   .project-lightbox-enter-active,
   .project-lightbox-leave-active {
     transition: none;
+  }
+
+  .project-lightbox__image--from-next,
+  .project-lightbox__image--from-prev {
+    animation: none;
   }
 
   .project-gallery__trigger:hover .project-gallery__image,
