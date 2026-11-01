@@ -235,7 +235,7 @@ const definitions = [
   },
   {
     slug: "completed-office-interiors",
-    name: "Abay Technical & Trading",
+    name: "Abay Homes Real Estate",
     category: "offices",
     kind: "photo",
     cover: "007",
