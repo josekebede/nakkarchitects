@@ -34,10 +34,10 @@
         <div class="footer__links">
           <h4 class="footer__heading">Services</h4>
           <ul>
-            <li><span>Architectural Design</span></li>
-            <li><span>Interior Design</span></li>
-            <li><span>Project Management</span></li>
-            <li><span>Consultation</span></li>
+            <li><RouterLink :to="{ path: '/about', hash: '#services' }">Architectural Design</RouterLink></li>
+            <li><RouterLink :to="{ path: '/about', hash: '#services' }">Interior Design</RouterLink></li>
+            <li><RouterLink :to="{ path: '/about', hash: '#services' }">Project Management</RouterLink></li>
+            <li><RouterLink :to="{ path: '/contact', query: { subject: 'consultation' }, hash: '#contact-form' }">Consultation</RouterLink></li>
           </ul>
         </div>
 
@@ -46,7 +46,13 @@
           <h4 class="footer__heading">Contact</h4>
           <div class="footer__contact-item">
             <span class="footer__contact-label">Address</span>
-            <span>Mina Building, Wolo Sefer<br>Ethio China St, Addis Ababa</span>
+            <a
+              class="footer__address"
+              href="https://www.google.com/maps/search/?api=1&query=Mina+Building+Wolo+Sefer+Ethio+China+Street+Addis+Ababa"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open in maps"
+            >Mina Building, Wolo Sefer<br>Ethio China St, Addis Ababa</a>
           </div>
           <div class="footer__contact-item">
             <span class="footer__contact-label">Email</span>
@@ -160,6 +166,12 @@ const currentYear = computed(() => new Date().getFullYear())
   color: var(--white);
 }
 
+/* Roomy tap area for fingers, without changing how the list looks */
+.footer__links a {
+  display: inline-block;
+  padding: var(--space-1) 0;
+}
+
 /* Contact */
 .footer__contact-item {
   margin-bottom: var(--space-4);
@@ -185,6 +197,19 @@ const currentYear = computed(() => new Date().getFullYear())
 
 .footer__contact-item a:hover {
   color: var(--white);
+}
+
+.footer__contact-item a {
+  display: inline-block;
+  padding: var(--space-1) 0;
+}
+
+.footer__address {
+  line-height: var(--leading-relaxed);
+}
+
+.footer__address:hover {
+  text-decoration: underline;
 }
 
 /* Social */
@@ -256,6 +281,12 @@ const currentYear = computed(() => new Date().getFullYear())
 
   .footer {
     padding: var(--space-12) 0 var(--space-6);
+  }
+
+  /* Bigger tap area on phones */
+  .footer__links a,
+  .footer__contact-item a:not(.footer__address) {
+    padding: var(--space-2) 0;
   }
 }
 </style>

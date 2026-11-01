@@ -60,7 +60,14 @@ const router = createRouter({
       return savedPosition
     }
     if (to.hash) {
-      return { el: to.hash, behavior: 'smooth' }
+      // top: keeps the target clear of the fixed navbar
+      const target = { el: to.hash, top: 96, behavior: 'smooth' }
+      // Coming from another page, the new page only appears once the old one has
+      // faded out (about 0.3s), so give it a moment before looking for the target.
+      if (from.path !== to.path) {
+        return new Promise((resolve) => setTimeout(() => resolve(target), 500))
+      }
+      return target
     }
     // left: 0 too, so a page that was nudged sideways never stays that way
     return { top: 0, left: 0, behavior: 'smooth' }

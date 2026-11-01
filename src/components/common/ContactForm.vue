@@ -131,7 +131,11 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const SUBJECT_OPTIONS = ['new-project', 'consultation', 'partnership', 'general', 'other']
 
 const form = reactive({
   name: '',
@@ -152,6 +156,18 @@ const errors = reactive({
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
 const submitError = ref('')
+
+// Links like /contact?subject=consultation open the form with that subject chosen
+watch(
+  () => route.query.subject,
+  (subject) => {
+    if (typeof subject === 'string' && SUBJECT_OPTIONS.includes(subject)) {
+      form.subject = subject
+      errors.subject = ''
+    }
+  },
+  { immediate: true }
+)
 
 const validateForm = () => {
   let isValid = true

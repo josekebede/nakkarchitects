@@ -80,7 +80,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="about-services section">
+    <section id="services" class="about-services section">
       <div class="container">
         <AnimatedSection animation="fade-in" class="section-header">
           <span class="about-services__label">What We Do</span>
