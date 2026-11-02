@@ -32,6 +32,10 @@
                   <dt>Format</dt>
                   <dd>{{ project.kindLabel }}</dd>
                 </div>
+                <div v-if="project.collaboration">
+                  <dt>Collaboration</dt>
+                  <dd>{{ project.collaboration }}</dd>
+                </div>
                 <div>
                   <dt>Gallery</dt>
                   <dd>{{ imageCount }} {{ imageCount === 1 ? 'image' : 'images' }}</dd>
