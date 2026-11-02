@@ -76,7 +76,7 @@ const definitions = [
   },
   {
     slug: "cubic-white-villa",
-    name: "Ftisum's Residence",
+    name: "Cubic White Villa",
     category: "houses",
     kind: "render",
     summary: "A crisp white villa composed of stacked volumes, with glazed terraces, teal-tinted balustrades and a recessed entry with covered parking.",
@@ -94,7 +94,7 @@ const definitions = [
   },
   {
     slug: "garden-terrace-villa",
-    name: "Selamawit Residence",
+    name: "Garden Terrace Villa",
     category: "houses",
     kind: "render",
     summary: "A multi-level white and stone villa framed by a dark tile canopy, with glass balustrades, hanging planters on the upper terraces, full-height glazing to the living and dining levels, a slatted entry gate and a landscaped garden setting.",
@@ -123,7 +123,7 @@ const definitions = [
   },
   {
     slug: "villa-with-pool",
-    name: "Ejigu Residence",
+    name: "Villa with Pool",
     category: "houses",
     kind: "photo",
     summary: "Photographs of a completed villa: a double-height living hall with a glass-block feature wall, a glazed stair landing, a marble-clad bathroom and a garden terrace with swimming pool.",
