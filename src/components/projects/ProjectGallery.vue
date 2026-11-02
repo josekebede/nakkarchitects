@@ -23,7 +23,8 @@
             :alt="image.alt"
             :width="image.width || undefined"
             :height="image.height || undefined"
-            loading="lazy"
+            :loading="index < 2 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 0 ? 'high' : undefined"
             decoding="async"
           />
           <span class="project-gallery__shade" aria-hidden="true" />

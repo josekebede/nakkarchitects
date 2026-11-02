@@ -11,14 +11,15 @@
             </ol>
           </nav>
 
-          <div class="project-intro__grid">
-            <div class="project-intro__copy">
-              <RouterLink class="project-intro__back" to="/projects">
-                <span aria-hidden="true">&larr;</span>
-                All projects
-              </RouterLink>
-              <p class="project-intro__eyebrow">{{ categoryLabel }}</p>
-              <h1 ref="pageHeadingRef" tabindex="-1">{{ project.name }}</h1>
+          <div class="project-intro__copy">
+            <RouterLink class="project-intro__back" to="/projects">
+              <span aria-hidden="true">&larr;</span>
+              All projects
+            </RouterLink>
+            <p class="project-intro__eyebrow">{{ categoryLabel }}</p>
+            <h1 ref="pageHeadingRef" tabindex="-1">{{ project.name }}</h1>
+
+            <div class="project-intro__body">
               <p v-if="projectSummary" class="project-intro__summary">
                 {{ projectSummary }}
               </p>
@@ -42,19 +43,6 @@
                 </div>
               </dl>
             </div>
-
-            <figure v-if="coverImage" class="project-intro__cover">
-              <img
-                :src="coverImage.thumb || coverImage.full"
-                :srcset="coverSrcset"
-                sizes="(max-width: 900px) 100vw, 48vw"
-                :alt="coverImage.alt"
-                :width="coverImage.width || undefined"
-                :height="coverImage.height || undefined"
-                fetchpriority="high"
-                decoding="async"
-              />
-            </figure>
           </div>
         </div>
       </header>
@@ -202,16 +190,6 @@ const coverImage = computed(() => {
   return normalizeImage(project.value.images?.[0], fallbackAlt)
 })
 
-const coverSrcset = computed(() => {
-  const image = coverImage.value
-  if (!image?.thumb || !image?.full || image.thumb === image.full) return undefined
-
-  const fullWidth = Number(image.width) || 1600
-  const thumbWidth = Number(image.thumbWidth) || Math.min(720, Math.max(320, fullWidth))
-  if (fullWidth <= thumbWidth) return undefined
-  return `${image.thumb} ${thumbWidth}w, ${image.full} ${fullWidth}w`
-})
-
 const projectPath = (item) => `/projects/${encodeURIComponent(item.slug)}`
 
 watch(
@@ -268,7 +246,7 @@ watch(
 .project-intro__container {
   position: relative;
   padding-top: var(--space-8);
-  padding-bottom: clamp(var(--space-16), 9vw, var(--space-24));
+  padding-bottom: clamp(var(--space-10), 6vw, var(--space-16));
 }
 
 .project-breadcrumbs {
@@ -305,15 +283,15 @@ watch(
   color: var(--primary-dark);
 }
 
-.project-intro__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(24rem, 1.1fr);
-  align-items: center;
-  gap: clamp(var(--space-10), 7vw, var(--space-24));
+.project-intro__copy {
+  max-width: 64rem;
 }
 
-.project-intro__copy {
-  max-width: 42rem;
+/* Summary on the left, project details on the right (stacked on phones) */
+.project-intro__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
 }
 
 .project-intro__back {
@@ -349,7 +327,7 @@ watch(
 }
 
 .project-intro h1 {
-  max-width: 13ch;
+  max-width: 20ch;
   margin-bottom: var(--space-6);
   color: var(--primary-darker);
   font-size: clamp(var(--text-4xl), 5vw, var(--text-7xl));
@@ -358,7 +336,7 @@ watch(
 
 .project-intro__summary {
   max-width: 38rem;
-  margin-bottom: var(--space-10);
+  margin-bottom: 0;
   color: var(--text-secondary);
   font-size: clamp(var(--text-base), 1.8vw, var(--text-xl));
   line-height: var(--leading-relaxed);
@@ -390,33 +368,8 @@ watch(
   font-weight: var(--font-medium);
 }
 
-.project-intro__cover {
-  position: relative;
-  margin: 0;
-}
-
-.project-intro__cover::before {
-  position: absolute;
-  inset: var(--space-6) calc(0px - var(--space-6)) calc(0px - var(--space-6)) var(--space-6);
-  z-index: 0;
-  border-radius: var(--radius-lg);
-  background: var(--primary);
-  content: '';
-}
-
-.project-intro__cover img {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-height: 38rem;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  object-fit: cover;
-}
-
 .project-gallery-section {
-  padding: clamp(var(--space-16), 9vw, var(--space-24)) 0;
+  padding: clamp(var(--space-10), 6vw, var(--space-16)) 0 clamp(var(--space-16), 9vw, var(--space-24));
 }
 
 .project-gallery-section__heading {
@@ -533,17 +486,20 @@ watch(
   margin-bottom: var(--space-8);
 }
 
-@media (max-width: 900px) {
-  .project-intro__grid {
-    grid-template-columns: 1fr;
+@media (min-width: 901px) {
+  .project-intro__body {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 0.8fr);
+    align-items: start;
+    gap: clamp(var(--space-12), 7vw, var(--space-24));
   }
 
-  .project-intro__copy {
-    max-width: 46rem;
-  }
-
-  .project-intro__cover {
-    width: calc(100% - var(--space-6));
+  .project-intro__facts {
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-top: 0;
+    padding-left: var(--space-8);
+    border-top: 0;
+    border-left: 1px solid var(--gray-200);
   }
 }
 
@@ -573,10 +529,6 @@ watch(
 @media (max-width: 560px) {
   .project-intro__facts {
     gap: var(--space-5);
-  }
-
-  .project-intro__cover::before {
-    inset: var(--space-3) calc(0px - var(--space-3)) calc(0px - var(--space-3)) var(--space-3);
   }
 
   .project-neighbors__container {
