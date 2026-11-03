@@ -399,6 +399,11 @@ const definitions = [
     featured: true,
     summary: "A medical and dental clinic with a calm reception hall, treatment rooms with city views, and a retail pharmacy finished in copper, timber and terrazzo.",
     images: [
+      { file: "021", w: 1920, h: 1219, tw: 720, th: 457, alt: "Clinic front corner with the terracotta leaf wall, sign wall and entrance door" },
+      { file: "022", w: 1920, h: 1217, tw: 720, th: 456, alt: "Clinic and pharmacy entrances seen from the atrium, with the sign wall on the right" },
+      { file: "023", w: 1920, h: 1217, tw: 720, th: 456, alt: "Ayzon Boutique Clinic sign wall in terracotta with warm spotlights" },
+      { file: "024", w: 1920, h: 1219, tw: 720, th: 457, alt: "Pharmacy and clinic reception frontage behind full-height glass" },
+      { file: "025", w: 1920, h: 1217, tw: 720, th: 456, alt: "Walkway along the clinic front, with the sign wall and leaf feature wall" },
       { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Dental treatment room with city views" },
       { file: "002", w: 1309, h: 830, tw: 720, th: 457, alt: "Consulting room with reception desk" },
       { file: "003", w: 1309, h: 830, tw: 720, th: 457, alt: "Treatment room with dental chair" },
