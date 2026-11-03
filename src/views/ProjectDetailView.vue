@@ -202,7 +202,7 @@ watch(
     const canonicalUrl = new URL(route.path, 'https://nakkarchitecture.com').href
     const imageUrl = coverImage.value?.full
       ? new URL(coverImage.value.full, 'https://nakkarchitecture.com').href
-      : 'https://nakkarchitecture.com/projects/limestone-villa/full/009.webp'
+      : 'https://nakkarchitecture.com/projects/limestone-villa/full/023.webp'
 
     document.title = title
     document.querySelector('meta[name="description"]')?.setAttribute('content', description)
