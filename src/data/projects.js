@@ -212,7 +212,7 @@ const definitions = [
     category: "offices",
     kind: "render",
     collaboration: "Eked Trading PLC",
-    summary: "Reception and workplace interiors for a public-sector office, with a sculpted reception desk, open-plan workstations and a conference room.",
+    summary: "Reception and workplace interiors for a public-sector office, with a sculpted reception desk, open-plan workstations, a conference room and an executive office suite.",
     images: [
       { file: "001", w: 1920, h: 1217, tw: 720, th: 456, alt: "Reception lounge with marble feature wall" },
       { file: "002", w: 1920, h: 1217, tw: 720, th: 456, alt: "Curved reception desk beneath a circular ceiling feature" },
@@ -220,7 +220,19 @@ const definitions = [
       { file: "005", w: 1920, h: 1217, tw: 720, th: 456, alt: "Open-plan office around a central column" },
       { file: "006", w: 1309, h: 830, tw: 720, th: 457, alt: "Open-plan workstations beneath a slatted ceiling" },
       { file: "007", w: 1309, h: 830, tw: 720, th: 457, alt: "Workstation rows, side view" },
-      { file: "008", w: 1920, h: 1217, tw: 720, th: 456, alt: "Meeting room with large conference table" }
+      { file: "008", w: 1920, h: 1217, tw: 720, th: 456, alt: "Meeting room with large conference table" },
+      { file: "009", w: 1920, h: 1080, tw: 720, th: 405, alt: "Executive office with a long desk and flag, seen across the open floor" },
+      { file: "010", w: 1920, h: 1080, tw: 720, th: 405, alt: "Lounge and seating area seen from the executive desk, with a laptop in the foreground" },
+      { file: "011", w: 1920, h: 1263, tw: 720, th: 474, alt: "Lounge seating in front of a black marble feature wall and framed artwork" },
+      { file: "012", w: 1920, h: 1080, tw: 720, th: 405, alt: "Executive suite with floor-to-ceiling windows, lounge chairs and the desk beyond" },
+      { file: "013", w: 1920, h: 1419, tw: 720, th: 532, alt: "Round-table seating in front of the long cabinet wall and black marble panel" },
+      { file: "014", w: 1920, h: 1419, tw: 720, th: 532, alt: "Executive desk and lounge seating beneath a layered ceiling" },
+      { file: "015", w: 1920, h: 1419, tw: 720, th: 532, alt: "Cabinet wall with a lit display niche and a full-height timber door" },
+      { file: "016", w: 1920, h: 1419, tw: 720, th: 532, alt: "Long wall of cabinets with display shelving and a black marble panel" },
+      { file: "017", w: 1920, h: 1419, tw: 720, th: 532, alt: "Cabinet wall and timber door with lounge chairs in the foreground" },
+      { file: "018", w: 1439, h: 1064, tw: 720, th: 532, alt: "Wide view of the executive suite with the desk on the left and lounge on the right" },
+      { file: "019", w: 1920, h: 1419, tw: 720, th: 532, alt: "Display shelving beside the black marble wall" },
+      { file: "020", w: 1920, h: 1419, tw: 720, th: 532, alt: "Executive desk with a monitor, facing the cabinet wall" }
     ]
   },
   {
