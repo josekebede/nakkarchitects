@@ -419,8 +419,6 @@ const definitions = [
       { file: "014", w: 1309, h: 830, tw: 720, th: 457, alt: "Pharmacy shelving, wide view" },
       { file: "015", w: 1309, h: 830, tw: 720, th: 457, alt: "Pharmacy and retail counter" },
       { file: "016", w: 1309, h: 830, tw: 720, th: 457, alt: "Glazed pharmacy frontage" },
-      { file: "017", w: 1309, h: 830, tw: 720, th: 457, alt: "Glass entrance to the clinic" },
-      { file: "018", w: 1309, h: 830, tw: 720, th: 457, alt: "Entrance atrium with glazing" },
       { file: "019", w: 1309, h: 830, tw: 720, th: 457, alt: "Treatment corridor" },
       { file: "020", w: 1309, h: 830, tw: 720, th: 457, alt: "Reception and waiting hall" }
     ]
