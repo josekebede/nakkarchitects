@@ -36,7 +36,13 @@
                 </div>
                 <div class="contact-info__content">
                   <h4>Office Address</h4>
-                  <p>Mina Building, Wolo Sefer<br>Ethio China St, Addis Ababa<br>ሚና ህንጻ | ወሎ ሰፈር</p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Mina+Building+Wolo+Sefer+Ethio+China+Street+Addis+Ababa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-info__map-link"
+                    title="Open in maps"
+                  >Mina Building, Wolo Sefer<br>Ethio China St, Addis Ababa<br>ሚና ህንጻ | ወሎ ሰፈር</a>
                 </div>
               </div>
 
@@ -95,7 +101,7 @@
           </AnimatedSection>
 
           <!-- Contact Form -->
-          <AnimatedSection animation="slide-in-right" class="contact-form-wrapper">
+          <AnimatedSection id="contact-form" animation="slide-in-right" class="contact-form-wrapper">
             <h2 class="contact-form-wrapper__title">Send Us a Message</h2>
             <ContactForm />
           </AnimatedSection>
@@ -130,7 +136,7 @@
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 import ContactForm from '@/components/common/ContactForm.vue'
 
-const heroImage = '/projects/residence-03/full/001.webp'
+const heroImage = '/projects/cubic-white-villa/full/001.webp'
 </script>
 
 <style scoped>
@@ -264,6 +270,15 @@ const heroImage = '/projects/residence-03/full/001.webp'
 
 .contact-info__content a:hover {
   color: var(--primary);
+}
+
+.contact-info__map-link {
+  display: inline-block;
+  line-height: var(--leading-relaxed);
+}
+
+.contact-info__map-link:hover {
+  text-decoration: underline;
 }
 
 /* Social */

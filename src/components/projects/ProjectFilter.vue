@@ -100,6 +100,18 @@ const setCategory = (categoryId) => {
   color: var(--white);
 }
 
+@media (min-width: 1025px) {
+  .project-filter__rail {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .project-filter__button {
+    padding-right: var(--space-3);
+    padding-left: var(--space-3);
+  }
+}
+
 .project-filter__count {
   min-width: 1.35rem;
   padding: 0.1rem 0.35rem;

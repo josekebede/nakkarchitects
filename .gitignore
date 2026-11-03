@@ -8,6 +8,8 @@ dist
 .env
 .env.local
 .env.*.local
+.dev.vars
+.wrangler
 
 # Editor directories and files
 .idea

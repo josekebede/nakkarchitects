@@ -22,7 +22,7 @@
             <span class="about-story__label">Our Story</span>
             <h2>Where Heritage Meets Innovation</h2>
             <p>
-              NAKK Architecture was founded in 2021 by Nahom Kebede with a singular vision:
+              NAKK Architects was founded in 2021 by Nahom Kebede with a singular vision:
               to create spaces that honor cultural context while embracing bold innovation.
               Based in the heart of Addis Ababa, Ethiopia, our practice has grown to deliver
               over 30 projects known for thoughtful design and unwavering commitment to quality.
@@ -34,7 +34,7 @@
               and sustainable practices.
             </p>
             <p>
-              Today, NAKK Architecture continues to build on this foundation, creating
+              Today, NAKK Architects continues to build on this foundation, creating
               residential, commercial, and institutional projects that leave lasting
               impressions on communities and individuals alike.
             </p>
@@ -43,8 +43,8 @@
           <AnimatedSection animation="slide-in-right" class="about-story__image-wrapper">
             <div class="about-story__image img-zoom">
               <img
-                src="/projects/abay-technical-trading/full/011.webp"
-                alt="Reception and workspace designed for Abay Technical & Trading PLC"
+                src="/projects/open-plan-corporate-office/full/007.webp"
+                alt="Lounge area with city views in an open-plan corporate office"
                 loading="lazy"
                 decoding="async"
               />
@@ -80,7 +80,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="about-services section">
+    <section id="services" class="about-services section">
       <div class="container">
         <AnimatedSection animation="fade-in" class="section-header">
           <span class="about-services__label">What We Do</span>
@@ -148,7 +148,7 @@
 import { h } from 'vue'
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 
-const heroImage = '/projects/nuclear-energy-commission/full/001.webp'
+const heroImage = '/projects/public-sector-office/full/001.webp'
 
 const values = [
   {

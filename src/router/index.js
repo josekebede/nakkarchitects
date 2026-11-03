@@ -6,7 +6,7 @@ const routes = [
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
     meta: {
-      title: 'NAKK Architecture | Addis Ababa',
+      title: 'NAKK Architects | Addis Ababa',
       description: 'Architecture and interiors rooted in place, designed for what comes next.'
     }
   },
@@ -15,8 +15,8 @@ const routes = [
     name: 'projects',
     component: () => import('@/views/ProjectsView.vue'),
     meta: {
-      title: 'Projects | NAKK Architecture',
-      description: 'Explore residential, commercial, hospitality, interior, and institutional projects by NAKK Architecture.'
+      title: 'Projects | NAKK Architects',
+      description: 'Explore residential, commercial, hospitality, interior, and institutional projects by NAKK Architects.'
     }
   },
   {
@@ -24,8 +24,8 @@ const routes = [
     name: 'project-detail',
     component: () => import('@/views/ProjectDetailView.vue'),
     meta: {
-      title: 'Project | NAKK Architecture',
-      description: 'Explore a project by NAKK Architecture in Addis Ababa.'
+      title: 'Project | NAKK Architects',
+      description: 'Explore a project by NAKK Architects in Addis Ababa.'
     }
   },
   {
@@ -33,8 +33,8 @@ const routes = [
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
     meta: {
-      title: 'About | NAKK Architecture',
-      description: 'Meet NAKK Architecture, an Addis Ababa practice creating thoughtful architecture and interiors.'
+      title: 'About | NAKK Architects',
+      description: 'Meet NAKK Architects, an Addis Ababa practice creating thoughtful architecture and interiors.'
     }
   },
   {
@@ -42,8 +42,8 @@ const routes = [
     name: 'contact',
     component: () => import('@/views/ContactView.vue'),
     meta: {
-      title: 'Contact | NAKK Architecture',
-      description: 'Contact NAKK Architecture in Addis Ababa to discuss your architecture or interior design project.'
+      title: 'Contact | NAKK Architects',
+      description: 'Contact NAKK Architects in Addis Ababa to discuss your architecture or interior design project.'
     }
   },
   {
@@ -60,18 +60,26 @@ const router = createRouter({
       return savedPosition
     }
     if (to.hash) {
-      return { el: to.hash, behavior: 'smooth' }
+      // top: keeps the target clear of the fixed navbar
+      const target = { el: to.hash, top: 96, behavior: 'smooth' }
+      // Coming from another page, the new page only appears once the old one has
+      // faded out (about 0.3s), so give it a moment before looking for the target.
+      if (from.path !== to.path) {
+        return new Promise((resolve) => setTimeout(() => resolve(target), 500))
+      }
+      return target
     }
-    return { top: 0, behavior: 'smooth' }
+    // left: 0 too, so a page that was nudged sideways never stays that way
+    return { top: 0, left: 0, behavior: 'smooth' }
   }
 })
 
 router.afterEach((to) => {
-  const title = to.meta.title || 'NAKK Architecture'
-  const description = to.meta.description || 'Architecture and interiors by NAKK Architecture.'
+  const title = to.meta.title || 'NAKK Architects'
+  const description = to.meta.description || 'Architecture and interiors by NAKK Architects.'
   const canonicalUrl = new URL(to.path, 'https://nakkarchitecture.com').href
-  const defaultImage = 'https://nakkarchitecture.com/projects/residence-01/full/009.webp'
-  const defaultImageAlt = 'Exterior courtyard view of Residence 01'
+  const defaultImage = 'https://nakkarchitecture.com/projects/limestone-villa/full/023.webp'
+  const defaultImageAlt = 'Entry court and glazed facade of a two-storey villa'
 
   document.title = title
   document.querySelector('meta[name="description"]')?.setAttribute('content', description)

@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local testing with `npx wrangler pages dev dist`.
+# In production, set these in Cloudflare: Pages project > Settings > Variables and Secrets.
+RESEND_API_KEY=re_replace_me
+CONTACT_TO_EMAIL=you@example.com
+# Optional. Leave out until the sending domain is verified in Resend.
+# CONTACT_FROM_EMAIL=NAKK Website <contact@nakkarchitecture.com>

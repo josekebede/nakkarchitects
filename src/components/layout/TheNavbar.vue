@@ -13,15 +13,15 @@
       <RouterLink
         to="/"
         class="navbar__brand"
-        aria-label="NAKK Architecture home"
+        aria-label="NAKK Architects home"
         @click="closeMobileMenu()"
       >
         <img
           class="navbar__brand-logo"
           src="/brand/nakk-logo-lockup-white.png"
           alt=""
-          width="1200"
-          height="384"
+          width="905"
+          height="247"
           decoding="async"
         />
       </RouterLink>

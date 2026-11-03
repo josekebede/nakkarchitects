@@ -31,6 +31,9 @@
       </div>
     </section>
 
+    <!-- Client logos (stays hidden until logo files are added in src/data/clients.js) -->
+    <ClientLogos />
+
     <!-- CTA Section -->
     <section class="cta-section section bg-dark">
       <div class="container">
@@ -54,6 +57,7 @@ import { h } from 'vue'
 import HeroSlider from '@/components/home/HeroSlider.vue'
 import AboutPreview from '@/components/home/AboutPreview.vue'
 import FeaturedProjects from '@/components/home/FeaturedProjects.vue'
+import ClientLogos from '@/components/home/ClientLogos.vue'
 import AnimatedSection from '@/components/common/AnimatedSection.vue'
 
 // Service icons as render functions

@@ -5,7 +5,7 @@
       :to="`/projects/${project.slug}`"
       :aria-label="`View ${project.name}, ${imageCountLabel}`"
     >
-      <div class="project-card__media" :style="mediaStyle">
+      <div class="project-card__media">
         <img
           :src="project.cover.thumb"
           :srcset="coverSrcset"
@@ -31,8 +31,10 @@
 
       <div class="project-card__content">
         <div>
-          <p class="project-card__category">{{ project.categoryLabel }}</p>
-          <h2 class="project-card__title">{{ project.name }}</h2>
+          <p class="project-card__category">
+            {{ project.categoryLabel }}<template v-if="project.kindLabel"> &middot; {{ project.kindLabel }}</template>
+          </p>
+          <h3 class="project-card__title">{{ project.name }}</h3>
         </div>
         <span class="project-card__arrow" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -65,10 +67,6 @@ const imageCountLabel = computed(() => {
   return `${count} ${count === 1 ? 'image' : 'images'}`
 })
 
-const mediaStyle = computed(() => ({
-  '--project-ratio': `${props.project.cover.width} / ${props.project.cover.height}`
-}))
-
 const coverSrcset = computed(() => {
   const cover = props.project.cover
   if (!cover?.thumb || !cover?.full || cover.thumb === cover.full) return undefined
@@ -95,9 +93,7 @@ const coverSrcset = computed(() => {
   position: relative;
   overflow: hidden;
   width: 100%;
-  aspect-ratio: var(--project-ratio, 4 / 3);
-  min-height: 240px;
-  max-height: 520px;
+  aspect-ratio: 4 / 3;
   background: var(--accent);
 }
 
@@ -192,10 +188,6 @@ const coverSrcset = computed(() => {
 }
 
 @media (max-width: 640px) {
-  .project-card__media {
-    min-height: 210px;
-  }
-
   .project-card__content {
     padding-top: var(--space-4);
   }
