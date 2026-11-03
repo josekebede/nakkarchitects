@@ -8,8 +8,8 @@
             <img
               src="/brand/nakk-logo-lockup-white.png"
               alt=""
-              width="1200"
-              height="384"
+              width="905"
+              height="247"
               loading="lazy"
               decoding="async"
             />
