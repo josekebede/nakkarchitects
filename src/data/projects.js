@@ -139,17 +139,6 @@ const definitions = [
     ]
   },
   {
-    slug: "courtyard-house",
-    name: "Courtyard House",
-    category: "houses",
-    kind: "photo",
-    summary: "Photographs of a courtyard house, showing an arched entrance and a stone-paved garden court with a sculptural steel stair.",
-    images: [
-      { file: "001", w: 1920, h: 1440, tw: 720, th: 540, alt: "Courtyard entrance with arched door and cobbled paving" },
-      { file: "002", w: 1920, h: 1440, tw: 720, th: 540, alt: "Garden court with stone steps and sculptural stair" }
-    ]
-  },
-  {
     slug: "mid-rise-apartment-building",
     name: "WS Apartment",
     category: "apartments",

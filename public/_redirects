@@ -31,8 +31,10 @@
 /projects/public-building /projects/villa-with-pool 301
 /projects/boutique-hotel /projects/villa-with-pool 301
 /projects/resort-complex /projects/industrial-hall 301
-/projects/solar-complex /projects/courtyard-house 301
-/projects/green-building /projects/courtyard-house 301
+/projects/solar-complex /projects 301
+/projects/green-building /projects 301
+/projects/courtyard-house /projects 301
+/projects/courtyard-house/* /projects 301
 
 # Image paths of renamed galleries
 /projects/woinu-residence/* /projects/limestone-villa/:splat 301
