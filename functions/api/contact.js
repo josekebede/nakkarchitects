@@ -5,7 +5,7 @@
 // never in the repo:
 //   RESEND_API_KEY      (secret)  Resend API key
 //   CONTACT_TO_EMAIL    (plain)   where messages are delivered
-//   CONTACT_FROM_EMAIL  (plain, optional) sender, e.g. "NAKK Website <contact@nakkarchitecture.com>"
+//   CONTACT_FROM_EMAIL  (plain, optional) sender, e.g. "NAKK Website <contact@nakkarchitects.com>"
 //                       Defaults to Resend's test sender until the domain is verified.
 
 const SUBJECT_LABELS = {

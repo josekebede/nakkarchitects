@@ -199,10 +199,10 @@ watch(
       ? `${currentProject.name} | NAKK Architects`
       : 'Project Not Found | NAKK Architects'
     const description = currentProject?.summary || 'Explore a project by NAKK Architects in Addis Ababa.'
-    const canonicalUrl = new URL(route.path, 'https://nakkarchitecture.com').href
+    const canonicalUrl = new URL(route.path, 'https://nakkarchitects.com').href
     const imageUrl = coverImage.value?.full
-      ? new URL(coverImage.value.full, 'https://nakkarchitecture.com').href
-      : 'https://nakkarchitecture.com/projects/limestone-villa/full/023.webp'
+      ? new URL(coverImage.value.full, 'https://nakkarchitects.com').href
+      : 'https://nakkarchitects.com/projects/limestone-villa/full/023.webp'
 
     document.title = title
     document.querySelector('meta[name="description"]')?.setAttribute('content', description)

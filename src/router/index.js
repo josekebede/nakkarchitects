@@ -77,8 +77,8 @@ const router = createRouter({
 router.afterEach((to) => {
   const title = to.meta.title || 'NAKK Architects'
   const description = to.meta.description || 'Architecture and interiors by NAKK Architects.'
-  const canonicalUrl = new URL(to.path, 'https://nakkarchitecture.com').href
-  const defaultImage = 'https://nakkarchitecture.com/projects/limestone-villa/full/023.webp'
+  const canonicalUrl = new URL(to.path, 'https://nakkarchitects.com').href
+  const defaultImage = 'https://nakkarchitects.com/projects/limestone-villa/full/023.webp'
   const defaultImageAlt = 'Entry court and glazed facade of a two-storey villa'
 
   document.title = title
