@@ -393,7 +393,7 @@ const definitions = [
   },
   {
     slug: "medical-clinic-and-pharmacy",
-    name: "Ayzon Medical Center",
+    name: "Ayzon Boutique Clinic",
     category: "healthcare",
     kind: "render",
     featured: true,

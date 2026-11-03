@@ -16,6 +16,6 @@ export const clients = [
   { name: 'Mebri', logo: null },
   { name: 'Pace Cigar Lounge & Bar', logo: null },
   { name: 'Scoops & Bites', logo: null },
-  { name: 'Ayzon Medical Center', logo: null },
+  { name: 'Ayzon Boutique Clinic', logo: null },
   { name: 'Hasset Academy', logo: null }
 ]
