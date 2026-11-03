@@ -4,7 +4,7 @@
       <div class="footer__grid">
         <!-- Brand Column -->
         <div class="footer__brand">
-          <RouterLink to="/" class="footer__logo" aria-label="NAKK Architecture home">
+          <RouterLink to="/" class="footer__logo" aria-label="NAKK Architects home">
             <img
               src="/brand/nakk-logo-lockup-white.png"
               alt=""
@@ -78,7 +78,7 @@
 
       <!-- Copyright -->
       <div class="footer__bottom">
-        <p>&copy; {{ currentYear }} NAKK Architecture. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} NAKK Architects. All rights reserved.</p>
       </div>
     </div>
   </footer>

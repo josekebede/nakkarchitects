@@ -7,7 +7,7 @@
           <span class="about-preview__label">About Us</span>
           <h2 class="about-preview__title">Where Heritage Meets Innovation</h2>
           <p class="about-preview__text">
-            Founded in 2021 by Nahom Kebede, NAKK Architecture bridges the contextual
+            Founded in 2021 by Nahom Kebede, NAKK Architects bridges the contextual
             and cultural richness of Ethiopian heritage with innovative and bold
             contemporary design. Based in Addis Ababa, we've delivered over 30 projects
             with thoughtful attention to detail and deep respect for local context.

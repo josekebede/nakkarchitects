@@ -13,7 +13,7 @@
       <RouterLink
         to="/"
         class="navbar__brand"
-        aria-label="NAKK Architecture home"
+        aria-label="NAKK Architects home"
         @click="closeMobileMenu()"
       >
         <img

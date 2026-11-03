@@ -22,7 +22,7 @@
             <span class="about-story__label">Our Story</span>
             <h2>Where Heritage Meets Innovation</h2>
             <p>
-              NAKK Architecture was founded in 2021 by Nahom Kebede with a singular vision:
+              NAKK Architects was founded in 2021 by Nahom Kebede with a singular vision:
               to create spaces that honor cultural context while embracing bold innovation.
               Based in the heart of Addis Ababa, Ethiopia, our practice has grown to deliver
               over 30 projects known for thoughtful design and unwavering commitment to quality.
@@ -34,7 +34,7 @@
               and sustainable practices.
             </p>
             <p>
-              Today, NAKK Architecture continues to build on this foundation, creating
+              Today, NAKK Architects continues to build on this foundation, creating
               residential, commercial, and institutional projects that leave lasting
               impressions on communities and individuals alike.
             </p>

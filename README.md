@@ -1,6 +1,6 @@
-# NAKK Architecture
+# NAKK Architects
 
-Portfolio website for NAKK Architecture, built with Vue 3, Vite, Vue Router, and Pinia.
+Portfolio website for NAKK Architects, built with Vue 3, Vite, Vue Router, and Pinia.
 
 ## Portfolio structure
 

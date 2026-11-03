@@ -15,7 +15,7 @@
 
     <div class="container hero__content">
       <div class="hero__statement">
-        <p class="hero__eyebrow">NAKK Architecture · Addis Ababa</p>
+        <p class="hero__eyebrow">NAKK Architects · Addis Ababa</p>
         <h1 id="hero-title">Architecture rooted in place, designed for what comes next.</h1>
       </div>
 

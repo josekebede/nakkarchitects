@@ -9,7 +9,7 @@
         <div class="projects-intro__aside">
           <p>
             Browse houses and villas, apartments, offices, commercial and industrial
-            buildings, hospitality, healthcare, and education work by NAKK Architecture.
+            buildings, hospitality, healthcare, and education work by NAKK Architects.
           </p>
           <dl class="projects-intro__stats" aria-label="Portfolio totals">
             <div>

@@ -196,9 +196,9 @@ watch(
   project,
   async (currentProject) => {
     const title = currentProject
-      ? `${currentProject.name} | NAKK Architecture`
-      : 'Project Not Found | NAKK Architecture'
-    const description = currentProject?.summary || 'Explore a project by NAKK Architecture in Addis Ababa.'
+      ? `${currentProject.name} | NAKK Architects`
+      : 'Project Not Found | NAKK Architects'
+    const description = currentProject?.summary || 'Explore a project by NAKK Architects in Addis Ababa.'
     const canonicalUrl = new URL(route.path, 'https://nakkarchitecture.com').href
     const imageUrl = coverImage.value?.full
       ? new URL(coverImage.value.full, 'https://nakkarchitecture.com').href
@@ -210,7 +210,7 @@ watch(
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', title)
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description)
     document.querySelector('meta[property="og:image"]')?.setAttribute('content', imageUrl)
-    document.querySelector('meta[property="og:image:alt"]')?.setAttribute('content', coverImage.value?.alt || 'NAKK Architecture project')
+    document.querySelector('meta[property="og:image:alt"]')?.setAttribute('content', coverImage.value?.alt || 'NAKK Architects project')
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl)
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl)
     await nextTick()
